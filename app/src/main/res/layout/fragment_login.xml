@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginFragment">
+
+
+    <TextView
+        android:id="@+id/loginFrag_tvHello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="140sp"
+        android:text="@string/hello"
+        android:textColor="@color/dark_blue"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loginFrag_tvGlad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="@string/glad_you_re_here"
+        android:textColor="@color/dark_blue"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tvHello" />
+
+
+
+
+    <TextView
+        android:id="@+id/loginFrag_tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="@string/email_adress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilId" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginFrag_tilId"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="70sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tvGlad">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginFrag_tietId"
+            android:paddingBottom="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/loginFrag_tvPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilPass" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginFrag_tilPass"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilId">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/loginFrag_tietPass"
+            android:paddingBottom="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <Switch
+        android:id="@+id/loginFrag_switchRem"
+        android:layout_width="wrap_content"
+        android:layout_height="55sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12sp"
+        android:checked="false"
+        android:thumbTint="@color/dark_blue"
+        android:trackTint="@color/dark_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilPass"
+
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:id="@+id/loginFrag_tvRem"
+        android:layout_width="wrap_content"
+        android:layout_height="55sp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/remember_me"
+
+        app:layout_constraintStart_toEndOf="@+id/loginFrag_switchRem"
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilPass" />
+
+
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginFrag_btLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:text="@string/log_in"
+        android:backgroundTint="@color/dark_blue"
+        app:cornerRadius="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tvRem"
+        />
+
+    <Button
+        android:id="@+id/loginFrag_btRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        app:strokeColor="@color/dark_blue"
+        app:strokeWidth="2dp"
+        android:text="@string/register"
+        android:textColor="@color/dark_blue"
+        android:backgroundTint="@color/white"
+        app:cornerRadius="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_btLogin"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

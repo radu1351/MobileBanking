@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterFragment">
+
+    <TextView
+        android:id="@+id/registerFrag_tvReg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create an account"
+        android:layout_marginTop="80sp"
+        android:textColor="@color/dark_blue"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_FirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="First Name"
+        app:layout_constraintBottom_toTopOf="@+id/registerFrag_tilFirstName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerFrag_tilFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="65sp"
+        android:layout_marginEnd="200sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tvReg">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFrag_tietFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:paddingBottom="10sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_tvLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200sp"
+        android:text="@string/last_name"
+        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilLastName"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerFrag_tilLastName"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="200sp"
+        android:layout_marginTop="65sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/registerFrag_tilFirstName"
+        app:layout_constraintTop_toBottomOf="@id/registerFrag_tvReg">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFrag_tietLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:paddingBottom="10sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_tvIdentificationNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="Personal Idenfitication Number"
+        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilIdentificationNumber"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerFrag_tilIdentificationNumber"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilLastName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFrag_tietAdress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:paddingBottom="10sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_tvCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="Country"
+        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilPhone"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/registerFrag_tilCountry"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="30sp"
+        android:layout_marginEnd="200sp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/spinner"
+        android:entries="@array/countries_array"
+        app:layout_constraintBottom_toTopOf="@+id/registerFrag_tilAdress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilIdentificationNumber" />
+
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_tvPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200sp"
+        android:text="Phone Number"
+        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilPhone"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerFrag_tilPhone"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="200sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/registerFrag_tilCountry"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilIdentificationNumber">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFrag_tietPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:inputType="number"
+            android:paddingBottom="10sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_tvAdress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="Home Adress"
+        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilAdress"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerFrag_tilAdress"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilPhone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFrag_tietIdentificationNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:paddingBottom="10sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="Email Adress"
+        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilEmail"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerFrag_tilEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilAdress">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFrag_tietEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:paddingBottom="10sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+    <TextView
+        android:id="@+id/registerFrag_tvPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20sp"
+        android:text="@string/password"
+        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilPass"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerFrag_tilPass"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilEmail">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerFrag_tietPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/dark_blue"
+            android:inputType="textPassword"
+            android:paddingBottom="10sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registerFrag_btCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:text="@string/create_account"
+        android:backgroundTint="@color/dark_blue"
+        app:cornerRadius="0sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilPass"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registerFrag_btBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"
+        android:text="Back"
+        android:textColor="@color/dark_blue"
+        android:backgroundTint="@color/white"
+        app:strokeColor="@color/dark_blue"
+        app:strokeWidth="2dp"
+        app:cornerRadius="0sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerFrag_btCreate"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
