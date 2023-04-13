@@ -42,10 +42,10 @@
         android:layout_marginStart="20sp"
         android:text="@string/email_adress"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilId" />
+        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilEmail" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/loginFrag_tilId"
+        android:id="@+id/loginFrag_tilEmail"
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_marginStart="20sp"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginFrag_tvGlad">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/loginFrag_tietId"
+            android:id="@+id/loginFrag_tietEmail"
             android:paddingBottom="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
         android:layout_marginEnd="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilId">
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilEmail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginFrag_tietPass"
@@ -162,6 +162,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginFrag_btLogin"
         />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

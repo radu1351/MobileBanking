@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterFragment">
+    tools:context=".RegisterFragment"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/registerFrag_tvReg"
@@ -38,7 +39,7 @@
         android:layout_marginStart="20sp"
         android:layout_marginTop="65sp"
         android:layout_marginEnd="200sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/registerFrag_tilLastName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerFrag_tvReg">
 
@@ -110,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilLastName">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerFrag_tietAdress"
+            android:id="@+id/registerFrag_tietIdentificationNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/dark_blue"
@@ -131,7 +132,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
-        android:id="@+id/registerFrag_tilCountry"
+        android:id="@+id/registerFrag_spinCountry"
         android:layout_width="match_parent"
         android:layout_height="45sp"
         android:layout_marginStart="20sp"
@@ -142,7 +143,7 @@
         android:entries="@array/countries_array"
         app:layout_constraintBottom_toTopOf="@+id/registerFrag_tilAdress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/registerFrag_tilPhone"
         app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilIdentificationNumber" />
 
 
@@ -166,7 +167,7 @@
         android:layout_marginTop="25sp"
         android:layout_marginEnd="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/registerFrag_tilCountry"
+        app:layout_constraintStart_toEndOf="@id/registerFrag_spinCountry"
         app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilIdentificationNumber">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -202,7 +203,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilPhone">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/registerFrag_tietIdentificationNumber"
+            android:id="@+id/registerFrag_tietAdress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/dark_blue"

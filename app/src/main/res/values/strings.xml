@@ -12,6 +12,8 @@
     <string name="email_adress">Email Adress</string>
     <string name="register">Register</string>
     <string name="create_account">Create Account</string>
+    <string name="email_pattern">^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$</string>
+    <string name="password_pattern"><![CDATA[^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$]]></string>
     <string-array name="countries_array">
         <item>Afghanistan</item>
         <item>Albania</item>
