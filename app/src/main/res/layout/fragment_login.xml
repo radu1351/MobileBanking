@@ -14,7 +14,7 @@
         android:layout_marginStart="20sp"
         android:layout_marginTop="140sp"
         android:text="@string/hello"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/primary_color"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
         android:text="@string/glad_you_re_here"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/primary_color"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
             android:paddingBottom="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue" />
+            android:backgroundTint="@color/primary_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -91,7 +91,7 @@
             android:paddingBottom="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,8 +105,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="12sp"
         android:checked="false"
-        android:thumbTint="@color/dark_blue"
-        android:trackTint="@color/dark_blue"
+        android:thumbTint="@color/primary_color"
+        android:trackTint="@color/primary_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilPass"
 
@@ -136,7 +136,7 @@
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20sp"
         android:text="@string/log_in"
-        android:backgroundTint="@color/dark_blue"
+        android:backgroundTint="@color/primary_color"
         app:cornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -151,10 +151,10 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20sp"
-        app:strokeColor="@color/dark_blue"
+        app:strokeColor="@color/primary_color"
         app:strokeWidth="2dp"
         android:text="@string/register"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/primary_color"
         android:backgroundTint="@color/white"
         app:cornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"

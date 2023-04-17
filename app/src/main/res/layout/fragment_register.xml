@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Create an account"
         android:layout_marginTop="80sp"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/primary_color"
         android:textSize="27sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +47,7 @@
             android:id="@+id/registerFrag_tietFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +82,7 @@
             android:id="@+id/registerFrag_tietLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +114,7 @@
             android:id="@+id/registerFrag_tietIdentificationNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,16 +123,16 @@
 
 
     <TextView
-        android:id="@+id/registerFrag_tvCountry"
+        android:id="@+id/registerFrag_tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
-        android:text="Country"
+        android:text="Date of Birth"
         app:layout_constraintBottom_toTopOf="@id/registerFrag_tilPhone"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Spinner
-        android:id="@+id/registerFrag_spinCountry"
+    <TextView
+        android:id="@+id/registerFrag_tvDateOfBirth"
         android:layout_width="match_parent"
         android:layout_height="45sp"
         android:layout_marginStart="20sp"
@@ -141,6 +141,8 @@
         android:layout_marginBottom="25dp"
         android:background="@drawable/spinner"
         android:entries="@array/countries_array"
+        android:hint = "Click to set date"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/registerFrag_tilAdress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/registerFrag_tilPhone"
@@ -167,14 +169,14 @@
         android:layout_marginTop="25sp"
         android:layout_marginEnd="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/registerFrag_spinCountry"
+        app:layout_constraintStart_toEndOf="@id/registerFrag_tvDate"
         app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilIdentificationNumber">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/registerFrag_tietPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:inputType="number"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -206,7 +208,7 @@
             android:id="@+id/registerFrag_tietAdress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -240,7 +242,7 @@
             android:id="@+id/registerFrag_tietEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -272,7 +274,7 @@
             android:id="@+id/registerFrag_tietPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
+            android:backgroundTint="@color/primary_color"
             android:inputType="textPassword"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -284,12 +286,12 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerFrag_btCreate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48sp"
         android:layout_marginTop="50dp"
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20sp"
         android:text="@string/create_account"
-        android:backgroundTint="@color/dark_blue"
+        android:backgroundTint="@color/primary_color"
         app:cornerRadius="0sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -305,9 +307,9 @@
         android:layout_marginStart="20sp"
         android:layout_marginEnd="20sp"
         android:text="Back"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/primary_color"
         android:backgroundTint="@color/white"
-        app:strokeColor="@color/dark_blue"
+        app:strokeColor="@color/primary_color"
         app:strokeWidth="2dp"
         app:cornerRadius="0sp"
         app:layout_constraintEnd_toEndOf="parent"

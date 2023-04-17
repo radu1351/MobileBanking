@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue_gradient"
+    tools:context=".HomeFragment">
+
+
+    <TextView
+        android:id="@+id/homeFrag_tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="John Terry"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="200sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="49dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/ic_profilepicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/homeFrag_tvName"
+       />
+
+
+    <TextView
+        android:id="@+id/homeFrag_tvBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3250.45 RON"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/homeFrag_tvBalance"
+        tools:layout_editor_absoluteY="135dp" />
+
+    <TextView
+        android:id="@+id/homeFrag_tvYourBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your balance"
+        android:layout_marginStart="30sp"
+        android:layout_marginBottom="60sp"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/homeFrag_tvBalance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/homeFrag_clCards">
+    </TextView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/homeFrag_clCards"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/roundbackground_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="275sp"
+        >
+
+        <TextView
+            android:id="@+id/homeFrag_tvCards"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:text="Cards"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="30sp"
+            android:layout_marginTop="25sp"
+            app:layout_constraintTop_toTopOf="@id/homeFrag_clCards"
+            app:layout_constraintStart_toStartOf="@id/homeFrag_clCards">
+        </TextView>
+
+        <!--  Scroll view carduri      -->
+        <HorizontalScrollView
+            android:id="@+id/homeFrag_hsvCards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/homeFrag_tvCards"
+         >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_card"
+                android:orientation="horizontal"
+                android:showDividers="middle|beginning|end"
+                app:layout_constraintTop_toBottomOf="@id/homeFrag_tvCards">
+
+                <com.vinaygaba.creditcardview.CreditCardView
+                    android:id="@+id/card1"
+                    android:layout_width="300sp"
+                    android:layout_height="185dp"
+                    app:cardName="John Terry"
+                    app:cardNameTextColor="#cccccc"
+                    app:cardNumber="5500005555555559"
+                    app:cardNumberFormat="all_digits"
+                    app:cardNumberTextColor="#cccccc"
+                    app:expiryDate="02/22"
+                    app:expiryDateTextColor="#cccccc"
+                    app:hintTextColor="#cccccc"
+                    app:isEditable="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.252"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:putChip="true"
+                    app:type="visa"
+                    app:validTillTextColor="#cccccc"
+                    tools:layout_editor_absoluteY="325dp" />
+
+                <com.vinaygaba.creditcardview.CreditCardView
+                    android:id="@+id/card2"
+                    android:layout_width="300sp"
+                    android:layout_height="185dp"
+                    app:cardName="John Terry"
+                    app:cardNameTextColor="#cccccc"
+                    app:cardNumber="5500005555555559"
+                    app:cardNumberFormat="all_digits"
+                    app:cardNumberTextColor="#cccccc"
+                    app:expiryDate="02/22"
+                    app:expiryDateTextColor="#cccccc"
+                    app:hintTextColor="#cccccc"
+                    app:isEditable="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.252"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:putChip="true"
+                    app:type="visa"
+                    app:validTillTextColor="#cccccc"
+                    tools:layout_editor_absoluteY="325dp" />
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

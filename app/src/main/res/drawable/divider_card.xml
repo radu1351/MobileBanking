@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/white" /> <!-- Set divider color here -->
+    <size android:width="25dp" /> <!-- Set divider height here -->
+</shape>

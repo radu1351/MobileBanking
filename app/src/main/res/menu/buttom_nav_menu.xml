@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:title="Home"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/menu_statistic"
+        android:title="Statistic"
+        android:icon="@drawable/ic_launcher_foreground" />
+
+    <item
+        android:id="@+id/menu_pay"
+        android:title="Pay"
+        android:icon="@drawable/ic_launcher_foreground"/>
+
+    <item
+        android:id="@+id/menu_stocks"
+        android:title="Stocks"
+        android:icon="@drawable/ic_launcher_foreground" />
+    />
+
+</menu>

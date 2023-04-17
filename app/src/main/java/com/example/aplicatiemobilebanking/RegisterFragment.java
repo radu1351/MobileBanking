@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public class RegisterFragment extends Fragment {
 
     TextInputEditText tietFirstName, tietLastName, tietIdNumber, tietPhoneNumber, tietAdress, tietEmail, tietPassword;
-    Spinner spinCountry;
+    TextView tvDateOfBirth;
     Button btCreateAccount, btBack;
 
     public RegisterFragment() {
@@ -58,7 +58,7 @@ public class RegisterFragment extends Fragment {
         tietFirstName = view.findViewById(R.id.registerFrag_tietFirstName);
         tietLastName = view.findViewById(R.id.registerFrag_tietLastName);
         tietIdNumber = view.findViewById(R.id.registerFrag_tietIdentificationNumber);
-        spinCountry = view.findViewById(R.id.registerFrag_spinCountry);
+        tvDateOfBirth = view.findViewById(R.id.registerFrag_tvDateOfBirth);
         tietPhoneNumber = view.findViewById(R.id.registerFrag_tietPhone);
         tietAdress = view.findViewById(R.id.registerFrag_tietAdress);
         tietEmail = view.findViewById(R.id.registerFrag_tietEmail);
@@ -218,7 +218,8 @@ public class RegisterFragment extends Fragment {
                 }
 
                 if(dataIsCorrect){
-                    // Firebase....
+                    Toast.makeText(getContext(),"Account has been succesfully created.",Toast.LENGTH_SHORT).show();
+                    openLoginFragment();
                 }
             }
         });
