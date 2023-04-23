@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:clipToPadding="false">
 
     <FrameLayout
         android:id="@+id/mainAct_fl"
@@ -18,16 +19,20 @@
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:theme="@style/Theme.AppCompat"
         android:id="@+id/mainAct_navView"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="95sp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:backgroundTint="@color/white"
-        app:menu="@menu/buttom_nav_menu"
+        android:layout_gravity="bottom"
         app:labelVisibilityMode="unlabeled"
-        app:itemIconSize="30sp"
+        app:menu="@menu/buttom_nav_menu"
+        app:itemIconSize="25sp"
+        app:itemIconTint="@color/selector_nav"
+        app:backgroundTint="@color/white"
         >
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 </androidx.constraintlayout.widget.ConstraintLayout>

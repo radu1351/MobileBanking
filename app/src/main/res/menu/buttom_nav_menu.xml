@@ -2,23 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:id="@+id/menu_statistic"
-        android:title="Statistic"
-        android:icon="@drawable/ic_launcher_foreground" />
+        android:id="@+id/menu_statistics"
+        android:title="@string/statistics"
+        android:icon="@drawable/icon_statistics" />
 
     <item
-        android:id="@+id/menu_pay"
-        android:title="Pay"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:id="@+id/menu_transfer"
+        android:title="@string/transfer"
+        android:icon="@drawable/icon_transfer"/>
 
     <item
         android:id="@+id/menu_stocks"
-        android:title="Stocks"
-        android:icon="@drawable/ic_launcher_foreground" />
-    />
+        android:title="@string/stocks"
+        android:icon="@drawable/icon_stocks" />
 
 </menu>
