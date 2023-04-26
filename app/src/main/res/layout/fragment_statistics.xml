@@ -48,6 +48,19 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="150sp">
 
+        <com.androidplot.pie.PieChart
+            android:id="@+id/statFrag_pcTransactions"
+            android:layout_width="wrap_content"
+            android:layout_height="265sp"
+            android:layout_marginTop="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:backgroundColor="@color/white"
+            app:borderColor="@color/white"
+          >
+
+        </com.androidplot.pie.PieChart>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
