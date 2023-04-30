@@ -1,17 +1,20 @@
 package com.example.aplicatiemobilebanking.classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Serializable {
     private int id;
     private String merchant;
+    private String category;
     private float ammount;
     private Date date;
 
 
-    public Transaction(int id, String merchant, float ammount, Date date) {
+    public Transaction(int id, String merchant, String category, float ammount, Date date) {
         this.id = id;
         this.merchant = merchant;
+        this.category=category;
         this.ammount = ammount;
         this.date = date;
     }
@@ -48,10 +51,20 @@ public class Transaction {
         this.date = date;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Transaction{" +
-                "merchant='" + merchant + '\'' +
+                "id=" + id +
+                ", merchant='" + merchant + '\'' +
+                ", category='" + category + '\'' +
                 ", ammount=" + ammount +
                 ", date=" + date +
                 '}';

@@ -23,9 +23,11 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    String name = "";
     List<Transaction> transactions = new ArrayList<Transaction>();
     TransactionAdapter adapter;
     ListView lvTransactions;
+    TextView tvName;
 
     public HomeFragment() {
 
@@ -42,28 +44,17 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            name = (String) getArguments().getSerializable("NAME");
+            transactions = (ArrayList<Transaction>) getArguments().getSerializable("TRANSACTIONS");
         }
-
-        //***TEST****
-        try {
-            Transaction t1 = new Transaction(1, "Carrefour", 500.0f, new SimpleDateFormat("dd MMM").parse("24 Apr"));
-            Transaction t2 = new Transaction(1, "Mega Image", 200.50f, new SimpleDateFormat("dd MMM").parse("23 Apr"));
-
-            transactions.add(t1);
-            transactions.add(t2);
-            //adapter.notifyDataSetChanged();
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //*************
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        tvName = view.findViewById(R.id.homeFrag_tvName);
+        tvName.setText(name);
 
         //***TEST****
         CreditCardView card1 = view.findViewById(R.id.card1);

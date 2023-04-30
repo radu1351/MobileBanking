@@ -179,6 +179,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:listSelector="@android:color/transparent"
+            android:clickable="false"
             android:divider="@color/white"
             android:dividerHeight="7sp"
             android:scrollbars="none"
