@@ -74,7 +74,6 @@ public class StatisticsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_statistics, container, false);
         pieChartTransactions = view.findViewById(R.id.statFrag_pcTransactions);
         lvTransatcions = view.findViewById(R.id.statFrag_lvTransactions);
-        transactionHeaderAdapter = new TransactionHeaderAdapter(getContext());
 
         loadLvTransactions();
 
@@ -134,6 +133,8 @@ public class StatisticsFragment extends Fragment {
 
 
     private void loadLvTransactions() {
+        transactionHeaderAdapter = new TransactionHeaderAdapter(getContext());
+
         Date lastDate = transactions.get(0).getDate();
         transactionHeaderAdapter.addSectionHeaderItem(transactions.get(0));
 

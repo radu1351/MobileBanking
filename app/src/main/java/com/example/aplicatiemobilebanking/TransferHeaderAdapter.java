@@ -10,29 +10,29 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.aplicatiemobilebanking.classes.Transaction;
+import com.example.aplicatiemobilebanking.classes.Transfer;
 
-class TransactionHeaderAdapter extends BaseAdapter {
+class TransferHeaderAdapter extends BaseAdapter {
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
 
-    private ArrayList<Transaction> mData = new ArrayList<Transaction>();
+    private ArrayList<Transfer> mData = new ArrayList<Transfer>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
 
     private LayoutInflater mInflater;
 
-    public TransactionHeaderAdapter(Context context) {
+    public TransferHeaderAdapter(Context context) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void addItem(final Transaction item) {
+    public void addItem(final Transfer item) {
         mData.add(item);
         notifyDataSetChanged();
     }
 
-    public void addSectionHeaderItem(final Transaction item) {
+    public void addSectionHeaderItem(final Transfer item) {
         mData.add(item);
         sectionHeader.add(mData.size() - 1);
         notifyDataSetChanged();
@@ -54,7 +54,7 @@ class TransactionHeaderAdapter extends BaseAdapter {
     }
 
     @Override
-    public Transaction getItem(int position) {
+    public Transfer getItem(int position) {
         return mData.get(position);
     }
 
@@ -71,10 +71,10 @@ class TransactionHeaderAdapter extends BaseAdapter {
             holder = new ViewHolder();
             switch (rowType) {
                 case TYPE_ITEM:
-                    convertView = mInflater.inflate(R.layout.lv_transactions_row_item, null);
-                    holder.textView1 = (TextView) convertView.findViewById(R.id.lvTransactions_merchant);
-                    holder.textView2 = (TextView) convertView.findViewById(R.id.lvTransactions_date);
-                    holder.textView3 = (TextView) convertView.findViewById(R.id.lvTransactions_ammount);
+                    convertView = mInflater.inflate(R.layout.lv_transfers_row_item, null);
+                    holder.textView1 = (TextView) convertView.findViewById(R.id.lvTransfers_tvProcessed);
+                    holder.textView2 = (TextView) convertView.findViewById(R.id.lvTransfers_tvAmmount);
+                    holder.textView3 = (TextView) convertView.findViewById(R.id.lvTransfers_tvDate);
                     break;
                 case TYPE_SEPARATOR:
                     convertView = mInflater.inflate(R.layout.lv_header, null);
@@ -88,9 +88,9 @@ class TransactionHeaderAdapter extends BaseAdapter {
 
         switch (rowType) {
             case TYPE_ITEM:
-                holder.textView1.setText(mData.get(position).getMerchant());
-                holder.textView2.setText((new SimpleDateFormat("dd MMM").format(mData.get(position).getDate())));
-                holder.textView3.setText(String.valueOf("- " + mData.get(position).getAmmount()) + " RON");
+                holder.textView1.setText(R.string.processed);
+                holder.textView2.setText(String.valueOf("- " + mData.get(position).getAmmount()) + " RON");
+                holder.textView3.setText((new SimpleDateFormat("dd MMM").format(mData.get(position).getDate())));
                 break;
             case TYPE_SEPARATOR:
                 holder.textView1.setText(new SimpleDateFormat("dd MMM").format(mData.get(position).getDate()));

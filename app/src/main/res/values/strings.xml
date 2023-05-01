@@ -19,6 +19,7 @@
     <string name="transfer">Transfer</string>
     <string name="stocks">Stocks</string>
     <string name="cards">Cards</string>
+    <string name="processed">Processed</string>
     <string-array name="countries_array">
         <item>Afghanistan</item>
         <item>Albania</item>

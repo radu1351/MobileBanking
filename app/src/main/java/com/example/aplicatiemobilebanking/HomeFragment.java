@@ -2,21 +2,17 @@ package com.example.aplicatiemobilebanking;
 
 import android.os.Bundle;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.vinaygaba.creditcardview.CreditCardView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +59,7 @@ public class HomeFragment extends Fragment {
         card2.setBackgroundResource(com.vinaygaba.creditcardview.R.drawable.cardbackground_world);
         //*************
 
-        adapter = new TransactionAdapter(getContext(), R.layout.lv_row_item, transactions, getLayoutInflater());
+        adapter = new TransactionAdapter(getContext(), R.layout.lv_transactions_row_item, transactions, getLayoutInflater());
         lvTransactions = view.findViewById(R.id.homeFrag_lvTransactions);
         lvTransactions.setAdapter(adapter);
         return view;

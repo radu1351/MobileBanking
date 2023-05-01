@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.example.aplicatiemobilebanking.classes.Transaction;
+import com.example.aplicatiemobilebanking.classes.Transfer;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.vinaygaba.creditcardview.CreditCardView;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     private ArrayList<Transaction> transactions = new ArrayList<>(0);
+    private ArrayList<Transfer> transfers = new ArrayList<Transfer>(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         initComponents();
         loadTransactionsFromDatabase();
+        loadTransfersFromDatabase();
     }
 
 
@@ -94,6 +97,24 @@ public class MainActivity extends AppCompatActivity {
         // ***********************
     }
 
+    private void loadTransfersFromDatabase(){
+        try {
+            Transfer t1 = new Transfer(1,500,"RO08BTRLRONCRT02799871","RO08BTRLRONCRT02799871",
+                    "Nota restuanrant", new SimpleDateFormat("dd MMM").parse("15 Mar"));
+            Transfer t2 = new Transfer(2,300,"RO08BTRLRONCRT02799871","RO08BTRLRONCRT02799871",
+                    "Nota restuanrant", new SimpleDateFormat("dd MMM").parse("15 Mar"));
+            Transfer t3= new Transfer(2,100,"RO08BTRLRONCRT02799871","RO08BTRLRONCRT02799871",
+                    "Nota restuanrant", new SimpleDateFormat("dd MMM").parse("12 Mar"));
+            transfers.add(t1);
+            transfers.add(t2);
+            transfers.add(t3);
+            sortTransfersByDate();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void openHomeFragment() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("TRANSACTIONS", transactions);
@@ -121,7 +142,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openTransferFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("TRANSFERS", transfers);
+
         currentFragment = new TransferFragment();
+        currentFragment.setArguments(bundle);
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.mainAct_fl, currentFragment)
                 .commit();
@@ -138,6 +164,19 @@ public class MainActivity extends AppCompatActivity {
         transactions.sort(new Comparator<Transaction>() {
             @Override
             public int compare(Transaction t1, Transaction t2) {
+                if (t1.getDate().compareTo(t2.getDate()) < 0)
+                    return 1;
+                else if (t1.getDate().compareTo(t2.getDate()) > 0)
+                    return -1;
+                else return 0;
+            }
+        });
+    }
+
+    private void sortTransfersByDate(){
+        transfers.sort(new Comparator<Transfer>() {
+            @Override
+            public int compare(Transfer t1, Transfer t2) {
                 if (t1.getDate().compareTo(t2.getDate()) < 0)
                     return 1;
                 else if (t1.getDate().compareTo(t2.getDate()) > 0)

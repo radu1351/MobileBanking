@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/lvTransfers_ivTransfer"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginStart="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_bank">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/lvTransfers_tvTransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IBAN Transfer"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="5sp"
+        app:layout_constraintStart_toEndOf="@id/lvTransfers_ivTransfer"
+        app:layout_constraintTop_toTopOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/lvTransfers_tvProcessed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Processed"
+        android:textSize="13sp"
+        android:textColor="#228B22"
+        android:layout_marginStart="10sp"
+        app:layout_constraintStart_toEndOf="@id/lvTransfers_ivTransfer"
+        app:layout_constraintTop_toBottomOf="@id/lvTransfers_tvTransfer">
+    </TextView>
+
+    <TextView
+        android:id="@+id/lvTransfers_tvAmmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:layout_marginEnd="25sp"
+        android:text="- 500 RON"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#FF0000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/lvTransfers_tvDate">
+    </TextView>
+
+    <TextView
+        android:id="@+id/lvTransfers_tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01 May"
+        android:textSize="13dp"
+        android:layout_marginEnd="25sp"
+        app:layout_constraintTop_toBottomOf="@id/lvTransfers_tvAmmount"
+        app:layout_constraintEnd_toEndOf="parent">
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
