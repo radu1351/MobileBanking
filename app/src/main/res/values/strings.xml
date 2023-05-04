@@ -20,6 +20,10 @@
     <string name="stocks">Stocks</string>
     <string name="cards">Cards</string>
     <string name="processed">Processed</string>
+    <string name="merchant">Merchant</string>
+    <string name="date">Date</string>
+    <string name="profile">Profile</string>
+    <string name="transactions">Transactions</string>
     <string-array name="countries_array">
         <item>Afghanistan</item>
         <item>Albania</item>
@@ -263,4 +267,23 @@
         <item>Zambia</item>
         <item>Zimbabwe</item>
     </string-array>
+
+    <string-array name="transaction_categories_array">
+        <item>Groceries</item>
+        <item>Shopping</item>
+        <item>Restaurant</item>
+        <item>Transport</item>
+        <item>Utilities</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="card_type_array">
+        <item>Visa</item>
+        <item>Mastercard</item>
+    </string-array>
+
+    <string name="credit_card_delivery_message">We will deliver the physical card to the address provided: %s.
+    \nPlease note that the estimated delivery time is 5 business days.</string>
+    <string name="delivery_message">We will deliver the physical card to the address provided: Aleea Livezilor 74B. \nPlease note that the estimated delivery time is 5 business days.</string>
+    <string name="card_description">%1$s ending in %2$s</string>
 </resources>

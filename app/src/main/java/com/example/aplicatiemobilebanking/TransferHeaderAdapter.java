@@ -93,7 +93,7 @@ class TransferHeaderAdapter extends BaseAdapter {
                 holder.textView3.setText((new SimpleDateFormat("dd MMM").format(mData.get(position).getDate())));
                 break;
             case TYPE_SEPARATOR:
-                holder.textView1.setText(new SimpleDateFormat("dd MMM").format(mData.get(position).getDate()));
+                holder.textView1.setText(new SimpleDateFormat("MMMM").format(mData.get(position).getDate()));
                 break;
         }
 

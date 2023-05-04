@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/roundbackground_listview">
 
     <ImageView
         android:id="@+id/lvTransfers_ivTransfer"
@@ -11,7 +12,7 @@
         android:layout_marginStart="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_bank">
+        android:src="@drawable/ic_transfer">
     </ImageView>
 
     <TextView

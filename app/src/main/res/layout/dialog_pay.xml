@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300sp"
+    android:layout_height="400sp"
+    android:background="@drawable/roundbackground_dialog">
+
+    <ScrollView
+        android:id="@+id/payDiag_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:overScrollMode="never">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/payDiag_ivPay"
+                android:layout_width="70sp"
+                android:layout_height="70sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/payDiag_tvMerchant"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_pay" />
+
+
+            <TextView
+                android:id="@+id/payDiag_tvMerchant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:text="@string/merchant"
+                app:layout_constraintBottom_toTopOf="@id/payDiag_tilMerchant"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_ivPay" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/payDiag_tilMerchant"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_tvMerchant">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/payDiag_tietMerchant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/payDiag_tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Category"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_tilMerchant" />
+
+            <Spinner
+                android:id="@+id/payDiag_spinCategory"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="20sp"
+                android:background="@drawable/background_spinner"
+                android:entries="@array/transaction_categories_array"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_tvCategory" />
+
+
+            <TextView
+                android:id="@+id/payDiag_tvAmmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Ammount (RON)"
+                app:layout_constraintBottom_toTopOf="@id/payDiag_tilAmmount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_spinCategory" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/payDiag_tilAmmount"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/payDiag_tvAmmount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/payDiag_tietAmmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/payDiag_tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="@string/date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_tilAmmount" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/payDiag_tilDate"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/payDiag_tvDate">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/payDiag_tietDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

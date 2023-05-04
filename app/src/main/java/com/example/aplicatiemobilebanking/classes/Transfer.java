@@ -4,28 +4,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Transfer implements Serializable {
-    private int id;
     private float ammount;
     private String senderIban;
     private String recipientIban;
     private String description;
     private Date date;
 
-    public Transfer(int id, float ammount, String senderIban, String recipientIban, String description, Date date) {
-        this.id = id;
+    public Transfer(float ammount, String senderIban, String recipientIban, String description, Date date) {
         this.ammount = ammount;
         this.senderIban = senderIban;
         this.recipientIban = recipientIban;
         this.description = description;
         this.date = date;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public float getAmmount() {
@@ -71,8 +61,7 @@ public class Transfer implements Serializable {
     @Override
     public String toString() {
         return "Transfer{" +
-                "id=" + id +
-                ", ammount=" + ammount +
+                "ammount=" + ammount +
                 ", senderIban='" + senderIban + '\'' +
                 ", recipientIban='" + recipientIban + '\'' +
                 ", description='" + description + '\'' +

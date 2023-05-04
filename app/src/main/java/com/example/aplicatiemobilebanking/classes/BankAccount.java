@@ -1,23 +1,22 @@
 package com.example.aplicatiemobilebanking.classes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BankAccount {
+public class BankAccount implements Serializable {
     private String iban;
     private String swift;
-    private String balance;
+    private float balance;
     private String currency;
-    private List<CreditCard> creditCards;
 
     public BankAccount() {
     }
 
-    public BankAccount(String iban, String swift, String balance, String currency, List<CreditCard> creditCards) {
+    public BankAccount(String iban, String swift, float balance, String currency) {
         this.iban = iban;
         this.swift = swift;
         this.balance = balance;
         this.currency = currency;
-        this.creditCards = creditCards;
     }
 
     public String getIban() {
@@ -36,11 +35,11 @@ public class BankAccount {
         this.swift = swift;
     }
 
-    public String getBalance() {
+    public float getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 
@@ -52,14 +51,6 @@ public class BankAccount {
         this.currency = currency;
     }
 
-    public List<CreditCard> getCreditCards() {
-        return creditCards;
-    }
-
-    public void setCreditCards(List<CreditCard> creditCards) {
-        this.creditCards = creditCards;
-    }
-
     @Override
     public String toString() {
         return "BankAccount{" +
@@ -67,7 +58,6 @@ public class BankAccount {
                 ", swift='" + swift + '\'' +
                 ", balance='" + balance + '\'' +
                 ", currency='" + currency + '\'' +
-                ", creditCards=" + creditCards +
                 '}';
     }
 }

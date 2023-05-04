@@ -4,28 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Transaction implements Serializable {
-    private int id;
     private String merchant;
     private String category;
     private float ammount;
     private Date date;
 
 
-    public Transaction(int id, String merchant, String category, float ammount, Date date) {
-        this.id = id;
+    public Transaction(String merchant, String category, float ammount, Date date) {
         this.merchant = merchant;
         this.category=category;
         this.ammount = ammount;
         this.date = date;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getMerchant() {
         return merchant;
@@ -62,8 +53,7 @@ public class Transaction implements Serializable {
     @Override
     public String toString() {
         return "Transaction{" +
-                "id=" + id +
-                ", merchant='" + merchant + '\'' +
+                "merchant='" + merchant + '\'' +
                 ", category='" + category + '\'' +
                 ", ammount=" + ammount +
                 ", date=" + date +

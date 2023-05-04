@@ -28,8 +28,9 @@
         android:layout_width="50sp"
         android:layout_height="55dp"
         android:layout_marginTop="70dp"
-        android:layout_marginEnd="20sp"
-        android:src="@drawable/ic_profilepicture"
+        android:layout_marginEnd="25sp"
+        android:layout_marginStart="5sp"
+        android:src="@drawable/ic_profile_picture_round"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/transferFrag_tvName"
         app:layout_constraintTop_toTopOf="parent"
@@ -108,10 +109,14 @@
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_marginTop="20sp"
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/transferFrag_rlPay"
             android:overScrollMode="never"
+            android:divider="@color/white"
+            android:dividerHeight="7sp"
             android:listSelector="@android:color/transparent">
         </ListView>
     </androidx.constraintlayout.widget.ConstraintLayout>

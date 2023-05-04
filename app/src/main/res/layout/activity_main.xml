@@ -19,10 +19,10 @@
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:theme="@style/Theme.AppCompat"
+        android:theme="@style/Theme.Material3.Light"
         android:id="@+id/mainAct_navView"
         android:layout_width="match_parent"
-        android:layout_height="95sp"
+        android:layout_height="100sp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         android:layout_gravity="bottom"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/buttom_nav_menu"
-        app:itemIconSize="25sp"
+        app:itemIconSize="28sp"
         app:itemIconTint="@color/selector_nav"
         app:backgroundTint="@color/white"
         >

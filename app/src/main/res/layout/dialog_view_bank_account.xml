@@ -1,0 +1,103 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="IBAN"
+        android:textStyle="bold"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"/>
+
+    <TextView
+        android:id="@+id/viewAccountDialog_tvIban"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SWIFT"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/viewAccountDialog_tvSwift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Balance"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/viewAccountDialog_tvBalance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:textColor="@android:color/black"
+        android:text=""/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Currency"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/viewAccountDialog_tvCurrency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Associated Credit Cards"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp"/>
+
+    <ListView
+        android:id="@+id/viewAccountDialog_lvCreditCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/white"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="0sp">
+
+    </ListView>
+</LinearLayout>

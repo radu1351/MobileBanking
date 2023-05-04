@@ -1,8 +1,9 @@
 package com.example.aplicatiemobilebanking.classes;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String identificationNumber;
@@ -10,13 +11,12 @@ public class User {
     private String phoneNumber;
     private String email;
     private String password;
-    private List<BankAccount> bankAccounts;
 
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String identificationNumber, String adress, String phoneNumber, String email, String password, List<BankAccount> bankAccounts) {
+    public User(String firstName, String lastName, String identificationNumber, String adress, String phoneNumber, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.identificationNumber = identificationNumber;
@@ -24,7 +24,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
-        this.bankAccounts = bankAccounts;
     }
 
     public String getFirstName() {
@@ -49,6 +48,10 @@ public class User {
 
     public void setIdentificationNumber(String identificationNumber) {
         this.identificationNumber = identificationNumber;
+    }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
     }
 
     public String getAdress() {
@@ -83,13 +86,6 @@ public class User {
         this.password = password;
     }
 
-    public List<BankAccount> getBankAccounts() {
-        return bankAccounts;
-    }
-
-    public void setBankAccounts(List<BankAccount> bankAccounts) {
-        this.bankAccounts = bankAccounts;
-    }
 
     @Override
     public String toString() {
@@ -101,7 +97,6 @@ public class User {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", bankAccounts=" + bankAccounts +
                 '}';
     }
 }

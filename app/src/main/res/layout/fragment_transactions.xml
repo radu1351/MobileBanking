@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/blue_gradient"
-    tools:context=".StatisticsFragment">
+    tools:context=".TransactionsFragment">
 
 
     <TextView
-        android:id="@+id/statFrag_tvName"
+        android:id="@+id/transactionsFrag_tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
@@ -19,26 +19,27 @@
         android:textStyle="bold"
         android:layout_marginTop="80dp"
         android:layout_marginStart="200sp"
-        app:layout_constraintEnd_toStartOf="@+id/statFrag_ivUser"
+        app:layout_constraintEnd_toStartOf="@+id/transactionsFrag_ivUser"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/statFrag_ivUser"
+        android:id="@+id/transactionsFrag_ivUser"
         android:layout_width="50sp"
         android:layout_height="55dp"
         android:layout_marginTop="70dp"
-        android:layout_marginEnd="20sp"
-        android:src="@drawable/ic_profilepicture"
+        android:layout_marginEnd="25sp"
+        android:layout_marginStart="5sp"
+        android:src="@drawable/ic_profile_picture_round"
         app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/statFrag_tvName"
+        app:layout_constraintStart_toEndOf="@id/transactionsFrag_tvName"
         />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/statFrag_clStats"
+        android:id="@+id/transactionsFrag_cltransactionss"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/roundbackground_layout"
@@ -49,7 +50,7 @@
         android:layout_marginTop="150sp">
 
         <com.androidplot.pie.PieChart
-            android:id="@+id/statFrag_pcTransactions"
+            android:id="@+id/transactionsFrag_pcTransactions"
             android:layout_width="wrap_content"
             android:layout_height="265sp"
             android:layout_marginTop="25sp"
@@ -63,14 +64,14 @@
         </com.androidplot.pie.PieChart>
 
         <ListView
-            android:id="@+id/statFrag_lvTransactions"
+            android:id="@+id/transactionsFrag_lvTransactions"
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:backgroundTint="@color/grey"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_marginTop="15sp"
-            app:layout_constraintTop_toBottomOf="@id/statFrag_pcTransactions"
+            app:layout_constraintTop_toBottomOf="@id/transactionsFrag_pcTransactions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
