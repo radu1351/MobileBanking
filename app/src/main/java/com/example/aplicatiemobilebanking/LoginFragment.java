@@ -63,7 +63,6 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Firebase...
-
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 startActivity(intent);
             }

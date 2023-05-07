@@ -6,26 +6,26 @@ import java.util.Date;
 public class Transfer implements Serializable {
     private String senderIban;
     private String recipientIban;
-    private float ammount;  // fara comision (to be transfered)
-    private float commision;  // 2.5f sau 5.0f
+    private float amount;  // fara comision (to be transfered)
+    private float commission;  // 2.5f sau 5.0f
     private String description;
     private Date date;
 
-    public Transfer(String senderIban, String recipientIban, float ammount, float commision, String description, Date date) {
+    public Transfer(String senderIban, String recipientIban, float amount, float commission, String description, Date date) {
         this.senderIban = senderIban;
         this.recipientIban = recipientIban;
-        this.ammount = ammount;
-        this.commision = commision;
+        this.amount = amount;
+        this.commission = commission;
         this.description = description;
         this.date = date;
     }
 
-    public float getAmmount() {
-        return ammount;
+    public float getAmount() {
+        return amount;
     }
 
-    public void setAmmount(float ammount) {
-        this.ammount = ammount;
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     public String getSenderIban() {
@@ -42,6 +42,14 @@ public class Transfer implements Serializable {
 
     public void setRecipientIban(String recipientIban) {
         this.recipientIban = recipientIban;
+    }
+
+    public float getCommission() {
+        return commission;
+    }
+
+    public void setCommission(float commission) {
+        this.commission = commission;
     }
 
     public String getDescription() {
@@ -65,8 +73,8 @@ public class Transfer implements Serializable {
         return "Transfer{" +
                 "senderIban='" + senderIban + '\'' +
                 ", recipientIban='" + recipientIban + '\'' +
-                ", ammount=" + ammount +
-                ", commision=" + commision +
+                ", ammount=" + amount +
+                ", commision=" + commission +
                 ", description='" + description + '\'' +
                 ", date=" + date +
                 '}';

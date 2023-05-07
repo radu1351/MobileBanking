@@ -1,5 +1,7 @@
 package com.example.aplicatiemobilebanking;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -54,7 +56,7 @@ public class TransactionsFragment extends Fragment {
     private User user;
     private PieChart pieChartTransactions;
     private TransactionHeaderAdapter transactionHeaderAdapter;
-    private ListView lvTransatcions;
+    private ListView lvTransactions;
     private TextView tvName, tvSum;
     private Spinner spinMonth;
     private ArrayList<Transaction> transactions = new ArrayList<>();
@@ -85,7 +87,7 @@ public class TransactionsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
         pieChartTransactions = view.findViewById(R.id.transactionsFrag_pcTransactions);
-        lvTransatcions = view.findViewById(R.id.transactionsFrag_lvTransactions);
+        lvTransactions = view.findViewById(R.id.transactionsFrag_lvTransactions);
         tvSum = view.findViewById(R.id.transactionsFrag_tvSum);
 
         loadLvTransactions(this.transactions);
@@ -97,7 +99,29 @@ public class TransactionsFragment extends Fragment {
         tvName = view.findViewById(R.id.transactionsFrag_tvName);
         tvName.setText(user.getFullName());
 
+        lvTransactions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                int actualPosition = position;
+                int headerCount = 0;
+                for (int headerPosition : transactionHeaderAdapter.getSectionHeader()) {
+                    if (headerPosition < position) {
+                        headerCount++;
+                    } else {
+                        break;
+                    }
+                }
+                actualPosition -= headerCount;
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("TRANSACTION", transactions.get(actualPosition));
+                ViewTransactionDialog viewTransactionDialog = new ViewTransactionDialog();
+                viewTransactionDialog.setArguments(bundle);
+                viewTransactionDialog.show(getActivity().getSupportFragmentManager(), "ViewTransactionDialog");
+            }
+
+        });
         return view;
     }
 
@@ -197,6 +221,7 @@ public class TransactionsFragment extends Fragment {
 
 
     private void loadLvTransactions(ArrayList<Transaction> transactions) {
+
         transactionHeaderAdapter = new TransactionHeaderAdapter(getContext());
         transactionHeaderAdapter.addSectionHeaderItem(transactions.get(0));
 
@@ -219,8 +244,7 @@ public class TransactionsFragment extends Fragment {
                 lastDay = thisDay;
             }
         }
-
-        lvTransatcions.setAdapter(transactionHeaderAdapter);
+        lvTransactions.setAdapter(transactionHeaderAdapter);
     }
 
     public ArrayList<String> getLastSixMonths() {
@@ -240,7 +264,6 @@ public class TransactionsFragment extends Fragment {
             else {
                 calendar.setTime(t.getDate());
                 String thisMonth = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-                Log.d("MONT: ----- ", thisMonth);
 
                 if (!lastMonth.equalsIgnoreCase(thisMonth)) {
                     lastSixMonths.add(thisMonth);

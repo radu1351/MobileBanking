@@ -24,18 +24,20 @@ import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transfer;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
-public class TransferDialogFragment extends DialogFragment {
+public class TransferDialog extends DialogFragment {
 
     private BankAccount bankAccount;
 
-    private TextInputEditText tietRecName, tietRecIban, tietAmmount, tietDescription;
+    private TextInputEditText tietRecName, tietRecIban, tietAmount, tietDescription;
     private RadioGroup rgTransferType;
     private RadioButton rbNormal, rbInstant;
     private TextView tvTotalTransfered, tvTotalCost;
@@ -62,12 +64,12 @@ public class TransferDialogFragment extends DialogFragment {
 
         tietRecName = view.findViewById(R.id.transferDiag_tietRecName);
         tietRecIban = view.findViewById(R.id.transferDiag_tietRecIban);
-        tietAmmount = view.findViewById(R.id.transferDiag_tietAmmount);
+        tietAmount = view.findViewById(R.id.transferDiag_tietAmount);
         tietDescription = view.findViewById(R.id.transferDiag_tietDescription);
         tvTotalTransfered = view.findViewById(R.id.transferDiag_tvTotalTransfered);
         tvTotalCost = view.findViewById(R.id.transferDiag_tvTotalCost);
 
-        tietAmmount.addTextChangedListener(new TextWatcher() {
+        tietAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -104,41 +106,21 @@ public class TransferDialogFragment extends DialogFragment {
                     commision = 5.0f;
                 }
 
-                float ammount = tietAmmount.getText().toString().isEmpty()
-                        ? 0.0f : Float.parseFloat(tietAmmount.getText().toString());
+                float Amount = tietAmount.getText().toString().isEmpty()
+                        ? 0.0f : Float.parseFloat(tietAmount.getText().toString());
 
-                totalTransfered = ammount;
+                totalTransfered = Amount;
                 tvTotalTransfered.setText(getString(R.string.to_be_transfered,
-                        String.valueOf(ammount)));
+                        String.valueOf(Amount)));
 
-                if (ammount != 0)
-                    totalCost = ammount + commision;
+                if (Amount != 0)
+                    totalCost = Amount + commision;
                 tvTotalCost.setText(getString(R.string.total_transfer_cost,
                         String.valueOf(totalCost)));
             }
         });
 
-        builder.setPositiveButton("Transfer", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String senderIban = bankAccount.getIban();
-                String recipientIban = tietRecIban.getText().toString();
-                float ammount = totalTransfered;
-                String description = tietDescription.getText().toString();
-
-                LocalDateTime localDateTime = LocalDateTime.now(); // Get the current local date and time
-                Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
-                Date date = Date.from(instant);
-
-                Transfer transfer = new Transfer(senderIban, recipientIban, ammount,
-                        commision, description, date);
-
-                if (mListener != null) {
-                    mListener.onTransferCreated(transfer);
-                }
-            }
-        });
-
+        builder.setPositiveButton("Transfer", null);
         builder.setNegativeButton("Close", null);
 
         Dialog dialog = builder.create();
@@ -148,6 +130,48 @@ public class TransferDialogFragment extends DialogFragment {
             public void onShow(DialogInterface dialogInterface) {
                 Button closeButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
                 Button transferButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+
+                transferButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean hasError = false;
+                        if (tietRecIban.getText().toString().isEmpty() || !isIbanValid(tietRecIban.getText().toString())) {
+                            tietRecIban.setError("Incorrect IBAN provided");
+                            hasError = true;
+                        }
+                        if (tietAmount.getText().toString().isEmpty()) {
+                            tietAmount.setError("No amount provided");
+                            hasError = true;
+                        }
+                        if (tietRecName.getText().toString().isEmpty()) {
+                            tietRecName.setError("No recipient name provided");
+                            hasError = true;
+                        }
+                        if (tietDescription.getText().toString().isEmpty()) {
+                            tietDescription.setError("No description provided");
+                            hasError = true;
+                        }
+                        if (!hasError) {
+                            String senderIban = bankAccount.getIban();
+                            String recipientIban = tietRecIban.getText().toString();
+                            float amount = totalTransfered;
+                            String description = tietDescription.getText().toString();
+
+                            LocalDateTime localDateTime = LocalDateTime.now(); // Get the current local date and time
+                            Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+                            Date date = Date.from(instant);
+
+                            Transfer transfer = new Transfer(senderIban, recipientIban, amount,
+                                    commision, description, date);
+
+                            if (mListener != null) {
+                                mListener.onTransferCreated(transfer);
+                            }
+                            dialog.dismiss();
+                        }
+                    }
+
+                });
                 closeButton.setTextColor(Color.BLACK);
                 transferButton.setTextColor(Color.BLACK);
             }
@@ -170,4 +194,27 @@ public class TransferDialogFragment extends DialogFragment {
         void onTransferCreated(Transfer transfer);
     }
 
+
+    public static boolean isIbanValid(String iban) {
+        if (iban == null || iban.length() != 24 || !iban.matches("^RO\\d{2}[A-Z]{4,10}\\d{1,16}$")) {
+            return false;
+        }
+
+        String rearrangedIban = iban.substring(4) + iban.substring(0, 4);
+        StringBuilder numericIban = new StringBuilder();
+
+        for (int i = 0; i < rearrangedIban.length(); i++) {
+            char currentChar = rearrangedIban.charAt(i);
+            if (Character.isLetter(currentChar)) {
+                numericIban.append(Character.getNumericValue(currentChar));
+            } else {
+                numericIban.append(currentChar);
+            }
+        }
+
+        BigInteger ibanNumber = new BigInteger(numericIban.toString());
+        return ibanNumber.mod(BigInteger.valueOf(97)).intValue() == 1;
+    }
+
 }
+

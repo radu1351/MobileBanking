@@ -8,15 +8,17 @@ public class Transaction implements Serializable {
     private String category;
     private float ammount;
     private Date date;
+    private CreditCard creditCard;
 
 
-    public Transaction(String merchant, String category, float ammount, Date date) {
+    public Transaction(String merchant, String category, float ammount, Date date, CreditCard creditCard) {
         this.merchant = merchant;
-        this.category=category;
+        this.category = category;
         this.ammount = ammount;
         this.date = date;
-    }
+        this.creditCard = creditCard;
 
+    }
 
     public String getMerchant() {
         return merchant;
@@ -50,6 +52,14 @@ public class Transaction implements Serializable {
         this.category = category;
     }
 
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
+    }
+
     @Override
     public String toString() {
         return "Transaction{" +
@@ -57,6 +67,7 @@ public class Transaction implements Serializable {
                 ", category='" + category + '\'' +
                 ", ammount=" + ammount +
                 ", date=" + date +
+                ", creditCard=" + creditCard +
                 '}';
     }
 }

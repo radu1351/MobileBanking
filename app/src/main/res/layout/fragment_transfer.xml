@@ -117,6 +117,7 @@
             android:overScrollMode="never"
             android:divider="@color/white"
             android:dividerHeight="7sp"
+            android:scrollbars="none"
             android:listSelector="@android:color/transparent">
         </ListView>
     </androidx.constraintlayout.widget.ConstraintLayout>

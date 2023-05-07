@@ -8,12 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.aplicatiemobilebanking.classes.BankAccount;
+import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.Transfer;
 import com.example.aplicatiemobilebanking.classes.User;
@@ -29,7 +31,8 @@ public class TransferFragment extends Fragment {
     private User user;
     private BankAccount bankAccount;
     private ListView lvTransfers;
-    private List<Transfer> transfers = new ArrayList<>(0);
+    private ArrayList<Transfer> transfers = new ArrayList<>(0);
+    private ArrayList<CreditCard> creditCards = new ArrayList<>(0);
     private ImageButton ibPay, ibTransfer;
     private TextView tvName;
     private TransferHeaderAdapter transferHeaderAdapter;
@@ -51,6 +54,7 @@ public class TransferFragment extends Fragment {
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("USER");
             bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
+            creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
             transfers = (ArrayList<Transfer>) getArguments().getSerializable("TRANSFERS");
         }
     }
@@ -67,7 +71,10 @@ public class TransferFragment extends Fragment {
         ibPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PayDialogFragment dialog = new PayDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("CREDITCARDS", creditCards);
+                PayDialog dialog = new PayDialog();
+                dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "PayDialogFragment");
 
             }
@@ -80,7 +87,7 @@ public class TransferFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("BANKACCOUNT", bankAccount);
 
-                TransferDialogFragment dialog = new TransferDialogFragment();
+                TransferDialog dialog = new TransferDialog();
                 dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "TransferDialogFragment");
             }
@@ -89,6 +96,27 @@ public class TransferFragment extends Fragment {
         tvName = view.findViewById(R.id.transferFrag_tvName);
         tvName.setText(user.getFullName());
 
+        lvTransfers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int actualPosition = position;
+                int headerCount = 0;
+                for (int headerPosition : transferHeaderAdapter.getSectionHeader()) {
+                    if (headerPosition < position) {
+                        headerCount++;
+                    } else {
+                        break;
+                    }
+                }
+                actualPosition -= headerCount;
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("TRANSFER", transfers.get(actualPosition));
+                ViewTransferDialog viewTransferDialog = new ViewTransferDialog();
+                viewTransferDialog.setArguments(bundle);
+                viewTransferDialog.show(getActivity().getSupportFragmentManager(), "ViewTransfersDialog");
+            }
+        });
         return view;
     }
 
@@ -118,7 +146,4 @@ public class TransferFragment extends Fragment {
     }
 
 
-    public void notifyTransferAdapter(){
-        transferHeaderAdapter.notifyDataSetChanged();
-    }
 }

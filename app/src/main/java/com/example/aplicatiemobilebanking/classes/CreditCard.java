@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class CreditCard implements Serializable {
-    private String cardNumber;
+    private String cardNumber; // PK
     private String cardholderName;
     private Date expirationDate;
     private int cvv;

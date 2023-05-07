@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300sp"
-    android:layout_height="400sp"
+    android:layout_height="wrap_content"
     android:background="@drawable/roundbackground_dialog">
 
     <ScrollView
@@ -63,14 +63,14 @@
 
 
             <TextView
-                android:id="@+id/payDiag_tvCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20sp"
-                android:layout_marginTop="5sp"
-                android:text="Category"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/payDiag_tilMerchant" />
+            android:id="@+id/payDiag_tvCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5sp"
+            android:text="Category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/payDiag_tilMerchant" />
 
             <Spinner
                 android:id="@+id/payDiag_spinCategory"
@@ -85,6 +85,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/payDiag_tvCategory" />
 
+            <TextView
+                android:id="@+id/payDiag_tvCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Card used"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_spinCategory" />
+
+            <Spinner
+                android:id="@+id/payDiag_spinCard"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="20sp"
+                android:background="@drawable/background_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payDiag_tvCard" />
+
 
             <TextView
                 android:id="@+id/payDiag_tvAmmount"
@@ -95,7 +117,7 @@
                 android:text="Ammount (RON)"
                 app:layout_constraintBottom_toTopOf="@id/payDiag_tilAmmount"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/payDiag_spinCategory" />
+                app:layout_constraintTop_toBottomOf="@id/payDiag_spinCard" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/payDiag_tilAmmount"

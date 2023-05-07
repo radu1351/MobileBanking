@@ -27,9 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class MainActivity extends AppCompatActivity implements PayDialogFragment.OnTransactionAddedListener,
+public class MainActivity extends AppCompatActivity implements PayDialog.OnTransactionAddedListener,
         AddCardDialog.AddCardListener, ViewBankAccountDialog.CreditCardListener,
-        TransferDialogFragment.TransferDialogListener {
+        TransferDialog.TransferDialogListener {
 
     private FrameLayout fl;
     private Fragment currentFragment;
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadCardsFromDatabase();
         loadTransactionsFromDatabase();
         loadTransfersFromDatabase();
-        loadCardsFromDatabase();
         loadBankAccountFromDatabase();
 
         initComponents();
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
 
     private void initComponents() {
         user = new User("John", "Terry", "5010813410083",
-                "Aleea Livezilor 74B", "072134523144", "john@gmail.com", "1234");
+                "Aleea Livezilor 74B", "0721385625", "john_terry@gmail.com", "1234");
 
         openHomeFragment();
 
@@ -88,17 +88,17 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
         // ********* TEST *********
         try {
             Transaction t1 = new Transaction("Carrefour", "Groceries", 100.0f,
-                    new SimpleDateFormat("dd MMM HH:mm").parse("11 Apr 22:40"));
+                    new SimpleDateFormat("dd MMM yyyy HH:mm").parse("11 Apr 2023 22:40"), creditCards.get(0));
             Transaction t2 = new Transaction("About You", "Shopping", 200.50f,
-                    new SimpleDateFormat("dd MMM HH:mm").parse("10 Apr 11:15"));
+                    new SimpleDateFormat("dd MMM yyyy HH:mm").parse("10 Apr 2023 11:15"), creditCards.get(1));
             Transaction t3 = new Transaction("STB", "Transport", 80.00f,
-                    new SimpleDateFormat("dd MMM HH:mm").parse("30 Apr 15:30"));
+                    new SimpleDateFormat("dd MMM yyyy HH:mm").parse("30 Apr 2023 15:30"), creditCards.get(0));
             Transaction t4 = new Transaction("Mega Image", "Groceries", 230.0f,
-                    new SimpleDateFormat("dd MMM HH:mm").parse("20 Apr 15:30"));
+                    new SimpleDateFormat("dd MMM yyyy HH:mm").parse("20 Apr 2023 15:30"), creditCards.get(0));
             Transaction t5 = new Transaction("Nomad Skybar", "Restaurant", 245.0f,
-                    new SimpleDateFormat("dd MMM HH:mm").parse("01 May 12:20"));
+                    new SimpleDateFormat("dd MMM yyyy HH:mm").parse("01 May 2023 12:20"), creditCards.get(1));
             Transaction t6 = new Transaction("Trattoria Il Calcio", "Restaurant", 325.0f,
-                    new SimpleDateFormat("dd MMM HH:mm").parse("30 Apr 20:14"));
+                    new SimpleDateFormat("dd MMM yyyy HH:mm").parse("30 Apr 2023 20:14"), creditCards.get(0));
             transactions.add(t1);
             transactions.add(t2);
             transactions.add(t3);
@@ -114,18 +114,18 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
 
     private void loadTransfersFromDatabase() {
         try {
-            Transfer t1 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+            Transfer t1 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT027329100",
                     500.0f, 5.0f, "Nota restuarant",
-                    new SimpleDateFormat("dd MMM yyyy").parse("15 Mar 2023"));
-            Transfer t2 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+                    new SimpleDateFormat("dd MMM yyyy").parse("15 Mar 2023 22:30"));
+            Transfer t2 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT027321222",
                     500.0f, 5.0f, "Nota restuarant",
-                    new SimpleDateFormat("dd MMM yyyy").parse("22 Mar 2023"));
-            Transfer t3 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+                    new SimpleDateFormat("dd MMM yyyy").parse("22 Mar 2023 21:30"));
+            Transfer t3 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT027321333",
                     500.0f, 5.0f, "Nota restuarant",
-                    new SimpleDateFormat("dd MMM yyyy").parse("15 Apr 2023"));
-            Transfer t4 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+                    new SimpleDateFormat("dd MMM yyyy").parse("15 Apr 2023 13:30"));
+            Transfer t4 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT027321543",
                     500.0f, 5.0f, "Nota restuarant",
-                    new SimpleDateFormat("dd MMM yyyy").parse("21 Jan 2023"));
+                    new SimpleDateFormat("dd MMM yyyy HH:mm").parse("21 Jan 2023 15:30"));
             transfers.add(t1);
             transfers.add(t2);
             transfers.add(t3);
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
             CreditCard creditCard2 = new CreditCard("4090000055421685", "John Terry",
                     new SimpleDateFormat("dd MMM yyyy").parse("22 Aug 2028"), 395, CardType.MASTERCARD);
             creditCards.add(creditCard1);
-            //creditCards.add(creditCard2);
+            creditCards.add(creditCard2);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
         sortTransfersByDate();
         bundle.putSerializable("USER", user);
         bundle.putSerializable("TRANSFERS", transfers);
+        bundle.putSerializable("CREDITCARDS", creditCards);
         bundle.putSerializable("BANKACCOUNT", bankAccount);
 
         currentFragment = new TransferFragment();
@@ -266,6 +267,6 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
     @Override
     public void onTransferCreated(Transfer transfer) {
         transfers.add(transfer);
-        ((TransferFragment) currentFragment).notifyTransferAdapter();
+        openTransferFragment();
     }
 }

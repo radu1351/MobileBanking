@@ -22,6 +22,10 @@ class TransferHeaderAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
 
+    public TreeSet<Integer> getSectionHeader() {
+        return sectionHeader;
+    }
+
     public TransferHeaderAdapter(Context context) {
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -89,8 +93,8 @@ class TransferHeaderAdapter extends BaseAdapter {
         switch (rowType) {
             case TYPE_ITEM:
                 holder.textView1.setText(R.string.processed);
-                holder.textView2.setText(String.valueOf("- " + mData.get(position).getAmmount()) + " RON");
-                holder.textView3.setText((new SimpleDateFormat("dd MMM").format(mData.get(position).getDate())));
+                holder.textView2.setText(String.valueOf("- " + mData.get(position).getAmount()) + " RON");
+                holder.textView3.setText((new SimpleDateFormat("dd MMM yyyy").format(mData.get(position).getDate())));
                 break;
             case TYPE_SEPARATOR:
                 holder.textView1.setText(new SimpleDateFormat("MMMM").format(mData.get(position).getDate()));

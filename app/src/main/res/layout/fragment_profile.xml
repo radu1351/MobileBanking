@@ -51,13 +51,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="50sp"
-            android:layout_marginStart="5sp"
+            android:layout_marginStart="10sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
-                android:id="@+id/profileFrag_tvFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -69,18 +68,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profileFrag_tvFirstNameValue"
+                android:id="@+id/profileFrag_tvFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="John"
+                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/profileFrag_tvLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -92,18 +91,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profileFrag_tvLastNameValue"
+                android:id="@+id/profileFrag_tvLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="Terry"
+                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/profileFrag_tvIdentificationNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -115,18 +114,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profileFrag_tvIdentificationNumberValue"
+                android:id="@+id/profileFrag_tvIdentificationNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="5010813418873"
+                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/profileFrag_tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -138,18 +137,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profileFrag_tvAddressValue"
+                android:id="@+id/profileFrag_tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="123 Main St"
+                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/profileFrag_tvPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -161,18 +160,18 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profileFrag_tvPhoneNumberValue"
+                android:id="@+id/profileFrag_tvPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="0721382452"
+                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/profileFrag_tvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -184,13 +183,14 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profileFrag_tvEmailValue"
+                android:id="@+id/profileFrag_tvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="16dp"
                 android:text="johnterry@gmail.com"
+                android:textStyle="normal"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -202,6 +202,7 @@
             android:layout_height="45sp"
             android:layout_marginTop="25sp"
             android:text="Log Out"
+            app:cornerRadius="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/homeFrag_llUser" />

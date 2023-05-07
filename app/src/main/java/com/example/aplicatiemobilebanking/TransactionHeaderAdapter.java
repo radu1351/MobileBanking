@@ -20,6 +20,14 @@ class TransactionHeaderAdapter extends BaseAdapter {
     private ArrayList<Transaction> mData = new ArrayList<Transaction>();
     private TreeSet<Integer> sectionHeader = new TreeSet<Integer>();
 
+    public TreeSet<Integer> getSectionHeader() {
+        return sectionHeader;
+    }
+
+    public void setSectionHeader(TreeSet<Integer> sectionHeader) {
+        this.sectionHeader = sectionHeader;
+    }
+
     private LayoutInflater mInflater;
 
     public TransactionHeaderAdapter(Context context) {
@@ -98,6 +106,10 @@ class TransactionHeaderAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public int getSectionHeaderCount() {
+        return sectionHeader.size();
     }
 
     public static class ViewHolder {

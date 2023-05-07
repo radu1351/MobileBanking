@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class BankAccount implements Serializable {
-    private String iban;
+    private String iban; // PK
     private String swift;
     private float balance;
     private String currency;
