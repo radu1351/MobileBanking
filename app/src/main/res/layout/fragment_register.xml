@@ -140,7 +140,6 @@
         android:layout_marginEnd="200sp"
         android:layout_marginBottom="25dp"
         android:background="@drawable/background_spinner"
-        android:entries="@array/countries_array"
         android:hint = "Click to set date"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/registerFrag_tilAdress"

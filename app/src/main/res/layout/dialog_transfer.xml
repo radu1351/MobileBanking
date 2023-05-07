@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/transferDiag_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/transferDiag_ivTransfer"
+                android:layout_width="70sp"
+                android:layout_height="70sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/transferDiag_tvRecName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_transfer" />
+
+
+            <TextView
+                android:id="@+id/transferDiag_tvRecName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:text="@string/recipient_name"
+                app:layout_constraintBottom_toTopOf="@id/transferDiag_tilRecName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_ivTransfer" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/transferDiag_tilRecName"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tvRecName">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transferDiag_tietRecName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/transferDiag_tvRecIban"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Recipient IBAN"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tilRecName" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/transferDiag_tilRecIban"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tvRecIban">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transferDiag_tietRecIban"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/transferDiag_tvAmmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Ammount (RON)"
+                app:layout_constraintBottom_toTopOf="@id/transferDiag_tilAmmount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tilRecIban" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/transferDiag_tilAmmount"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/transferDiag_tvAmmount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transferDiag_tietAmmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/transferDiag_tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tilAmmount" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/transferDiag_tilDesciption"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/transferDiag_tvDescription">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transferDiag_tietDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/transferDiag_tvType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Transfer Type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tilDesciption" />
+
+            <RadioGroup
+                android:id="@+id/transferDiag_rgTransferType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tvType">
+
+
+                <RadioButton
+                    android:id="@+id/transferDiag_rbNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Normal Transfer" />
+
+
+                <RadioButton
+                    android:id="@+id/transferDiag_rbInstant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Instant Transfer" />
+
+
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" + 2.5 RON"
+                app:layout_constraintStart_toEndOf="@id/transferDiag_rgTransferType"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tvType"
+                android:layout_marginTop="14sp"
+                android:layout_marginStart="5sp"
+                android:textColor="#FF0000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" + 5 RON"
+                app:layout_constraintStart_toEndOf="@id/transferDiag_rgTransferType"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tvType"
+                android:layout_marginTop="63sp"
+                android:layout_marginStart="5sp"
+                android:textColor="#FF0000" />
+
+
+            <TextView
+                android:id="@+id/transferDiag_tvTotalTransfered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:text="To be transfered: 0.0 RON"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_rgTransferType" />
+
+            <TextView
+                android:id="@+id/transferDiag_tvTotalCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:text="Total transfer cost: 0.0 RON"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transferDiag_tvTotalTransfered"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="30sp"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

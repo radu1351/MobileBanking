@@ -27,7 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class MainActivity extends AppCompatActivity implements PayDialogFragment.OnTransactionAddedListener, AddCardDialog.AddCardListener, ViewBankAccountDialog.CreditCardListener {
+public class MainActivity extends AppCompatActivity implements PayDialogFragment.OnTransactionAddedListener,
+        AddCardDialog.AddCardListener, ViewBankAccountDialog.CreditCardListener,
+        TransferDialogFragment.TransferDialogListener {
 
     private FrameLayout fl;
     private Fragment currentFragment;
@@ -55,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
 
 
     private void initComponents() {
-        user = new User("John","Terry","5010813410083",
-                "Aleea Livezilor 74B","072134523144","john@gmail.com","1234");
+        user = new User("John", "Terry", "5010813410083",
+                "Aleea Livezilor 74B", "072134523144", "john@gmail.com", "1234");
 
         openHomeFragment();
 
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
 
     }
 
-    private void loadBankAccountFromDatabase(){
+    private void loadBankAccountFromDatabase() {
         bankAccount = new BankAccount("R008BTRLRONCRT0279986", "BTLRON", 6250.50f, "RON");
     }
 
@@ -112,14 +114,18 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
 
     private void loadTransfersFromDatabase() {
         try {
-            Transfer t1 = new Transfer(500, "RO08BTRLRONCRT02799871", "RO08BTRLRONCRT02799871",
-                    "Nota restuanrant", new SimpleDateFormat("dd MMM").parse("15 Mar"));
-            Transfer t2 = new Transfer(300, "RO08BTRLRONCRT02799871", "RO08BTRLRONCRT02799871",
-                    "Nota restuanrant", new SimpleDateFormat("dd MMM").parse("15 Mar"));
-            Transfer t3 = new Transfer(100, "RO08BTRLRONCRT02799871", "RO08BTRLRONCRT02799871",
-                    "Nota restuanrant", new SimpleDateFormat("dd MMM").parse("12 Mar"));
-            Transfer t4 = new Transfer(650, "RO08BTRLRONCRT02799871", "RO08BTRLRONCRT02799871",
-                    "Nota restuanrant", new SimpleDateFormat("dd MMM").parse("22 Apr"));
+            Transfer t1 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+                    500.0f, 5.0f, "Nota restuarant",
+                    new SimpleDateFormat("dd MMM yyyy").parse("15 Mar 2023"));
+            Transfer t2 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+                    500.0f, 5.0f, "Nota restuarant",
+                    new SimpleDateFormat("dd MMM yyyy").parse("22 Mar 2023"));
+            Transfer t3 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+                    500.0f, 5.0f, "Nota restuarant",
+                    new SimpleDateFormat("dd MMM yyyy").parse("15 Apr 2023"));
+            Transfer t4 = new Transfer("RO08BTRLRONCRT027321871", "RO08BTRLRONCRT02799871",
+                    500.0f, 5.0f, "Nota restuarant",
+                    new SimpleDateFormat("dd MMM yyyy").parse("21 Jan 2023"));
             transfers.add(t1);
             transfers.add(t2);
             transfers.add(t3);
@@ -181,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
         sortTransfersByDate();
         bundle.putSerializable("USER", user);
         bundle.putSerializable("TRANSFERS", transfers);
+        bundle.putSerializable("BANKACCOUNT", bankAccount);
 
         currentFragment = new TransferFragment();
         currentFragment.setArguments(bundle);
@@ -254,5 +261,11 @@ public class MainActivity extends AppCompatActivity implements PayDialogFragment
     public void onCreditCardsDismissed(ArrayList<CreditCard> creditCards) {
         this.creditCards = creditCards;
         openHomeFragment();
+    }
+
+    @Override
+    public void onTransferCreated(Transfer transfer) {
+        transfers.add(transfer);
+        ((TransferFragment) currentFragment).notifyTransferAdapter();
     }
 }

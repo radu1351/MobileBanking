@@ -4,16 +4,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Transfer implements Serializable {
-    private float ammount;
     private String senderIban;
     private String recipientIban;
+    private float ammount;  // fara comision (to be transfered)
+    private float commision;  // 2.5f sau 5.0f
     private String description;
     private Date date;
 
-    public Transfer(float ammount, String senderIban, String recipientIban, String description, Date date) {
-        this.ammount = ammount;
+    public Transfer(String senderIban, String recipientIban, float ammount, float commision, String description, Date date) {
         this.senderIban = senderIban;
         this.recipientIban = recipientIban;
+        this.ammount = ammount;
+        this.commision = commision;
         this.description = description;
         this.date = date;
     }
@@ -61,9 +63,10 @@ public class Transfer implements Serializable {
     @Override
     public String toString() {
         return "Transfer{" +
-                "ammount=" + ammount +
-                ", senderIban='" + senderIban + '\'' +
+                "senderIban='" + senderIban + '\'' +
                 ", recipientIban='" + recipientIban + '\'' +
+                ", ammount=" + ammount +
+                ", commision=" + commision +
                 ", description='" + description + '\'' +
                 ", date=" + date +
                 '}';

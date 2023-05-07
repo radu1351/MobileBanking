@@ -33,7 +33,6 @@ public class HomeFragment extends Fragment {
     private BankAccount bankAccount;
     private ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
     private ArrayList<Transaction> transactions = new ArrayList<>();
-    private TransactionAdapter adapter;
     private ListView lvTransactions;
     private TextView tvName,tvBalance;
     private LinearLayout llCards;
@@ -117,7 +116,6 @@ public class HomeFragment extends Fragment {
 
 
     private void loadCreditCardView(View view) {
-        Log.d("creditCARDS", creditCards.toString());
 
         if (creditCards.size() == 2) {
             CreditCardView card1 = view.findViewById(R.id.card1);
@@ -152,4 +150,5 @@ public class HomeFragment extends Fragment {
             llCards.removeView(card2);
         }
     }
+
 }

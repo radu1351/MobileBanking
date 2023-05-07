@@ -7,13 +7,18 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.androidplot.ui.HorizontalPositioning;
+import com.androidplot.ui.LayoutManager;
 import com.androidplot.ui.Size;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.androidplot.pie.PieChart;
@@ -22,15 +27,26 @@ import com.androidplot.pie.SegmentFormatter;
 import com.androidplot.ui.SizeMode;
 import com.androidplot.ui.VerticalPositioning;
 import com.androidplot.ui.widget.TextLabelWidget;
+import com.androidplot.ui.widget.Widget;
 import com.androidplot.util.PixelUtils;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.User;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class TransactionsFragment extends Fragment {
@@ -39,7 +55,8 @@ public class TransactionsFragment extends Fragment {
     private PieChart pieChartTransactions;
     private TransactionHeaderAdapter transactionHeaderAdapter;
     private ListView lvTransatcions;
-    private TextView tvName;
+    private TextView tvName, tvSum;
+    private Spinner spinMonth;
     private ArrayList<Transaction> transactions = new ArrayList<>();
 
     public TransactionsFragment() {
@@ -69,18 +86,76 @@ public class TransactionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
         pieChartTransactions = view.findViewById(R.id.transactionsFrag_pcTransactions);
         lvTransatcions = view.findViewById(R.id.transactionsFrag_lvTransactions);
+        tvSum = view.findViewById(R.id.transactionsFrag_tvSum);
 
-        loadLvTransactions();
+        loadLvTransactions(this.transactions);
 
-        createPieChart();
+        createPieChart(this.transactions);
+
+        initSpinnerMonth(view);
 
         tvName = view.findViewById(R.id.transactionsFrag_tvName);
         tvName.setText(user.getFullName());
 
+
         return view;
     }
 
-    private void createPieChart() {
+    private void initSpinnerMonth(View view) {
+        spinMonth = view.findViewById(R.id.transactionsFrag_spinMonth);
+
+        // Get the current date
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        // Generate a list of entries for the last 3 months
+        List<String> entries = getLastSixMonths();
+
+        // Load the entries into the spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
+                android.R.layout.simple_spinner_dropdown_item, entries);
+
+        spinMonth.setAdapter(adapter);
+
+        spinMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+
+                if (!selectedItem.equalsIgnoreCase("All")) {
+                    Calendar calendar = Calendar.getInstance();
+
+                    List<Transaction> transactionsInThisMonth = transactions.stream()
+                            .filter(transaction -> {
+                                calendar.setTime(transaction.getDate());
+                                String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+                                if (month.equalsIgnoreCase(selectedItem)) return true;
+                                else return false;
+                            }).collect(Collectors.toList());
+
+                    loadLvTransactions((ArrayList<Transaction>) transactionsInThisMonth);
+
+                    pieChartTransactions.getRegistry().clear();
+                    createPieChart((ArrayList<Transaction>) transactionsInThisMonth);
+                    pieChartTransactions.redraw();
+
+
+                } else {
+                    loadLvTransactions(transactions);
+                    pieChartTransactions.getRegistry().clear();
+                    createPieChart(transactions);
+                    pieChartTransactions.redraw();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void createPieChart(ArrayList<Transaction> transactions) {
         HashMap<String, Float> categoriesPercentage = new HashMap<>(0);
 
         for (Transaction transaction : transactions) {
@@ -117,21 +192,11 @@ public class TransactionsFragment extends Fragment {
                 .sum();
         ;
 
-        TextLabelWidget centerText = new TextLabelWidget(pieChartTransactions.getLayoutManager(),
-                new Size(1.0f, SizeMode.RELATIVE, 1.0f, SizeMode.RELATIVE));
-        centerText.setText(String.valueOf(sum) + " RON");
-        centerText.getLabelPaint().setColor(Color.BLACK);
-        centerText.getLabelPaint().setTextSize(PixelUtils.dpToPix(13));
-        centerText.getLabelPaint().setTextAlign(Paint.Align.CENTER);
-        int centerX = pieChartTransactions.getWidth() / 2;
-        int centerY = pieChartTransactions.getHeight() / 2;
-        centerText.position(centerX - 30, HorizontalPositioning.ABSOLUTE_FROM_CENTER, centerY, VerticalPositioning.ABSOLUTE_FROM_CENTER);
-        pieChartTransactions.getLayoutManager().add(centerText);
-
+        tvSum.setText(String.valueOf(sum) + " RON");
     }
 
 
-    private void loadLvTransactions() {
+    private void loadLvTransactions(ArrayList<Transaction> transactions) {
         transactionHeaderAdapter = new TransactionHeaderAdapter(getContext());
         transactionHeaderAdapter.addSectionHeaderItem(transactions.get(0));
 
@@ -158,5 +223,45 @@ public class TransactionsFragment extends Fragment {
         lvTransatcions.setAdapter(transactionHeaderAdapter);
     }
 
+    public ArrayList<String> getLastSixMonths() {
+        sortTransactionsByDate();
+
+        ArrayList<String> lastSixMonths = new ArrayList<>(0);
+        lastSixMonths.add("All");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(transactions.get(0).getDate());
+        String lastMonth = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+
+        lastSixMonths.add(lastMonth);
+
+        for (Transaction t : transactions) {
+            if (lastSixMonths.size() >= 6) break;
+            else {
+                calendar.setTime(t.getDate());
+                String thisMonth = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+                Log.d("MONT: ----- ", thisMonth);
+
+                if (!lastMonth.equalsIgnoreCase(thisMonth)) {
+                    lastSixMonths.add(thisMonth);
+                    lastMonth = thisMonth;
+                }
+            }
+        }
+        return lastSixMonths;
+    }
+
+    private void sortTransactionsByDate() {
+        transactions.sort(new Comparator<Transaction>() {
+            @Override
+            public int compare(Transaction t1, Transaction t2) {
+                if (t1.getDate().compareTo(t2.getDate()) < 0)
+                    return 1;
+                else if (t1.getDate().compareTo(t2.getDate()) > 0)
+                    return -1;
+                else return 0;
+            }
+        });
+    }
 
 }
