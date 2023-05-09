@@ -11,8 +11,18 @@ public class CreditCard implements Serializable {
     private Date expirationDate;
     private int cvv;
     private int cardType; // 0 - Visa ,  1 - Mastercard
+    private String bankAccountIban;  //Foreign key for BankAccount
 
     public CreditCard() {
+    }
+
+    public CreditCard(String cardNumber, String cardholderName, Date expirationDate, int cvv, int cardType, String bankAccountIban) {
+        this.cardNumber = cardNumber;
+        this.cardholderName = cardholderName;
+        this.expirationDate = expirationDate;
+        this.cvv = cvv;
+        this.cardType = cardType;
+        this.bankAccountIban = bankAccountIban;
     }
 
     public CreditCard(String cardNumber, String cardholderName, Date expirationDate, int cvv, int cardType) {
@@ -63,8 +73,13 @@ public class CreditCard implements Serializable {
         return cvv;
     }
 
-    public void setCvv(short cvv) {
-        this.cvv = cvv;
+
+    public String getBankAccountIban() {
+        return bankAccountIban;
+    }
+
+    public void setBankAccountIban(String bankAccountIban) {
+        this.bankAccountIban = bankAccountIban;
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,12 +30,15 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PayDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private TextInputEditText tietMerchant, tietAmmount, tietDate;
     private Spinner spinCategory, spinCard;
     private ArrayList<CreditCard> creditCards;
+    private BankAccount bankAccount;
     private OnTransactionAddedListener mListener;
 
     @Override
@@ -53,6 +57,7 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
         tietAmmount = view.findViewById(R.id.payDiag_tietAmmount);
         tietDate = view.findViewById(R.id.payDiag_tietDate);
         creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
+        bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
         LocalDateTime now = LocalDateTime.now();
@@ -70,23 +75,7 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
         spinCard.setAdapter(adapter);
 
 
-        builder.setPositiveButton("Add payment", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    String merchant = tietMerchant.getText().toString();
-                    String category = spinCategory.getSelectedItem().toString();
-                    Float ammount = Float.parseFloat(tietAmmount.getText().toString());
-                    Date date = new SimpleDateFormat("dd MMM yyyy HH:mm").parse(tietDate.getText().toString());
-                    Transaction transaction = new Transaction(merchant, category, ammount,
-                            date, creditCards.get(spinCard.getSelectedItemPosition()));
-                    mListener.onTransactionAdded(transaction);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
+        builder.setPositiveButton("Add payment", null);
         // Set the negative button to cancel the dialog
         builder.setNegativeButton("Cancel", null);
 
@@ -95,8 +84,51 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                Button saveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                saveButton.setTextColor(Color.BLACK);
+                Button payButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                payButton.setTextColor(Color.BLACK);
+                payButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            boolean hasError = false;
+                            if (tietMerchant.getText().toString().isEmpty()) {
+                                tietMerchant.setError("No merchant name provided");
+                                hasError = true;
+                            }
+                            if (tietAmmount.getText().toString().isEmpty()) {
+                                tietAmmount.setError("No ammount provided");
+                                hasError = true;
+                            }
+                            if (tietDate.getText().toString().isEmpty()) {
+                                tietDate.setError("No date provided");
+                                hasError = true;
+                            }
+
+                            if (hasError == false) {
+                                String merchant = tietMerchant.getText().toString();
+                                String category = spinCategory.getSelectedItem().toString();
+                                Float ammount = Float.parseFloat(tietAmmount.getText().toString());
+                                Date date = new SimpleDateFormat("dd MMM yyyy HH:mm").parse(tietDate.getText().toString());
+                                Transaction transaction = new Transaction(generateId(),
+                                        merchant, category, ammount,
+                                        date, creditCards.get(spinCard.getSelectedItemPosition()).getCardNumber(),
+                                        bankAccount.getIban());
+
+                                if (transaction.getAmmount() < bankAccount.getBalance()) {
+                                    mListener.onTransactionAdded(transaction);
+                                    dialog.dismiss();
+                                } else {
+                                    tietAmmount.setError("Insufficient funds in your account");
+                                }
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                });
+
+
                 Button cancelButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE);
                 cancelButton.setTextColor(Color.BLACK);
             }
@@ -104,6 +136,11 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
 
         return dialog;
     }
+
+    private void processTransaction(Transaction transaction) {
+
+    }
+
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
@@ -121,7 +158,18 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
         }
     }
 
+    public String generateId() {
+        // Generate a random 12-digit number
+        long min = 100000000000L;
+        long max = 999999999999L;
+        long randomNum = ThreadLocalRandom.current().nextLong(min, max + 1);
+        return Long.toString(randomNum);
+    }
+
+
     public interface OnTransactionAddedListener {
         void onTransactionAdded(Transaction transaction);
     }
+
+
 }

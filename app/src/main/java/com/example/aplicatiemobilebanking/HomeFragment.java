@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment {
                     AddCardDialog dialog = new AddCardDialog();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("USER", user);
+                    bundle.putSerializable("BANKACCOUNT",bankAccount);
                     dialog.setArguments(bundle);
                     dialog.show(getActivity().getSupportFragmentManager(), "AddCardDialogFragment");
                 }

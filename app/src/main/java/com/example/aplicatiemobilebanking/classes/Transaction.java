@@ -4,19 +4,35 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Transaction implements Serializable {
+    private String id; // Pk
     private String merchant;
     private String category;
     private float ammount;
     private Date date;
-    private CreditCard creditCard;
+    private String creditCardNumber;  //Foreign key for CreditCard
+    private String bankAccountIban;  //Foreign key for BankAccount
 
 
-    public Transaction(String merchant, String category, float ammount, Date date, CreditCard creditCard) {
+    public Transaction(){
+
+    }
+
+    public Transaction(String id, String merchant, String category, float ammount, Date date, String creditCardNumber, String bankAccountIban) {
+        this.id = id;
         this.merchant = merchant;
         this.category = category;
         this.ammount = ammount;
         this.date = date;
-        this.creditCard = creditCard;
+        this.creditCardNumber = creditCardNumber;
+        this.bankAccountIban = bankAccountIban;
+    }
+
+    public Transaction(String merchant, String category, float ammount, Date date, String creditCardNumber) {
+        this.merchant = merchant;
+        this.category = category;
+        this.ammount = ammount;
+        this.date = date;
+        this.creditCardNumber = creditCardNumber;
 
     }
 
@@ -52,12 +68,28 @@ public class Transaction implements Serializable {
         this.category = category;
     }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
+    public String getCreditCardNumber() {
+        return creditCardNumber;
     }
 
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
+    public void setCreditCard(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getBankAccountIban() {
+        return bankAccountIban;
+    }
+
+    public void setBankAccountIban(String bankAccountIban) {
+        this.bankAccountIban = bankAccountIban;
     }
 
     @Override
@@ -67,7 +99,7 @@ public class Transaction implements Serializable {
                 ", category='" + category + '\'' +
                 ", ammount=" + ammount +
                 ", date=" + date +
-                ", creditCard=" + creditCard +
+                ", creditCardNumber=" + creditCardNumber +
                 '}';
     }
 }

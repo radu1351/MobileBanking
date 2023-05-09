@@ -4,15 +4,29 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Transfer implements Serializable {
-    private String senderIban;
+    private String id; // PK
     private String recipientIban;
     private float amount;  // fara comision (to be transfered)
     private float commission;  // 2.5f sau 5.0f
     private String description;
     private Date date;
+    private String bankAccountIban;  //Foreign key for BankAccount
 
-    public Transfer(String senderIban, String recipientIban, float amount, float commission, String description, Date date) {
-        this.senderIban = senderIban;
+    public Transfer(){
+
+    }
+
+    public Transfer(String id, String recipientIban, float amount, float commission, String description, Date date, String bankAccountIban) {
+        this.id = id;
+        this.recipientIban = recipientIban;
+        this.amount = amount;
+        this.commission = commission;
+        this.description = description;
+        this.date = date;
+        this.bankAccountIban = bankAccountIban;
+    }
+
+    public Transfer(String recipientIban, float amount, float commission, String description, Date date) {
         this.recipientIban = recipientIban;
         this.amount = amount;
         this.commission = commission;
@@ -26,14 +40,6 @@ public class Transfer implements Serializable {
 
     public void setAmount(float amount) {
         this.amount = amount;
-    }
-
-    public String getSenderIban() {
-        return senderIban;
-    }
-
-    public void setSenderIban(String senderIban) {
-        this.senderIban = senderIban;
     }
 
     public String getRecipientIban() {
@@ -68,10 +74,25 @@ public class Transfer implements Serializable {
         this.date = date;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getBankAccountIban() {
+        return bankAccountIban;
+    }
+
+    public void setBankAccountIban(String bankAccountIban) {
+        this.bankAccountIban = bankAccountIban;
+    }
+
     @Override
     public String toString() {
         return "Transfer{" +
-                "senderIban='" + senderIban + '\'' +
                 ", recipientIban='" + recipientIban + '\'' +
                 ", ammount=" + amount +
                 ", commision=" + commission +

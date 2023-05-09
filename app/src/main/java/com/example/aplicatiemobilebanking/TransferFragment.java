@@ -73,6 +73,7 @@ public class TransferFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("CREDITCARDS", creditCards);
+                bundle.putSerializable("BANKACCOUNT", bankAccount);
                 PayDialog dialog = new PayDialog();
                 dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "PayDialogFragment");
@@ -86,7 +87,6 @@ public class TransferFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("BANKACCOUNT", bankAccount);
-
                 TransferDialog dialog = new TransferDialog();
                 dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "TransferDialogFragment");
@@ -121,28 +121,32 @@ public class TransferFragment extends Fragment {
     }
 
     private void loadLvTransfers() {
-        transferHeaderAdapter = new TransferHeaderAdapter(getContext());
-        transferHeaderAdapter.addSectionHeaderItem(transfers.get(0));
+        if (!transfers.isEmpty()) {
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(transfers.get(0).getDate());
-        int lastMonth = calendar.get(Calendar.MONTH);
+            transferHeaderAdapter = new TransferHeaderAdapter(getContext());
+            transferHeaderAdapter.addSectionHeaderItem(transfers.get(0));
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(transfers.get(0).getDate());
+            int lastMonth = calendar.get(Calendar.MONTH);
 
 
-        for (Transfer t : transfers) {
-            calendar.setTime(t.getDate());
-            int thisMonth = calendar.get(Calendar.MONTH);
-            if (thisMonth == lastMonth) {
-                transferHeaderAdapter.addItem(t);
+            for (Transfer t : transfers) {
+                calendar.setTime(t.getDate());
+                int thisMonth = calendar.get(Calendar.MONTH);
+                if (thisMonth == lastMonth) {
+                    transferHeaderAdapter.addItem(t);
 
-            } else {
-                transferHeaderAdapter.addSectionHeaderItem(t);
-                transferHeaderAdapter.addItem(t);
-                lastMonth = calendar.get(Calendar.MONTH);
+                } else {
+                    transferHeaderAdapter.addSectionHeaderItem(t);
+                    transferHeaderAdapter.addItem(t);
+                    lastMonth = calendar.get(Calendar.MONTH);
+                }
             }
+
+            lvTransfers.setAdapter(transferHeaderAdapter);
         }
 
-        lvTransfers.setAdapter(transferHeaderAdapter);
     }
 
 

@@ -1,5 +1,7 @@
 package com.example.aplicatiemobilebanking;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -22,7 +24,12 @@ import androidx.fragment.app.DialogFragment;
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transfer;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.math.BigInteger;
 import java.time.Instant;
@@ -32,6 +39,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TransferDialog extends DialogFragment {
 
@@ -41,6 +51,7 @@ public class TransferDialog extends DialogFragment {
     private RadioGroup rgTransferType;
     private RadioButton rbNormal, rbInstant;
     private TextView tvTotalTransfered, tvTotalCost;
+    private Dialog dialog;
 
     private float totalTransfered = 0.0f;
     private float totalCost = 0.0f;
@@ -123,7 +134,7 @@ public class TransferDialog extends DialogFragment {
         builder.setPositiveButton("Transfer", null);
         builder.setNegativeButton("Close", null);
 
-        Dialog dialog = builder.create();
+        dialog = builder.create();
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -135,7 +146,7 @@ public class TransferDialog extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         boolean hasError = false;
-                        if (tietRecIban.getText().toString().isEmpty() || !isIbanValid(tietRecIban.getText().toString())) {
+                        if (tietRecIban.getText().toString().isEmpty() || !isValidIban(tietRecIban.getText().toString())) {
                             tietRecIban.setError("Incorrect IBAN provided");
                             hasError = true;
                         }
@@ -152,6 +163,7 @@ public class TransferDialog extends DialogFragment {
                             hasError = true;
                         }
                         if (!hasError) {
+
                             String senderIban = bankAccount.getIban();
                             String recipientIban = tietRecIban.getText().toString();
                             float amount = totalTransfered;
@@ -161,13 +173,11 @@ public class TransferDialog extends DialogFragment {
                             Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
                             Date date = Date.from(instant);
 
-                            Transfer transfer = new Transfer(senderIban, recipientIban, amount,
-                                    commision, description, date);
+                            Transfer transfer = new Transfer(generateId(),
+                                    recipientIban, amount,
+                                    commision, description, date, bankAccount.getIban());
 
-                            if (mListener != null) {
-                                mListener.onTransferCreated(transfer);
-                            }
-                            dialog.dismiss();
+                            processTransfer(transfer);
                         }
                     }
 
@@ -195,26 +205,80 @@ public class TransferDialog extends DialogFragment {
     }
 
 
-    public static boolean isIbanValid(String iban) {
-        if (iban == null || iban.length() != 24 || !iban.matches("^RO\\d{2}[A-Z]{4,10}\\d{1,16}$")) {
+    public boolean isValidIban(String iban) {
+        if (iban == null || iban.length() < 4) {
             return false;
         }
 
         String rearrangedIban = iban.substring(4) + iban.substring(0, 4);
-        StringBuilder numericIban = new StringBuilder();
 
+        int remainder = 0;
         for (int i = 0; i < rearrangedIban.length(); i++) {
             char currentChar = rearrangedIban.charAt(i);
             if (Character.isLetter(currentChar)) {
-                numericIban.append(Character.getNumericValue(currentChar));
-            } else {
-                numericIban.append(currentChar);
+                remainder = (remainder * 10 + (currentChar - 'A' + 10)) % 97;
+            } else if (Character.isDigit(currentChar)) {
+                remainder = (remainder * 10 + (currentChar - '0')) % 97;
             }
         }
 
-        BigInteger ibanNumber = new BigInteger(numericIban.toString());
-        return ibanNumber.mod(BigInteger.valueOf(97)).intValue() == 1;
+        return remainder == 1;
     }
 
+
+    public String generateId() {
+        // Generate a random 12-digit number
+        long min = 100000000000L;
+        long max = 999999999999L;
+        long randomNum = ThreadLocalRandom.current().nextLong(min, max + 1);
+        return Long.toString(randomNum);
+    }
+
+    public void processTransfer(Transfer transfer) {
+        CompletableFuture<Boolean> checkRecipientFuture = new CompletableFuture<>();
+        checkAccountInDatabase(new OnSuccessListener<Boolean>() {
+            @Override
+            public void onSuccess(Boolean recipientExists) {
+                checkRecipientFuture.complete(recipientExists);
+            }
+        });
+
+        checkRecipientFuture.thenRun(() -> {
+            Boolean recipientExists = checkRecipientFuture.join();
+
+            if (recipientExists) {
+                if (!transfer.getRecipientIban().equals(bankAccount.getIban())) {
+                    if (mListener != null) {
+                        mListener.onTransferCreated(transfer);
+                    }
+                    dialog.dismiss();
+                } else {
+                    tietRecIban.setError("Recipient IBAN is the same as yours");
+                }
+            } else {
+                tietRecIban.setError("IBAN not in database");
+            }
+        });
+    }
+
+    public void checkAccountInDatabase(OnSuccessListener<Boolean> callback) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference bankAccountsRef = db.collection("bankAccounts");
+        Query query = bankAccountsRef.whereEqualTo("iban", tietRecIban.getText().toString());
+
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot snapshot = task.getResult();
+                if (!snapshot.isEmpty()) {
+                    callback.onSuccess(true); // RecipientIban exists in the database
+                } else {
+                    callback.onSuccess(false); // RecipientIban doesn't exists in the database
+                }
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+        });
+
+    }
 }
 

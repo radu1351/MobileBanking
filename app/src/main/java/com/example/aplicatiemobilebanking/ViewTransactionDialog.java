@@ -16,14 +16,20 @@ import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ViewTransactionDialog extends DialogFragment {
 
     private Transaction transaction;
     private TextView tvMerchant, tvCategory,
             tvAmmount, tvDate, tvCreditCard;
+
+    ArrayList<CreditCard> creditCards = new ArrayList<>(0);
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundDialogSyle);
@@ -35,6 +41,7 @@ public class ViewTransactionDialog extends DialogFragment {
         builder.setView(view);
 
         transaction = (Transaction) getArguments().getSerializable("TRANSACTION");
+        creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
 
         tvMerchant = view.findViewById(R.id.viewTransactionDialog_tvMerchant);
         tvCategory = view.findViewById(R.id.viewTransactionDialog_tvCategory);
@@ -46,9 +53,19 @@ public class ViewTransactionDialog extends DialogFragment {
         tvCategory.setText(transaction.getCategory());
         tvAmmount.setText(String.valueOf(transaction.getAmmount()) + " RON");
         tvDate.setText(new SimpleDateFormat("dd MMM yyyy HH:mm").format(transaction.getDate()));
-        tvCreditCard.setText(getString(R.string.card_description,
-                transaction.getCreditCard().getCardType() == 0 ? "Visa" : "Mastercard",
-                transaction.getCreditCard().getCardNumber().substring(12,16)));
+
+        CreditCard creditCard = creditCards.stream().filter(c -> c.getCardNumber().equals(transaction.getCreditCardNumber()))
+                .findAny().orElse(null);
+
+        if (creditCard != null) {
+            tvCreditCard.setText(getString(R.string.card_description,
+                    creditCard.getCardType() == 0 ? "Visa" : "Mastercard",
+                    creditCard.getCardNumber().substring(12, 16)));
+        } else {
+            //The card was removed from the account
+            tvCreditCard.setText(getString(R.string.card_description,
+                    "Removed card", transaction.getCreditCardNumber().substring(12, 16)));
+        }
 
         builder.setNegativeButton("Close", null);
 

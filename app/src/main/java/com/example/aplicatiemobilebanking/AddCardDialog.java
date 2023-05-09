@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,26 +14,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
-import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.User;
 import com.vinaygaba.creditcardview.CardType;
 import com.vinaygaba.creditcardview.CreditCardView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Random;
 
 public class AddCardDialog extends DialogFragment {
 
     private User user;
+    private BankAccount bankAccount;
     private Spinner spinCardType;
     private TextView tvDelivery;
 
@@ -50,8 +46,9 @@ public class AddCardDialog extends DialogFragment {
         builder.setView(view);
 
         user = (User) getArguments().getSerializable("USER");
+        bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
         tvDelivery = view.findViewById(R.id.addCardDIag_tvDelivery);
-        tvDelivery.setText(getString(R.string.credit_card_delivery_message,user.getAdress()));
+        tvDelivery.setText(getString(R.string.credit_card_delivery_message, user.getAddress()));
 
         spinCardType = view.findViewById(R.id.addCardDiag_spinCardType);
 
@@ -86,7 +83,7 @@ public class AddCardDialog extends DialogFragment {
                             creditCardView.getCardName(),
                             new SimpleDateFormat("MM/yy").parse(creditCardView.getExpiryDate()),
                             CVVGenerator(),
-                            creditCardView.getType());
+                            creditCardView.getType(), bankAccount.getIban());
                     mListener.onCardAdded(creditCard);
                 } catch (ParseException e) {
                     e.printStackTrace();

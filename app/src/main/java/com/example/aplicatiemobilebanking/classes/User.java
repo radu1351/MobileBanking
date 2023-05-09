@@ -1,13 +1,12 @@
 package com.example.aplicatiemobilebanking.classes;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String identificationNumber; // PK
-    private String adress;
+    private String address;
     private String phoneNumber;
     private String email;
     private String password;
@@ -16,11 +15,12 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String firstName, String lastName, String identificationNumber, String adress, String phoneNumber, String email, String password) {
+
+    public User(String firstName, String lastName, String identificationNumber, String address, String phoneNumber, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.identificationNumber = identificationNumber;
-        this.adress = adress;
+        this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
@@ -54,12 +54,12 @@ public class User implements Serializable {
         return this.firstName + " " + this.lastName;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPhoneNumber() {
@@ -93,7 +93,7 @@ public class User implements Serializable {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", identificationNumber='" + identificationNumber + '\'' +
-                ", adress='" + adress + '\'' +
+                ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

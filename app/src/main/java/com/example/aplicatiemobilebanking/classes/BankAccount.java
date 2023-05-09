@@ -1,5 +1,7 @@
 package com.example.aplicatiemobilebanking.classes;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,8 +10,18 @@ public class BankAccount implements Serializable {
     private String swift;
     private float balance;
     private String currency;
+    private String userPersonalID; //Foreign key for user
+
 
     public BankAccount() {
+    }
+
+    public BankAccount(String iban, String swift, float balance, String currency, String userPersonalID) {
+        this.iban = iban;
+        this.swift = swift;
+        this.balance = balance;
+        this.currency = currency;
+        this.userPersonalID = userPersonalID;
     }
 
     public BankAccount(String iban, String swift, float balance, String currency) {
@@ -51,6 +63,17 @@ public class BankAccount implements Serializable {
         this.currency = currency;
     }
 
+    public void setUserPersonalID(String userPersonalID) {
+        this.userPersonalID = userPersonalID;
+    }
+
+    public String getUserPersonalID() {
+        return userPersonalID;
+    }
+
+    public void reduceBalance(float ammount){
+        this.balance -= ammount;
+    }
     @Override
     public String toString() {
         return "BankAccount{" +
@@ -59,5 +82,11 @@ public class BankAccount implements Serializable {
                 ", balance='" + balance + '\'' +
                 ", currency='" + currency + '\'' +
                 '}';
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

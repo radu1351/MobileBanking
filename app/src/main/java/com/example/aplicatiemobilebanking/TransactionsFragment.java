@@ -31,6 +31,7 @@ import com.androidplot.ui.VerticalPositioning;
 import com.androidplot.ui.widget.TextLabelWidget;
 import com.androidplot.ui.widget.Widget;
 import com.androidplot.util.PixelUtils;
+import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.User;
 
@@ -60,6 +61,7 @@ public class TransactionsFragment extends Fragment {
     private TextView tvName, tvSum;
     private Spinner spinMonth;
     private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<CreditCard> creditCards = new ArrayList<>();
 
     public TransactionsFragment() {
         // Required empty public constructor
@@ -78,6 +80,7 @@ public class TransactionsFragment extends Fragment {
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("USER");
             transactions = (ArrayList<Transaction>) getArguments().getSerializable("TRANSACTIONS");
+            creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
         }
     }
 
@@ -89,39 +92,41 @@ public class TransactionsFragment extends Fragment {
         pieChartTransactions = view.findViewById(R.id.transactionsFrag_pcTransactions);
         lvTransactions = view.findViewById(R.id.transactionsFrag_lvTransactions);
         tvSum = view.findViewById(R.id.transactionsFrag_tvSum);
-
-        loadLvTransactions(this.transactions);
-
-        createPieChart(this.transactions);
-
-        initSpinnerMonth(view);
-
         tvName = view.findViewById(R.id.transactionsFrag_tvName);
         tvName.setText(user.getFullName());
 
-        lvTransactions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (!transactions.isEmpty()) {
 
-                int actualPosition = position;
-                int headerCount = 0;
-                for (int headerPosition : transactionHeaderAdapter.getSectionHeader()) {
-                    if (headerPosition < position) {
-                        headerCount++;
-                    } else {
-                        break;
+            loadLvTransactions(this.transactions);
+            createPieChart(this.transactions);
+            initSpinnerMonth(view);
+
+            lvTransactions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    int actualPosition = position;
+                    int headerCount = 0;
+                    for (int headerPosition : transactionHeaderAdapter.getSectionHeader()) {
+                        if (headerPosition < position) {
+                            headerCount++;
+                        } else {
+                            break;
+                        }
                     }
+                    actualPosition -= headerCount;
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("TRANSACTION", transactions.get(actualPosition));
+                    bundle.putSerializable("CREDITCARDS", creditCards);
+                    ViewTransactionDialog viewTransactionDialog = new ViewTransactionDialog();
+                    viewTransactionDialog.setArguments(bundle);
+                    viewTransactionDialog.show(getActivity().getSupportFragmentManager(), "ViewTransactionDialog");
                 }
-                actualPosition -= headerCount;
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("TRANSACTION", transactions.get(actualPosition));
-                ViewTransactionDialog viewTransactionDialog = new ViewTransactionDialog();
-                viewTransactionDialog.setArguments(bundle);
-                viewTransactionDialog.show(getActivity().getSupportFragmentManager(), "ViewTransactionDialog");
-            }
+            });
+        }
 
-        });
         return view;
     }
 
@@ -245,9 +250,11 @@ public class TransactionsFragment extends Fragment {
             }
         }
         lvTransactions.setAdapter(transactionHeaderAdapter);
+
     }
 
     public ArrayList<String> getLastSixMonths() {
+
         sortTransactionsByDate();
 
         ArrayList<String> lastSixMonths = new ArrayList<>(0);

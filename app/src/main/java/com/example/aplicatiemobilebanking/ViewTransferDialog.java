@@ -40,7 +40,7 @@ public class ViewTransferDialog extends DialogFragment {
         tvDescription = view.findViewById(R.id.viewTransactionDialog_tvDescription);
         tvDate = view.findViewById(R.id.viewTransactionDialog_tvDate);
 
-        tvSenderIban.setText(transfer.getSenderIban());
+        tvSenderIban.setText(transfer.getBankAccountIban());
         tvRecipientIban.setText(transfer.getRecipientIban());
         tvAmount.setText(String.valueOf(transfer.getAmount()));
         tvCommission.setText(String.valueOf(transfer.getCommission()));

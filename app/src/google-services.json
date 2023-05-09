@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "571276882417",
+    "project_id": "aplicatie-mobile-banking-c2e35",
+    "storage_bucket": "aplicatie-mobile-banking-c2e35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571276882417:android:e70aaec3f5bafe687a9450",
+        "android_client_info": {
+          "package_name": "com.example.aplicatiemobilebanking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "571276882417-80l65a7hmqemkijcpr2mtip00veq8q92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0yRhfTB-SurXEvXNR-d3Fs3qCmNFyxhY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "571276882417-80l65a7hmqemkijcpr2mtip00veq8q92.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

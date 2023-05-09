@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.example.aplicatiemobilebanking.classes.User;
 
 public class ProfileFragment extends Fragment {
-    private TextView tvFirstName, tvLastName, tvIdentificationNumber,
-            tvAdress,tvPhone,tvEmail;
+    private TextView tvName, tvFirstName, tvLastName, tvIdentificationNumber,
+            tvAddress,tvPhone,tvEmail;
     private Button btLogOut;
     private User user;
 
@@ -43,17 +43,19 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        tvName = view.findViewById(R.id.profileFrag_tvName);
         tvFirstName = view.findViewById(R.id.profileFrag_tvFirstName);
         tvLastName = view.findViewById(R.id.profileFrag_tvLastName);
         tvIdentificationNumber = view.findViewById(R.id.profileFrag_tvIdentificationNumber);
-        tvAdress = view.findViewById(R.id.profileFrag_tvAddress);
+        tvAddress = view.findViewById(R.id.profileFrag_tvAddress);
         tvPhone = view.findViewById(R.id.profileFrag_tvPhoneNumber);
         tvEmail = view.findViewById(R.id.profileFrag_tvEmail);
 
+        tvName.setText(user.getFullName());
         tvFirstName.setText(user.getFirstName());
         tvLastName.setText(user.getLastName());
         tvIdentificationNumber.setText(user.getIdentificationNumber());
-        tvAdress.setText(user.getAdress());
+        tvAddress.setText(user.getAddress());
         tvPhone.setText(user.getPhoneNumber());
         tvEmail.setText(user.getEmail());
 
