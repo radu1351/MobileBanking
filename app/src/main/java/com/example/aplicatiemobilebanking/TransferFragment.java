@@ -123,7 +123,7 @@ public class TransferFragment extends Fragment {
     private void loadLvTransfers() {
         if (!transfers.isEmpty()) {
 
-            transferHeaderAdapter = new TransferHeaderAdapter(getContext());
+            transferHeaderAdapter = new TransferHeaderAdapter(getContext(), bankAccount);
             transferHeaderAdapter.addSectionHeaderItem(transfers.get(0));
 
             Calendar calendar = Calendar.getInstance();

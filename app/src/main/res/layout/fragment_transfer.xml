@@ -12,29 +12,28 @@
         android:id="@+id/transferFrag_tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200sp"
-        android:layout_marginTop="80dp"
         android:fontFamily="sans-serif"
         android:text="John Terry"
+        android:layout_marginEnd="5sp"
         android:textColor="@color/white"
         android:textSize="25sp"
+        android:singleLine="true"
         android:textStyle="bold"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toStartOf="@+id/transferFrag_ivUser"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/transferFrag_ivUser"
         android:layout_width="50sp"
         android:layout_height="55dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="25sp"
         android:layout_marginStart="5sp"
+        android:layout_marginEnd="25sp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/ic_profile_picture_round"
+        app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/transferFrag_tvName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

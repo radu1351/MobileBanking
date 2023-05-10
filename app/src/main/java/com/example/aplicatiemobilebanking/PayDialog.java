@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -98,6 +99,10 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
                             if (tietAmmount.getText().toString().isEmpty()) {
                                 tietAmmount.setError("No ammount provided");
                                 hasError = true;
+                            }
+                            if(spinCard.getAdapter().getCount()==0){
+                                Toast.makeText(getContext(),"A payment needs to have an associated card.",Toast.LENGTH_SHORT);
+                                hasError=true;
                             }
                             if (tietDate.getText().toString().isEmpty()) {
                                 tietDate.setError("No date provided");

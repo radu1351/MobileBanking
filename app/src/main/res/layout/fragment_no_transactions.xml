@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/image_no_transactions"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@drawable/ic_no_tansactions"
+        android:layout_marginTop="5sp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/text_no_transactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="There are no transactions in your account"
+        android:textSize="24sp"
+        android:layout_below="@id/image_no_transactions"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+
+</RelativeLayout>

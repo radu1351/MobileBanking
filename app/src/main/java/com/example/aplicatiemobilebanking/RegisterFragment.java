@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.units.qual.C;
 
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -389,7 +390,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public boolean isValidIdNumber(String idNumber) {
-        return idNumber.length() >= 8 && idNumber.matches("[0-9]+");
+        return idNumber.length() == 13 && idNumber.matches("[0-9]+");
     }
 
     public boolean isValidPhoneNumber(String phoneNumber) {
@@ -418,26 +419,32 @@ public class RegisterFragment extends Fragment {
         return matcher.matches();
     }
 
-    public String generateIban() {
-        String bic = "BTRLRO22";
-        String random16DigitNumber = String.valueOf((long) (Math.random() * 9_000_000_000_000_000L) + 1_000_000_000_000_000L);
-
-        String iban = bic + random16DigitNumber;
-        iban = iban.substring(0, 2) + "00" + iban.substring(4);
-
+    public static String generateIban() { // Modulo 97
+        String countryCode = "RO";
+        String bankCode = "BTRL";
+        String currencyCode = "RON";
+        String accountNumber = "";
+        Random random = new Random();
+        for (int i = 0; i < 13; i++) {
+            accountNumber += random.nextInt(10);
+        }
+        String iban = countryCode + "00" + bankCode + currencyCode + accountNumber;
         int remainder = 0;
         for (int i = 0; i < iban.length(); i++) {
-            char currentChar = iban.charAt(i);
-            if (Character.isLetter(currentChar)) {
-                remainder = (remainder * 10 + (currentChar - 'A' + 10)) % 97;
+            char c = iban.charAt(i);
+            int digit;
+            if (Character.isDigit(c)) {
+                digit = Character.getNumericValue(c);
             } else {
-                remainder = (remainder * 10 + (currentChar - '0')) % 97;
+                digit = c - 'A' + 10;
             }
+            remainder = (remainder * 10 + digit) % 97;
         }
-
-        int checkDigit = 98 - remainder;
-        return "RO" + String.format("%02d", checkDigit) + bic + random16DigitNumber;
+        int checkDigits = 98 - remainder;
+        String checkDigitsStr = String.format("%02d", checkDigits);
+        return countryCode + checkDigitsStr + bankCode + currencyCode + accountNumber;
     }
+
 
     public static String generateCreditCardNumber() {
         String ccNumber = "4140"; // start with 4140

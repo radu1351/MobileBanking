@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -123,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     }
 
 
-
     private void loadUser() {
         user = (User) getIntent().getSerializableExtra("USER");
     }
@@ -199,24 +199,28 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     private void loadTransfersFromDatabase(OnSuccessListener<List<Transfer>> callback) {
         CollectionReference transfersRef = db.collection("transfers");
 
-        Query query = transfersRef.whereEqualTo("bankAccountIban", bankAccount.getIban());
+        // Query for transfers where recipientIban = bankAccount.getIban()
+        Query recipientQuery = transfersRef.whereEqualTo("recipientIban", bankAccount.getIban());
 
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    List<Transfer> transfers = new ArrayList<>(0);
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        // Convert the document to a Transfer object and add it to the list
-                        Transfer transfer = document.toObject(Transfer.class);
-                        transfers.add(transfer);
+        // Query for transfers where bankAccountIban = bankAccount.getIban()
+        Query bankAccountQuery = transfersRef.whereEqualTo("bankAccountIban", bankAccount.getIban());
+
+        // Combine the results of the two queries into a single list
+        Tasks.whenAllSuccess(recipientQuery.get(), bankAccountQuery.get())
+                .addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> results) {
+                        List<Transfer> transfers = new ArrayList<>();
+                        for (Object result : results) {
+                            QuerySnapshot querySnapshot = (QuerySnapshot) result;
+                            for (QueryDocumentSnapshot document : querySnapshot) {
+                                Transfer transfer = document.toObject(Transfer.class);
+                                transfers.add(transfer);
+                            }
+                        }
+                        callback.onSuccess(transfers);
                     }
-                    callback.onSuccess(transfers);
-                } else {
-                    Log.w(TAG, "Error getting transfers", task.getException());
-                }
-            }
-        });
+                });
     }
 
     private void initComponents() {
@@ -316,6 +320,25 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                 .addOnSuccessListener(aVoid -> {
                     // Handle success
                     Log.d(TAG, "Transfer added successfully");
+                    CollectionReference bankAccountsCollection = db.collection("bankAccounts");
+
+                    bankAccountsCollection.document(transfer.getBankAccountIban())
+                            .update("balance", FieldValue.increment(-(transfer.getAmount() + transfer.getCommission())))
+                            .addOnSuccessListener(aVoid1 -> {
+                                Log.d(TAG, "Sender balance updated successfully");
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Error updating sender balance", e);
+                            });
+
+                    bankAccountsCollection.document(transfer.getRecipientIban())
+                            .update("balance", FieldValue.increment(transfer.getAmount()))
+                            .addOnSuccessListener(aVoid1 -> {
+                                Log.d(TAG, "Recipient balance updated successfully");
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Error updating recipient balance", e);
+                            });
                 })
                 .addOnFailureListener(e -> {
                     // Handle error
@@ -341,18 +364,25 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     }
 
     private void openTransactionsFragment() {
-        Bundle bundle = new Bundle();
-        sortTransactionsByDate();
-        bundle.putSerializable("USER", user);
-        bundle.putSerializable("TRANSACTIONS", transactions);
-        bundle.putSerializable("CREDITCARDS", creditCards);
+        if (!transactions.isEmpty()) {
+            Bundle bundle = new Bundle();
+            sortTransactionsByDate();
+            bundle.putSerializable("USER", user);
+            bundle.putSerializable("TRANSACTIONS", transactions);
+            bundle.putSerializable("CREDITCARDS", creditCards);
 
-        currentFragment = new TransactionsFragment();
-        currentFragment.setArguments(bundle);
+            currentFragment = new TransactionsFragment();
+            currentFragment.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainAct_fl, currentFragment)
-                .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainAct_fl, currentFragment)
+                    .commit();
+        } else {
+            currentFragment = new NoTransactionsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainAct_fl, currentFragment)
+                    .commit();
+        }
     }
 
     private void openTransferFragment() {
@@ -438,6 +468,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     public void onTransferCreated(Transfer transfer) {
         transfers.add(transfer);
         addTransferToDatabase(transfer);
+        bankAccount.reduceBalance(transfer.getAmount() + transfer.getCommission());
         openTransferFragment();
     }
 }

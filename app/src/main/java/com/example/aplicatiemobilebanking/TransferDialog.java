@@ -88,13 +88,23 @@ public class TransferDialog extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                totalTransfered = Float.parseFloat(s.toString());
-                tvTotalTransfered.setText(getString(R.string.to_be_transfered,
-                        String.valueOf(totalTransfered)));
+                if (!s.toString().isEmpty()) {
+                    totalTransfered = Float.parseFloat(s.toString());
+                    tvTotalTransfered.setText(getString(R.string.to_be_transfered,
+                            String.valueOf(totalTransfered)));
 
-                totalCost = s.toString().isEmpty() ? 0.0f : Float.parseFloat(s.toString()) + commision;
-                tvTotalCost.setText(getString(R.string.total_transfer_cost,
-                        String.valueOf(totalCost)));
+                    totalCost = s.toString().isEmpty() ? 0.0f : Float.parseFloat(s.toString()) + commision;
+                    tvTotalCost.setText(getString(R.string.total_transfer_cost,
+                            String.valueOf(totalCost)));
+                } else {
+                    totalTransfered = 0.0f;
+                    tvTotalTransfered.setText(getString(R.string.to_be_transfered,
+                            String.valueOf(totalTransfered)));
+
+                    totalCost = 0.0f;
+                    tvTotalCost.setText(getString(R.string.total_transfer_cost,
+                            String.valueOf(totalCost)));
+                }
             }
 
 
@@ -146,8 +156,8 @@ public class TransferDialog extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         boolean hasError = false;
-                        if (tietRecIban.getText().toString().isEmpty() || !isValidIban(tietRecIban.getText().toString())) {
-                            tietRecIban.setError("Incorrect IBAN provided");
+                        if (tietRecIban.getText().toString().isEmpty() || tietRecIban.getText().toString().length() != 24) {
+                            tietRecIban.setError("Wrong IBAN provided");
                             hasError = true;
                         }
                         if (tietAmount.getText().toString().isEmpty()) {
@@ -205,27 +215,6 @@ public class TransferDialog extends DialogFragment {
     }
 
 
-    public boolean isValidIban(String iban) {
-        if (iban == null || iban.length() < 4) {
-            return false;
-        }
-
-        String rearrangedIban = iban.substring(4) + iban.substring(0, 4);
-
-        int remainder = 0;
-        for (int i = 0; i < rearrangedIban.length(); i++) {
-            char currentChar = rearrangedIban.charAt(i);
-            if (Character.isLetter(currentChar)) {
-                remainder = (remainder * 10 + (currentChar - 'A' + 10)) % 97;
-            } else if (Character.isDigit(currentChar)) {
-                remainder = (remainder * 10 + (currentChar - '0')) % 97;
-            }
-        }
-
-        return remainder == 1;
-    }
-
-
     public String generateId() {
         // Generate a random 12-digit number
         long min = 100000000000L;
@@ -280,5 +269,6 @@ public class TransferDialog extends DialogFragment {
         });
 
     }
+
 }
 
