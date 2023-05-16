@@ -106,10 +106,9 @@
         android:layout_marginTop="12sp"
         android:checked="false"
         android:thumbTint="@color/primary_color"
-        android:trackTint="@color/primary_color"
+        android:trackTint="@drawable/switch_track_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilPass"
-
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <TextView

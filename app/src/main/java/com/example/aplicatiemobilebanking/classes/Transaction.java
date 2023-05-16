@@ -7,7 +7,7 @@ public class Transaction implements Serializable {
     private String id; // Pk
     private String merchant;
     private String category;
-    private float ammount;
+    private float amount;
     private Date date;
     private String creditCardNumber;  //Foreign key for CreditCard
     private String bankAccountIban;  //Foreign key for BankAccount
@@ -17,20 +17,20 @@ public class Transaction implements Serializable {
 
     }
 
-    public Transaction(String id, String merchant, String category, float ammount, Date date, String creditCardNumber, String bankAccountIban) {
+    public Transaction(String id, String merchant, String category, float amount, Date date, String creditCardNumber, String bankAccountIban) {
         this.id = id;
         this.merchant = merchant;
         this.category = category;
-        this.ammount = ammount;
+        this.amount = amount;
         this.date = date;
         this.creditCardNumber = creditCardNumber;
         this.bankAccountIban = bankAccountIban;
     }
 
-    public Transaction(String merchant, String category, float ammount, Date date, String creditCardNumber) {
+    public Transaction(String merchant, String category, float amount, Date date, String creditCardNumber) {
         this.merchant = merchant;
         this.category = category;
-        this.ammount = ammount;
+        this.amount = amount;
         this.date = date;
         this.creditCardNumber = creditCardNumber;
 
@@ -44,12 +44,12 @@ public class Transaction implements Serializable {
         this.merchant = merchant;
     }
 
-    public float getAmmount() {
-        return ammount;
+    public float getAmount() {
+        return amount;
     }
 
-    public void setAmmount(float ammount) {
-        this.ammount = ammount;
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 
     public Date getDate() {
@@ -97,7 +97,7 @@ public class Transaction implements Serializable {
         return "Transaction{" +
                 "merchant='" + merchant + '\'' +
                 ", category='" + category + '\'' +
-                ", ammount=" + ammount +
+                ", amount=" + amount +
                 ", date=" + date +
                 ", creditCardNumber=" + creditCardNumber +
                 '}';

@@ -12,16 +12,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ViewTransactionDialog extends DialogFragment {
 
@@ -51,7 +46,7 @@ public class ViewTransactionDialog extends DialogFragment {
 
         tvMerchant.setText(transaction.getMerchant());
         tvCategory.setText(transaction.getCategory());
-        tvAmmount.setText(String.valueOf(transaction.getAmmount()) + " RON");
+        tvAmmount.setText(String.valueOf(transaction.getAmount()) + " RON");
         tvDate.setText(new SimpleDateFormat("dd MMM yyyy HH:mm").format(transaction.getDate()));
 
         CreditCard creditCard = creditCards.stream().filter(c -> c.getCardNumber().equals(transaction.getCreditCardNumber()))

@@ -51,54 +51,116 @@
             android:id="@+id/transferFrag_rlPay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50sp"
+            android:layout_marginStart="60sp"
             android:layout_marginTop="50sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/transferFrag_ibPay"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
+                android:layout_width="85sp"
+                android:layout_height="85sp"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/ic_pay"
                 android:clickable="true" />
 
             <TextView
                 android:id="@+id/transferFrag_tvPay"
-                android:layout_width="wrap_content"
+                android:layout_width="110sp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/transferFrag_ibPay"
                 android:layout_centerHorizontal="true"
                 android:text="Pay"
-                android:textSize="17sp"
+                android:textAlignment="center"
+                android:textSize="15sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/transferFrag_rlRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:layout_marginEnd="60sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/transferFrag_ibRequest"
+                android:layout_width="85sp"
+                android:layout_height="85sp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_request"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/transferFrag_tvRequest"
+                android:layout_width="110sp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/transferFrag_ibRequest"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:text="Request Money"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/transferFrag_rlTransfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/transferFrag_rlPay"
-            app:layout_constraintTop_toTopOf="parent">
+           android:layout_marginTop="5sp"
+            android:layout_marginStart="60sp"
+           app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transferFrag_rlPay">
 
             <ImageButton
                 android:id="@+id/transferFrag_ibTransfer"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
-                android:layout_marginTop="50sp"
+                android:layout_width="85sp"
+                android:layout_height="85sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="12dp"
                 android:background="@drawable/ic_transfer" />
 
             <TextView
                 android:id="@+id/transferFrag_tvTransfer"
-                android:layout_width="wrap_content"
+                android:layout_width="110sp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/transferFrag_ibTransfer"
                 android:layout_centerHorizontal="true"
-                android:text="@string/transfer"
-                android:textSize="17sp"
+                android:textAlignment="center"
+                android:text="IBAN Transfer"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/transferFrag_rlMobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:layout_marginEnd="60sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/transferFrag_rlRequest">
+
+            <ImageButton
+                android:id="@+id/transferFrag_ibMobile"
+                android:layout_width="85sp"
+                android:layout_height="85sp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_mobile_transfer" />
+
+            <TextView
+                android:id="@+id/transferFrag_tvMobile"
+                android:layout_width="110sp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/transferFrag_ibMobile"
+                android:layout_centerHorizontal="true"
+                android:text="Mobile Transfer"
+                android:textAlignment="center"
+                android:textSize="15sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -107,19 +169,21 @@
             android:id="@+id/transferFrag_lvTransfers"
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="30sp"
             android:layout_marginStart="15sp"
             android:layout_marginEnd="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/transferFrag_rlPay"
+            app:layout_constraintTop_toBottomOf="@id/transferFrag_rlTransfer"
             android:overScrollMode="never"
             android:divider="@color/white"
             android:dividerHeight="7sp"
             android:scrollbars="none"
             android:listSelector="@android:color/transparent">
         </ListView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

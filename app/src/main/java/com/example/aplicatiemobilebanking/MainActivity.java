@@ -9,13 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
 import android.widget.FrameLayout;
 
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
+import com.example.aplicatiemobilebanking.classes.Request;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.Transfer;
 import com.example.aplicatiemobilebanking.classes.User;
@@ -35,18 +33,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class MainActivity extends AppCompatActivity implements PayDialog.OnTransactionAddedListener,
         AddCardDialog.AddCardListener, ViewBankAccountDialog.CreditCardListener,
-        TransferDialog.TransferDialogListener {
+        TransferDialog.TransferDialogListener, RequestDialog.RequestListener {
 
     private FrameLayout fl;
     private Fragment currentFragment;
@@ -57,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     private ArrayList<Transaction> transactions = new ArrayList<>(0);
     private ArrayList<Transfer> transfers = new ArrayList<Transfer>(0);
     private ArrayList<CreditCard> creditCards = new ArrayList<>(0);
+    private ArrayList<Request> requests = new ArrayList<>(0);
 
     private boolean bankAccountLoaded = false;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -262,10 +257,8 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     }
 
     private void updateCreditCardDatabase(ArrayList<CreditCard> creditCards) {
-        // Get a reference to the Firestore collection for credit cards
         CollectionReference creditCardsCollection = db.collection("creditCards");
 
-        // Delete the old credit cards that match the bank account IBAN
         Query query = creditCardsCollection.whereEqualTo("bankAccountIban", bankAccount.getIban());
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -274,16 +267,13 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                     batch.delete(document.getReference());
                 }
                 batch.commit().addOnSuccessListener(aVoid -> {
-                    // Add the new credit cards to the collection
                     for (CreditCard card : creditCards) {
                         creditCardsCollection.document(card.getCardNumber()).set(card);
                     }
                 }).addOnFailureListener(e -> {
-                    // Handle error if deleting old credit cards fails
                     Log.e(TAG, "Error deleting old credit cards", e);
                 });
             } else {
-                // Handle error if querying old credit cards fails
                 Log.e(TAG, "Error querying old credit cards", task.getException());
             }
         });
@@ -300,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                     CollectionReference bankAccountsCollection = db.collection("bankAccounts");
 
                     bankAccountsCollection.document(bankAccount.getIban())
-                            .update("balance", FieldValue.increment(-transaction.getAmmount()))
+                            .update("balance", FieldValue.increment(-transaction.getAmount()))
                             .addOnSuccessListener(aVoid1 -> {
                                 Log.d(TAG, "Balance updated successfully");
                             })
@@ -368,6 +358,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
             Bundle bundle = new Bundle();
             sortTransactionsByDate();
             bundle.putSerializable("USER", user);
+            bundle.putSerializable("BANKACCOUNT", bankAccount);
             bundle.putSerializable("TRANSACTIONS", transactions);
             bundle.putSerializable("CREDITCARDS", creditCards);
 
@@ -441,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     @Override
     public void onTransactionAdded(Transaction transaction) {
         transactions.add(transaction);
-        bankAccount.reduceBalance(transaction.getAmmount());
+        bankAccount.reduceBalance(transaction.getAmount());
         addTransactionToDatabase(transaction);
     }
 
@@ -470,5 +461,11 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
         addTransferToDatabase(transfer);
         bankAccount.reduceBalance(transfer.getAmount() + transfer.getCommission());
         openTransferFragment();
+    }
+
+    @Override
+    public void onRequestCreated(Request request) {
+        requests.add(request);
+        Log.d("REQUESTS:", this.requests.toString());
     }
 }

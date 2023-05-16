@@ -1,6 +1,9 @@
 package com.example.aplicatiemobilebanking;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +21,8 @@ public class ProfileFragment extends Fragment {
             tvAddress,tvPhone,tvEmail;
     private Button btLogOut;
     private User user;
+
+    private final String SHARED_PREFS_NAME = "com.example.aplicatiemobilebanking";
 
     public ProfileFragment() {
 
@@ -63,6 +68,11 @@ public class ProfileFragment extends Fragment {
         btLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Clear saved email and password
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.clear();
+                editor.apply();
+
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
             }

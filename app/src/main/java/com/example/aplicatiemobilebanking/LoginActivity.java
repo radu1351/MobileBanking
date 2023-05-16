@@ -19,8 +19,9 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
+
     public FrameLayout flLogin;
-    public Fragment currentFragment ;
+    public Fragment currentFragment;
 
 
     @Override
@@ -33,14 +34,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void initComponents(){
+    private void initComponents() {
         flLogin = findViewById(R.id.loginAct_fl);
         openLoginFragment();
     }
 
 
-    public void openLoginFragment(){
-        if( ! (currentFragment instanceof LoginFragment) ) {
+    public void openLoginFragment() {
+        if (!(currentFragment instanceof LoginFragment)) {
             currentFragment = new LoginFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.loginAct_fl, currentFragment)

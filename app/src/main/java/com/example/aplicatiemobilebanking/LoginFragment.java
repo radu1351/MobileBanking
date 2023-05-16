@@ -1,8 +1,10 @@
 package com.example.aplicatiemobilebanking;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +36,9 @@ public class LoginFragment extends Fragment {
     public Switch switchRemember;
     public Button btLogin, btRegister;
 
+    private final String SHARED_PREFS_NAME = "com.example.aplicatiemobilebanking";
+    private final String PREF_EMAIL = "PREF_EMAIL";
+    private final String PREF_PASSWORD = "PREF_PASSWORD";
     //User and Account information
     User user;
 
@@ -89,6 +94,16 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        SharedPreferences prefs = getActivity().getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
+        String savedEmail = prefs.getString(PREF_EMAIL, "");
+        String savedPassword = prefs.getString(PREF_PASSWORD, "");
+
+        if (!savedEmail.isEmpty() && !savedPassword.isEmpty()) {
+            tietEmail.setText(savedEmail);
+            tietPassword.setText(savedPassword);
+            switchRemember.setChecked(true);
+            logInUser(savedEmail, savedPassword);
+        }
     }
 
     private void logInUser(String email, String password) {
@@ -106,6 +121,17 @@ public class LoginFragment extends Fragment {
                 // Check if there is a user with the given email and password
                 if (!task.getResult().isEmpty()) {
                     // User found, log them in
+                    SharedPreferences.Editor editor = getActivity().getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE).edit();
+                    if (switchRemember.isChecked()) {
+                        //Save the email and password for the lext logIn
+                        editor.putString(PREF_EMAIL, email);
+                        editor.putString(PREF_PASSWORD, password);
+                    } else {
+                        // Clear saved email and password
+                        editor.clear();
+                    }
+                    editor.apply();
+
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     user = task.getResult().getDocuments().get(0).toObject(User.class);
                     intent.putExtra("USER", user);

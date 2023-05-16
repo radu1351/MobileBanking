@@ -33,7 +33,7 @@ public class TransferFragment extends Fragment {
     private ListView lvTransfers;
     private ArrayList<Transfer> transfers = new ArrayList<>(0);
     private ArrayList<CreditCard> creditCards = new ArrayList<>(0);
-    private ImageButton ibPay, ibTransfer;
+    private ImageButton ibPay, ibTransfer, ibRequest, ibPhoneTransfer;
     private TextView tvName;
     private TransferHeaderAdapter transferHeaderAdapter;
 
@@ -78,6 +78,14 @@ public class TransferFragment extends Fragment {
                 dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "PayDialogFragment");
 
+            }
+        });
+
+        ibRequest = view.findViewById(R.id.transferFrag_ibRequest);
+        ibRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRequestMoneyFragment();
             }
         });
 
@@ -150,4 +158,16 @@ public class TransferFragment extends Fragment {
     }
 
 
+    public void openRequestMoneyFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("USER", user);
+        bundle.putSerializable("BANKACCOUNT", bankAccount);
+
+        RequestMoneyFragment requestMoneyFragment = new RequestMoneyFragment();
+        requestMoneyFragment.setArguments(bundle);
+
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainAct_fl, requestMoneyFragment)
+                .commit();
+    }
 }

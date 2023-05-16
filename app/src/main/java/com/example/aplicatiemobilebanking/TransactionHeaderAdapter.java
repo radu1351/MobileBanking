@@ -98,7 +98,7 @@ class TransactionHeaderAdapter extends BaseAdapter {
             case TYPE_ITEM:
                 holder.textView1.setText(mData.get(position).getMerchant());
                 holder.textView2.setText((new SimpleDateFormat("HH:mm").format(mData.get(position).getDate())));
-                holder.textView3.setText(String.valueOf("- " + mData.get(position).getAmmount()) + " RON");
+                holder.textView3.setText(String.valueOf("- " + mData.get(position).getAmount()) + " RON");
                 break;
             case TYPE_SEPARATOR:
                 holder.textView1.setText(new SimpleDateFormat("dd MMM").format(mData.get(position).getDate()));

@@ -1,54 +1,38 @@
 package com.example.aplicatiemobilebanking;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.androidplot.ui.HorizontalPositioning;
-import com.androidplot.ui.LayoutManager;
-import com.androidplot.ui.Size;
-
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.androidplot.pie.PieChart;
 import com.androidplot.pie.Segment;
 import com.androidplot.pie.SegmentFormatter;
-import com.androidplot.ui.SizeMode;
-import com.androidplot.ui.VerticalPositioning;
-import com.androidplot.ui.widget.TextLabelWidget;
-import com.androidplot.ui.widget.Widget;
-import com.androidplot.util.PixelUtils;
+import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.User;
 
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -60,6 +44,8 @@ public class TransactionsFragment extends Fragment {
     private ListView lvTransactions;
     private TextView tvName, tvSum;
     private Spinner spinMonth;
+    private Toolbar toolbar;
+    private BankAccount bankAccount;
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private ArrayList<CreditCard> creditCards = new ArrayList<>();
 
@@ -79,6 +65,7 @@ public class TransactionsFragment extends Fragment {
         super.onCreate(savedInstancetransactionse);
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("USER");
+            bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
             transactions = (ArrayList<Transaction>) getArguments().getSerializable("TRANSACTIONS");
             creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
         }
@@ -94,6 +81,27 @@ public class TransactionsFragment extends Fragment {
         tvSum = view.findViewById(R.id.transactionsFrag_tvSum);
         tvName = view.findViewById(R.id.transactionsFrag_tvName);
         tvName.setText(user.getFullName());
+        toolbar = view.findViewById(R.id.transactionsFrag_toolbar);
+
+        toolbar.inflateMenu(R.menu.menu_transactions);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_account_statement:
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("USER", user);
+                        bundle.putSerializable("BANKACCOUNT", bankAccount);
+                        bundle.putSerializable("TRANSACTIONS", transactions);
+                        StatementDialog dialog = new StatementDialog();
+                        dialog.setArguments(bundle);
+                        dialog.show(getActivity().getSupportFragmentManager(), "PayDialogFragment");
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
 
         if (!transactions.isEmpty()) {
 
@@ -217,11 +225,10 @@ public class TransactionsFragment extends Fragment {
 
 
         double sum = transactions.stream()
-                .mapToDouble(Transaction::getAmmount)
+                .mapToDouble(Transaction::getAmount)
                 .sum();
-        ;
 
-        tvSum.setText(String.valueOf(sum) + " RON");
+        tvSum.setText(String.format("%.2f", sum) + " RON");
     }
 
 

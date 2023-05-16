@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.Transfer;
 
@@ -104,7 +106,6 @@ class TransferHeaderAdapter extends BaseAdapter {
                 if (mData.get(position).getRecipientIban().equals(bankAccount.getIban())) {
                     // This account recieved money, so the sum is positive.
                     holder.textView2.setText(String.valueOf(" + " + mData.get(position).getAmount()) + " RON");
-                    holder.textView2.setTextColor(Color.GREEN);
                 } else { // This account sent money, so the sum is negative
                     holder.textView2.setText(String.valueOf("- " + mData.get(position).getAmount()) + " RON");
                     holder.textView2.setTextColor(Color.RED);

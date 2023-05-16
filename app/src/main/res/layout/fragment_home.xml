@@ -16,14 +16,14 @@
         android:fontFamily="sans-serif"
         android:text="John Terry"
         android:layout_marginEnd="5sp"
-        android:layout_marginBottom="40sp"
+        android:layout_marginTop="80sp"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:singleLine="true"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/homeFrag_ivUser"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/homeFrag_clCards"/>
+        />
 
     <ImageView
         android:id="@+id/homeFrag_ivUser"
@@ -31,12 +31,11 @@
         android:layout_height="55dp"
         android:layout_marginStart="5sp"
         android:layout_marginEnd="25sp"
-        android:layout_marginBottom="40sp"
+        android:layout_marginTop="70sp"
         android:src="@drawable/ic_profile_picture_round"
         app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/homeFrag_clCards"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView

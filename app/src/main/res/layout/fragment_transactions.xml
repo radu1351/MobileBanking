@@ -7,6 +7,20 @@
     android:background="@drawable/blue_gradient"
     tools:context=".TransactionsFragment">
 
+    <android.widget.Toolbar
+        android:id="@+id/transactionsFrag_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25sp"
+        app:showAsAction="always"
+        android:gravity="start"
+        android:paddingLeft="20sp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/transactionsFrag_cltransactions"
+        android:contentInsetStart="5dp"
+        android:theme="@style/WhiteOptionsMenuTheme"/>
+
 
     <TextView
         android:id="@+id/transactionsFrag_tvName"
@@ -75,9 +89,10 @@
                 android:id="@+id/transactionsFrag_tvSum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:text="6500.50 RON"
-                android:textStyle="normal"
-                android:layout_centerInParent="true"/>
+                android:textColor="@color/black"
+                android:textStyle="normal" />
         </RelativeLayout>
 
 

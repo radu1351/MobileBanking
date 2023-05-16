@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -25,13 +23,10 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PayDialog extends DialogFragment implements DialogInterface.OnClickListener {
@@ -119,7 +114,7 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
                                         date, creditCards.get(spinCard.getSelectedItemPosition()).getCardNumber(),
                                         bankAccount.getIban());
 
-                                if (transaction.getAmmount() < bankAccount.getBalance()) {
+                                if (transaction.getAmount() < bankAccount.getBalance()) {
                                     mListener.onTransactionAdded(transaction);
                                     dialog.dismiss();
                                 } else {
@@ -145,7 +140,6 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
     private void processTransaction(Transaction transaction) {
 
     }
-
 
     @Override
     public void onClick(DialogInterface dialog, int which) {

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/blue_gradient"
+    tools:context=".RequestMoneyFragment">
+
+
+    <TextView
+        android:id="@+id/requestMoneyFrag_tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="John Terry"
+        android:layout_marginEnd="5sp"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toStartOf="@+id/requestMoneyFrag_ivUser"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/requestMoneyFrag_ivUser"
+        android:layout_width="50sp"
+        android:layout_height="55dp"
+        android:layout_marginStart="5sp"
+        android:layout_marginEnd="25sp"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/ic_profile_picture_round"
+        app:tint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/requestMoneyFrag_cltransactions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150sp"
+        android:background="@drawable/roundbackground_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/requestMoneyFrag_tvPersonalNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="40sp"
+            android:text="Sender's Personal ID Number"
+            app:layout_constraintBottom_toTopOf="@id/requestMoneyFrag_tilPersonalNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/requestMoneyFrag_tilPersonalNumber"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5sp"
+            android:layout_marginEnd="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/requestMoneyFrag_tvPersonalNumber">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/requestMoneyFrag_tietPersonalNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primary_color"
+                android:paddingBottom="10sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/requestMoneyFrag_btSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20sp"
+            android:layout_marginEnd="20sp"
+            android:text="Search"
+            android:paddingRight="55sp"
+            android:textAlignment="center"
+            android:drawableLeft="@drawable/ic_baseline_search_24"
+            android:drawableTint="@color/primary_color"
+            android:textColor="@color/primary_color"
+            android:backgroundTint="@color/white"
+            app:cornerRadius="0dp"
+            app:strokeColor="@color/primary_color"
+            app:strokeWidth="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/requestMoneyFrag_tilPersonalNumber"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/requestMoneyFrag_llSender"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:background="@drawable/roundbackground_listview"
+            android:layout_marginTop="30sp"
+            app:layout_constraintTop_toBottomOf="@id/requestMoneyFrag_btSearch"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="20sp"
+            android:layout_marginEnd="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/requestMoneyFrag_tvSenderName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="John Terry"
+                    android:layout_marginStart="15sp"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:id="@+id/requestMoneyFrag_tvSenderIban"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15sp"
+                    android:text="RO08BLTRONCRT0279971101"
+                    android:textSize="15sp"
+                    android:padding="8dp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/requestMoneyFrag_btRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="15sp"
+                android:gravity="center"
+                android:layout_marginTop="8sp"
+                android:layout_marginBottom="8sp"
+                android:text="Request"
+                android:textSize="16sp"
+                android:padding="8dp"/>
+        </LinearLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

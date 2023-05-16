@@ -38,7 +38,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
         Transaction transaction = transactions.get(position);
 
         addMerchant(transaction.getMerchant(), view);
-        addAmmount(transaction.getAmmount(), view);
+        addAmmount(transaction.getAmount(), view);
         addDate(transaction.getDate(), view);
 
         return view;

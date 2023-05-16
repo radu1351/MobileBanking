@@ -11,4 +11,5 @@
     <color name="grey">#F5F5F5</color>
     <color name="btGrey">#F0F0F0</color>
     <color name="light_grey">#7f7f7f</color>
+    <color name="dark_green">#228B22</color>
 </resources>
