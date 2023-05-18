@@ -25,7 +25,7 @@ public class RequestDialog extends DialogFragment {
     private BankAccount senderBankAccount;
     private User senderUser;
     private Request request;
-    private TextInputEditText tietAmount;
+    private TextInputEditText tietAmount, tietDescription;
 
     private RequestListener requestListener;
 
@@ -47,12 +47,24 @@ public class RequestDialog extends DialogFragment {
         builder.setPositiveButton("Request", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (tietAmount.getText().toString().isEmpty())
+                boolean hasError = false;
+
+                if (tietDescription.getText().toString().isEmpty()) {
+                    tietDescription.setError("No description provided for the sender");
+                    hasError = true;
+                }
+
+                if (tietAmount.getText().toString().isEmpty()) {
                     tietAmount.setError("No amount provided");
-                else {
+                    hasError = true;
+                }
+
+                if (!hasError) {
                     request.setAmount(Float.parseFloat(tietAmount.getText().toString()));
                     request.setDate(new Date());
+                    request.setDescription(tietDescription.getText().toString());
                     request.setState(0); // In progress (not accepted/declined)
+
                     if (requestListener != null) {
                         requestListener.onRequestCreated(request);
                     }

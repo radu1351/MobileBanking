@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Request implements Serializable {
+    private String id; // PK
     private String requesterFullName;  // The one who requested the money
     private String requesterIban;
     private String senderFullName;  // The one who sends the money
     private String senderIban;
+    private String description;
     private float amount;
     private Date date; // Last state change
     private int state;  // 0 - in progress, 1 - accepted, 2 - denied
@@ -15,12 +17,14 @@ public class Request implements Serializable {
     public Request() {
     }
 
-    public Request(String requesterFullName, String requesterIban, String senderFullName, String senderIban,
-                   float amount, Date date, int state) {
+    public Request(String id, String requesterFullName, String requesterIban, String senderFullName, String senderIban,
+                   String description, float amount, Date date, int state) {
+        this.id = id;
         this.requesterFullName = requesterFullName;
         this.requesterIban = requesterIban;
         this.senderFullName = senderFullName;
         this.senderIban = senderIban;
+        this.description=description;
         this.amount = amount;
         this.date = date;
         this.state = state;
@@ -82,13 +86,31 @@ public class Request implements Serializable {
         this.state = state;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Request{" +
-                "requesterFullName='" + requesterFullName + '\'' +
+                "id='" + id + '\'' +
+                ", requesterFullName='" + requesterFullName + '\'' +
                 ", requesterIban='" + requesterIban + '\'' +
                 ", senderFullName='" + senderFullName + '\'' +
                 ", senderIban='" + senderIban + '\'' +
+                ", description='" + description + '\'' +
                 ", amount=" + amount +
                 ", date=" + date +
                 ", state=" + state +

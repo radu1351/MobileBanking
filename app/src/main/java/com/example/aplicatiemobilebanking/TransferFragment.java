@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
+import com.example.aplicatiemobilebanking.classes.Request;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.Transfer;
 import com.example.aplicatiemobilebanking.classes.User;
@@ -33,6 +34,7 @@ public class TransferFragment extends Fragment {
     private ListView lvTransfers;
     private ArrayList<Transfer> transfers = new ArrayList<>(0);
     private ArrayList<CreditCard> creditCards = new ArrayList<>(0);
+    private ArrayList<Request> requests = new ArrayList<Request>(0);
     private ImageButton ibPay, ibTransfer, ibRequest, ibPhoneTransfer;
     private TextView tvName;
     private TransferHeaderAdapter transferHeaderAdapter;
@@ -56,6 +58,7 @@ public class TransferFragment extends Fragment {
             bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
             creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
             transfers = (ArrayList<Transfer>) getArguments().getSerializable("TRANSFERS");
+            requests = (ArrayList<Request>) getArguments().getSerializable("REQUESTS");
         }
     }
 
@@ -162,6 +165,7 @@ public class TransferFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("USER", user);
         bundle.putSerializable("BANKACCOUNT", bankAccount);
+        bundle.putSerializable("REQUESTS", requests);
 
         RequestMoneyFragment requestMoneyFragment = new RequestMoneyFragment();
         requestMoneyFragment.setArguments(bundle);

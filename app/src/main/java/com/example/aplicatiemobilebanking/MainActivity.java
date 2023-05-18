@@ -33,14 +33,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 
+import org.bouncycastle.cert.ocsp.Req;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 public class MainActivity extends AppCompatActivity implements PayDialog.OnTransactionAddedListener,
         AddCardDialog.AddCardListener, ViewBankAccountDialog.CreditCardListener,
-        TransferDialog.TransferDialogListener, RequestDialog.RequestListener {
+        TransferDialog.TransferDialogListener, RequestDialog.RequestListener, ViewRequestDialog.RequestDialogListener {
 
     private FrameLayout fl;
     private Fragment currentFragment;
@@ -105,12 +108,20 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                 }
             });
 
+            CompletableFuture<List<Request>> requestsFuture = new CompletableFuture<>();
+            loadRequestsFromDatabase(new OnSuccessListener<List<Request>>() {
+                @Override
+                public void onSuccess(List<Request> requestsFromDatabase) {
+                    requestsFuture.complete(requestsFromDatabase);
+                }
+            });
             // wait for all the futures to complete
-            return CompletableFuture.allOf(creditCardFuture, transactionsFuture, transfersFuture)
+            return CompletableFuture.allOf(creditCardFuture, transactionsFuture, transfersFuture, requestsFuture)
                     .thenAccept(v -> {
                         creditCards = new ArrayList<>(creditCardFuture.join());
                         transactions = new ArrayList<>(transactionsFuture.join());
                         transfers = new ArrayList<>(transfersFuture.join());
+                        requests = new ArrayList<>(requestsFuture.join());
                     });
         });
 
@@ -194,13 +205,10 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     private void loadTransfersFromDatabase(OnSuccessListener<List<Transfer>> callback) {
         CollectionReference transfersRef = db.collection("transfers");
 
-        // Query for transfers where recipientIban = bankAccount.getIban()
         Query recipientQuery = transfersRef.whereEqualTo("recipientIban", bankAccount.getIban());
 
-        // Query for transfers where bankAccountIban = bankAccount.getIban()
         Query bankAccountQuery = transfersRef.whereEqualTo("bankAccountIban", bankAccount.getIban());
 
-        // Combine the results of the two queries into a single list
         Tasks.whenAllSuccess(recipientQuery.get(), bankAccountQuery.get())
                 .addOnSuccessListener(new OnSuccessListener<List<Object>>() {
                     @Override
@@ -214,6 +222,33 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                             }
                         }
                         callback.onSuccess(transfers);
+                    }
+                });
+    }
+
+    private void loadRequestsFromDatabase(OnSuccessListener<List<Request>> callback) {
+        CollectionReference requestsRef = db.collection("requests");
+
+        // Query for requets where requesterIban = bankAccount.getIban()
+        Query requesterQuery = requestsRef.whereEqualTo("requesterIban", bankAccount.getIban());
+
+        // Query for requests where senderIban = bankAccount.getIban()
+        Query senderQuery = requestsRef.whereEqualTo("senderIban", bankAccount.getIban());
+
+        // Combine the results of the two queries into a single list
+        Tasks.whenAllSuccess(requesterQuery.get(), senderQuery.get())
+                .addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> results) {
+                        List<Request> requests = new ArrayList<>();
+                        for (Object result : results) {
+                            QuerySnapshot querySnapshot = (QuerySnapshot) result;
+                            for (QueryDocumentSnapshot document : querySnapshot) {
+                                Request request = document.toObject(Request.class);
+                                requests.add(request);
+                            }
+                        }
+                        callback.onSuccess(requests);
                     }
                 });
     }
@@ -281,8 +316,11 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
 
 
     public void addTransactionToDatabase(Transaction transaction) {
-        CollectionReference transactionsCollection = db.collection("transactions");
+        //Update the local variables
+        transactions.add(transaction);
+        bankAccount.reduceBalance(transaction.getAmount());
 
+        CollectionReference transactionsCollection = db.collection("transactions");
         transactionsCollection.document(transaction.getId()).set(transaction)
                 .addOnSuccessListener(aVoid -> {
                     Log.d(TAG, "Transaction added successfully");
@@ -305,6 +343,10 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
 
 
     public void addTransferToDatabase(Transfer transfer) {
+        //Update the local variables
+        transfers.add(transfer);
+        bankAccount.reduceBalance(transfer.getAmount() + transfer.getCommission());
+
         CollectionReference transactionsCollection = db.collection("transfers");
         transactionsCollection.document(transfer.getId()).set(transfer)
                 .addOnSuccessListener(aVoid -> {
@@ -334,6 +376,32 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                     // Handle error
                     Log.e(TAG, "Error adding transfer", e);
                 });
+    }
+
+    private void addRequestToDatabase(Request request) {
+        //Update the local variables
+        requests.add(request);
+
+        CollectionReference requestsCollection = db.collection("requests");
+
+        requestsCollection.document(request.getId()).set(request)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Request added successfully");
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error adding Request", e);
+                });
+    }
+
+    private void updateRequestInDatabase(Request request) {
+        for (int i = 0; i < requests.size(); i++) {
+            if (requests.get(i).getId().equals(request.getId())) {
+                requests.set(i, request);
+                break;
+            }
+        }
+        addRequestToDatabase(request);
     }
 
     private void openHomeFragment() {
@@ -379,16 +447,33 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     private void openTransferFragment() {
         Bundle bundle = new Bundle();
         sortTransfersByDate();
+        sortRequests();
         bundle.putSerializable("USER", user);
         bundle.putSerializable("TRANSFERS", transfers);
         bundle.putSerializable("CREDITCARDS", creditCards);
         bundle.putSerializable("BANKACCOUNT", bankAccount);
+        bundle.putSerializable("REQUESTS", requests);
 
         currentFragment = new TransferFragment();
         currentFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.mainAct_fl, currentFragment)
+                .commit();
+    }
+
+    private void openRequestMoneyFragment() {
+        Bundle bundle = new Bundle();
+        sortRequests();
+        bundle.putSerializable("USER", user);
+        bundle.putSerializable("BANKACCOUNT", bankAccount);
+        bundle.putSerializable("REQUESTS", requests);
+
+        RequestMoneyFragment requestMoneyFragment = new RequestMoneyFragment();
+        requestMoneyFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.mainAct_fl, requestMoneyFragment)
                 .commit();
     }
 
@@ -428,11 +513,37 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
         });
     }
 
+    private void sortRequests() {
+        requests.sort(new Comparator<Request>() {
+            @Override
+            public int compare(Request r1, Request r2) {
+                boolean r1IsSender = r1.getSenderIban().equals(bankAccount.getIban());
+                boolean r2IsSender = r2.getSenderIban().equals(bankAccount.getIban());
+                boolean r1IsRequester = r1.getRequesterIban().equals(bankAccount.getIban());
+                boolean r2IsRequester = r2.getRequesterIban().equals(bankAccount.getIban());
+
+                if (r1IsSender && r2IsSender) {
+                    return r1.getDate().compareTo(r2.getDate());
+                } else if (r1IsSender) {
+                    return -1;
+                } else if (r2IsSender) {
+                    return 1;
+                } else if (r1IsRequester && r2IsRequester) {
+                    return r1.getDate().compareTo(r2.getDate());
+                } else if (r1IsRequester) {
+                    return -1;
+                } else if (r2IsRequester) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
+    }
+
+
     //Adaugare transactie din PayDialogFragment
     @Override
     public void onTransactionAdded(Transaction transaction) {
-        transactions.add(transaction);
-        bankAccount.reduceBalance(transaction.getAmount());
         addTransactionToDatabase(transaction);
     }
 
@@ -457,15 +568,35 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
 
     @Override
     public void onTransferCreated(Transfer transfer) {
-        transfers.add(transfer);
         addTransferToDatabase(transfer);
-        bankAccount.reduceBalance(transfer.getAmount() + transfer.getCommission());
         openTransferFragment();
     }
 
     @Override
     public void onRequestCreated(Request request) {
-        requests.add(request);
-        Log.d("REQUESTS:", this.requests.toString());
+        addRequestToDatabase(request);
+        openRequestMoneyFragment();
+    }
+
+    @Override
+    public void onAcceptRequest(Request request) {
+        Log.d("ACCEPTED REQ", request.toString());
+        if (request.getState() == 1) { // If accepted, the request becomes a transfer
+            Transfer transfer = new Transfer(generateId(), request.getRequesterIban(), request.getAmount(),
+                    2.5f, request.getDescription(), request.getDate(), request.getSenderIban());
+            addTransferToDatabase(transfer);
+            updateRequestInDatabase(request);
+        } else if (request.getState() == 2) { // If declined, the request is only updated
+            updateRequestInDatabase(request);
+        }
+        openRequestMoneyFragment();
+    }
+
+    public String generateId() {
+        Random rand = new Random();
+        long min = 100000000000L;
+        long max = 999999999999L;
+        long randomNum = min + ((long) (rand.nextDouble() * (max - min)));
+        return Long.toString(randomNum);
     }
 }

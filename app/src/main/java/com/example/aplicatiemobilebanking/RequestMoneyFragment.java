@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RequestMoneyFragment extends Fragment {
 
@@ -38,11 +42,14 @@ public class RequestMoneyFragment extends Fragment {
     private Button btSearch, btRequest;
     private TextView tvSenderName, tvSenderIban;
     private TextView tvName;
+    private ListView lvRequests;
     private User senderUser;
     private BankAccount senderBankAccount;
 
     private User user;
     private BankAccount bankAccount;
+
+    private ArrayList<Request> requests = new ArrayList<>(0);
 
     public RequestMoneyFragment() {
     }
@@ -60,6 +67,9 @@ public class RequestMoneyFragment extends Fragment {
         if (getArguments() != null) {
             bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
             user = (User) getArguments().getSerializable("USER");
+            requests = (ArrayList<Request>) getArguments().getSerializable("REQUESTS");
+
+            Log.d("REQUESTS IN FRAG ", requests.toString());
         }
     }
 
@@ -76,6 +86,9 @@ public class RequestMoneyFragment extends Fragment {
         tietPersonalNumber = view.findViewById(R.id.requestMoneyFrag_tietPersonalNumber);
         tvSenderIban = view.findViewById(R.id.requestMoneyFrag_tvSenderIban);
         tvSenderName = view.findViewById(R.id.requestMoneyFrag_tvSenderName);
+
+        lvRequests = view.findViewById(R.id.requestMoneyFrag_lvRequests);
+        loadLvRequests();
 
         btSearch = view.findViewById(R.id.requestMoneyFrag_btSearch);
         btSearch.setOnClickListener(new View.OnClickListener() {
@@ -95,10 +108,10 @@ public class RequestMoneyFragment extends Fragment {
                                     tvSenderIban.setText(senderBankAccount.getIban());
                                     llSender.setVisibility(View.VISIBLE);
                                 } else
-                                    Toast.makeText(getContext(), "You can't request money from yourself !",
+                                    Toast.makeText(getContext(), "You can't request money from yourself",
                                             Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(getContext(), "User not found !", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
                                 llSender.setVisibility(View.GONE);
                             }
                         }
@@ -112,6 +125,7 @@ public class RequestMoneyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Request request = new Request();
+                request.setId(generateId());
                 request.setRequesterIban(bankAccount.getIban());
                 request.setRequesterFullName(user.getFullName());
                 request.setSenderFullName(senderUser.getFullName());
@@ -127,6 +141,31 @@ public class RequestMoneyFragment extends Fragment {
 
         return view;
     }
+
+    public void loadLvRequests() {
+        RequestHeaderAdapter requestHeaderAdapter = new RequestHeaderAdapter(getContext(), bankAccount);
+        boolean firstOutgoingAdded = false;
+        boolean incomingHeaderAdded = false;
+        for (Request request : requests) {
+            if (request.getSenderIban().equals(bankAccount.getIban()) && request.getState() != 0)
+                continue;
+            if (!request.getSenderIban().equals(bankAccount.getIban())) {
+                if (!firstOutgoingAdded) {
+                    requestHeaderAdapter.addSectionHeaderItem(request);
+                    firstOutgoingAdded = true;
+                }
+                requestHeaderAdapter.addItem(request);
+            } else {
+                if (!incomingHeaderAdded) {
+                    requestHeaderAdapter.addSectionHeaderItem(request);
+                    incomingHeaderAdded = true;
+                }
+                requestHeaderAdapter.addItem(request);
+            }
+        }
+        lvRequests.setAdapter(requestHeaderAdapter);
+    }
+
 
     public void getAccountFromDatabase(OnSuccessListener<Pair<User, BankAccount>> callback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -170,4 +209,11 @@ public class RequestMoneyFragment extends Fragment {
     }
 
 
+    public String generateId() {
+        Random rand = new Random();
+        long min = 100000000000L;
+        long max = 999999999999L;
+        long randomNum = min + ((long) (rand.nextDouble() * (max - min)));
+        return Long.toString(randomNum);
+    }
 }

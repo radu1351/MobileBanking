@@ -216,10 +216,10 @@ public class TransferDialog extends DialogFragment {
 
 
     public String generateId() {
-        // Generate a random 12-digit number
+        Random rand = new Random();
         long min = 100000000000L;
         long max = 999999999999L;
-        long randomNum = ThreadLocalRandom.current().nextLong(min, max + 1);
+        long randomNum = min + ((long)(rand.nextDouble() * (max - min)));
         return Long.toString(randomNum);
     }
 

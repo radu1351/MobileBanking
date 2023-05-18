@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PayDialog extends DialogFragment implements DialogInterface.OnClickListener {
@@ -158,10 +159,10 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
     }
 
     public String generateId() {
-        // Generate a random 12-digit number
+        Random rand = new Random();
         long min = 100000000000L;
         long max = 999999999999L;
-        long randomNum = ThreadLocalRandom.current().nextLong(min, max + 1);
+        long randomNum = min + ((long)(rand.nextDouble() * (max - min)));
         return Long.toString(randomNum);
     }
 

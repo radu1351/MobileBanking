@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginEnd="20sp"
+        android:text="Requester Name"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewRequestDialog_tvRequesterName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:text="John Terry"
+        android:layout_marginEnd="20sp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Requester IBAN"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewRequestDialog_tvRequesterIban"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text="RO08BTLRONCRT0279971"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Amount"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewRequestDialog_tvAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:textColor="@android:color/black"
+        android:text="250 RON"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Description"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewRequestDialog_tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text="Restaurant bill split"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+</LinearLayout>
