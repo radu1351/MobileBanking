@@ -22,32 +22,27 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.aplicatiemobilebanking.classes.BankAccount;
-import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transfer;
+import com.example.aplicatiemobilebanking.classes.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.math.BigInteger;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class TransferDialog extends DialogFragment {
-
+public class MobileTransferDialog extends DialogFragment {
     private BankAccount bankAccount;
-
-    private TextInputEditText tietRecName, tietRecIban, tietAmount, tietDescription;
+    private User user;
+    private TextInputEditText tietRecPhone, tietAmount, tietDescription;
     private RadioGroup rgTransferType;
     private RadioButton rbNormal, rbInstant;
     private TextView tvTotalTransfered, tvTotalCost;
@@ -57,28 +52,27 @@ public class TransferDialog extends DialogFragment {
     private float totalCost = 0.0f;
     private float commision = 2.5f;
 
-    private TransferDialogListener mListener;
+    private TransferDialog.TransferDialogListener mListener;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundDialogSyle);
-        builder.setTitle("Make a new transfer");
+        builder.setTitle("Make a new mobile transfer");
 
         // Inflate the layout for the dialog
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_transfer, null);
+        View view = inflater.inflate(R.layout.dialog_mobile_transfer, null);
         builder.setView(view);
 
         bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
+        user = (User) getArguments().getSerializable("USER");
 
-        rgTransferType = view.findViewById(R.id.transferDiag_rgTransferType);
-
-        tietRecName = view.findViewById(R.id.transferDiag_tietRecName);
-        tietRecIban = view.findViewById(R.id.transferDiag_tietRecIban);
-        tietAmount = view.findViewById(R.id.transferDiag_tietAmount);
-        tietDescription = view.findViewById(R.id.transferDiag_tietDescription);
-        tvTotalTransfered = view.findViewById(R.id.transferDiag_tvTotalTransfered);
-        tvTotalCost = view.findViewById(R.id.transferDiag_tvTotalCost);
+        rgTransferType = view.findViewById(R.id.mobileTransferDiag_rgTransferType);
+        tietRecPhone = view.findViewById(R.id.mobileTransferDiag_tietRecPhone);
+        tietAmount = view.findViewById(R.id.mobileTransferDiag_tietAmount);
+        tietDescription = view.findViewById(R.id.mobileTransferDiag_tietDescription);
+        tvTotalTransfered = view.findViewById(R.id.mobileTransferDiag_tvTotalTransfered);
+        tvTotalCost = view.findViewById(R.id.mobileTransferDiag_tvTotalCost);
 
         tietAmount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -115,8 +109,8 @@ public class TransferDialog extends DialogFragment {
         });
 
 
-        rbNormal = view.findViewById(R.id.transferDiag_rbNormal);
-        rbInstant = view.findViewById(R.id.transferDiag_rbInstant);
+        rbNormal = view.findViewById(R.id.mobileTransferDiag_rbNormal);
+        rbInstant = view.findViewById(R.id.mobileTransferDiag_rbInstant);
         rgTransferType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -156,8 +150,8 @@ public class TransferDialog extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         boolean hasError = false;
-                        if (tietRecIban.getText().toString().isEmpty() || tietRecIban.getText().toString().length() != 24) {
-                            tietRecIban.setError("Wrong IBAN provided");
+                        if (tietRecPhone.getText().toString().isEmpty()) {
+                            tietRecPhone.setError("Wrong Phone Number provided");
                             hasError = true;
                         }
                         if (tietAmount.getText().toString().isEmpty()) {
@@ -168,10 +162,6 @@ public class TransferDialog extends DialogFragment {
                             tietAmount.setError("Balance too low");
                             hasError = true;
                         }
-                        if (tietRecName.getText().toString().isEmpty()) {
-                            tietRecName.setError("No recipient name provided");
-                            hasError = true;
-                        }
                         if (tietDescription.getText().toString().isEmpty()) {
                             tietDescription.setError("No description provided");
                             hasError = true;
@@ -179,7 +169,6 @@ public class TransferDialog extends DialogFragment {
                         if (!hasError) {
 
                             String senderIban = bankAccount.getIban();
-                            String recipientIban = tietRecIban.getText().toString();
                             float amount = totalTransfered;
                             String description = tietDescription.getText().toString();
 
@@ -188,8 +177,8 @@ public class TransferDialog extends DialogFragment {
                             Date date = Date.from(instant);
 
                             Transfer transfer = new Transfer(generateId(),
-                                    recipientIban, amount,
-                                    commision, description, date, bankAccount.getIban());
+                                    null, amount,
+                                    commision, description, date, senderIban);
 
                             processTransfer(transfer);
                         }
@@ -208,14 +197,14 @@ public class TransferDialog extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            mListener = (TransferDialogListener) context;
+            mListener = (TransferDialog.TransferDialogListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement TransferDialogListener");
         }
     }
 
-    public interface TransferDialogListener {
-        void onTransferCreated(Transfer transfer);
+    public interface MobileTransferDialogListener {
+        void onMobileTransferCreated(Transfer transfer);
     }
 
 
@@ -228,51 +217,69 @@ public class TransferDialog extends DialogFragment {
     }
 
     public void processTransfer(Transfer transfer) {
-        CompletableFuture<Boolean> checkRecipientFuture = new CompletableFuture<>();
-        checkAccountInDatabase(new OnSuccessListener<Boolean>() {
+        String recipientPhoneNumber = tietRecPhone.getText().toString();
+        String currentUserPhoneNumber = user.getPhoneNumber();
+
+        if (recipientPhoneNumber.equals(currentUserPhoneNumber)) {
+            tietRecPhone.setError("Recipient Phone Number is the same as yours");
+            return;
+        }
+
+        checkAccountInDatabase(recipientPhoneNumber, new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Boolean recipientExists) {
-                checkRecipientFuture.complete(recipientExists);
-            }
-        });
-
-        checkRecipientFuture.thenRun(() -> {
-            Boolean recipientExists = checkRecipientFuture.join();
-
-            if (recipientExists) {
-                if (!transfer.getRecipientIban().equals(bankAccount.getIban())) {
-                    if (mListener != null) {
-                        mListener.onTransferCreated(transfer);
+            public void onSuccess(DocumentSnapshot recipientAccountDocument) {
+                if (recipientAccountDocument != null && recipientAccountDocument.exists()) {
+                    BankAccount recipientAccount = recipientAccountDocument.toObject(BankAccount.class);
+                    if (recipientAccount != null) {
+                        transfer.setRecipientIban(recipientAccount.getIban());
+                        if (mListener != null) {
+                            mListener.onTransferCreated(transfer);
+                        }
+                        dialog.dismiss();
                     }
-                    dialog.dismiss();
                 } else {
-                    tietRecIban.setError("Recipient IBAN is the same as yours");
+                    tietRecPhone.setError("Phone number not in database");
                 }
-            } else {
-                tietRecIban.setError("IBAN not in database");
             }
         });
     }
 
-    public void checkAccountInDatabase(OnSuccessListener<Boolean> callback) {
+    public void checkAccountInDatabase(String recipientPhoneNumber, OnSuccessListener<DocumentSnapshot> callback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference bankAccountsRef = db.collection("bankAccounts");
-        Query query = bankAccountsRef.whereEqualTo("iban", tietRecIban.getText().toString());
+        CollectionReference usersRef = db.collection("users");
+        Query query = usersRef.whereEqualTo("phoneNumber", recipientPhoneNumber);
 
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 QuerySnapshot snapshot = task.getResult();
                 if (!snapshot.isEmpty()) {
-                    callback.onSuccess(true); // RecipientIban exists in the database
+                    DocumentSnapshot recipientDocument = snapshot.getDocuments().get(0);
+                    String userPersonalId = recipientDocument.getString("identificationNumber");
+
+                    CollectionReference accountsRef = db.collection("bankAccounts");
+                    Query accountQuery = accountsRef.whereEqualTo("userPersonalID", userPersonalId);
+
+                    accountQuery.get().addOnCompleteListener(accountTask -> {
+                        if (accountTask.isSuccessful()) {
+                            QuerySnapshot accountSnapshot = accountTask.getResult();
+                            if (!accountSnapshot.isEmpty()) {
+                                DocumentSnapshot accountDocument = accountSnapshot.getDocuments().get(0);
+                                callback.onSuccess(accountDocument); // Found recipient's bank account
+                            } else {
+                                callback.onSuccess(null); // Bank account not found
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting bank account documents: ", accountTask.getException());
+                        }
+                    });
                 } else {
-                    callback.onSuccess(false); // RecipientIban doesn't exists in the database
+                    callback.onSuccess(null); // User not found
                 }
             } else {
-                Log.d(TAG, "Error getting documents: ", task.getException());
+                Log.d(TAG, "Error getting user documents: ", task.getException());
             }
         });
-
     }
 
-}
 
+}

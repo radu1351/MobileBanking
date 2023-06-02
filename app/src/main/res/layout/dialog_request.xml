@@ -63,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/primary_color"
-            android:inputType="numberDecimal"
             android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
 

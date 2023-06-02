@@ -1,15 +1,16 @@
 package com.example.aplicatiemobilebanking;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,14 +18,11 @@ import android.widget.TextView;
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Request;
-import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.Transfer;
 import com.example.aplicatiemobilebanking.classes.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 
 public class TransferFragment extends Fragment {
@@ -35,7 +33,7 @@ public class TransferFragment extends Fragment {
     private ArrayList<Transfer> transfers = new ArrayList<>(0);
     private ArrayList<CreditCard> creditCards = new ArrayList<>(0);
     private ArrayList<Request> requests = new ArrayList<Request>(0);
-    private ImageButton ibPay, ibTransfer, ibRequest, ibPhoneTransfer;
+    private ImageButton ibPay, ibTransfer, ibRequest, ibMobileTransfer;
     private TextView tvName;
     private TransferHeaderAdapter transferHeaderAdapter;
 
@@ -88,7 +86,7 @@ public class TransferFragment extends Fragment {
         ibRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openRequestMoneyFragment();
+                ((MainActivity) requireActivity()).openRequestMoneyFragment();
             }
         });
 
@@ -101,6 +99,19 @@ public class TransferFragment extends Fragment {
                 TransferDialog dialog = new TransferDialog();
                 dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "TransferDialogFragment");
+            }
+        });
+
+        ibMobileTransfer = view.findViewById(R.id.transferFrag_ibMobile);
+        ibMobileTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("BANKACCOUNT", bankAccount);
+                bundle.putSerializable("USER", user);
+                MobileTransferDialog dialog = new MobileTransferDialog();
+                dialog.setArguments(bundle);
+                dialog.show(getActivity().getSupportFragmentManager(), "MobileTransferDialog");
             }
         });
 
@@ -128,6 +139,8 @@ public class TransferFragment extends Fragment {
                 viewTransferDialog.show(getActivity().getSupportFragmentManager(), "ViewTransfersDialog");
             }
         });
+
+
         return view;
     }
 
@@ -157,21 +170,32 @@ public class TransferFragment extends Fragment {
 
             lvTransfers.setAdapter(transferHeaderAdapter);
         }
-
+        diableLvTransfersRefresh();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    public void diableLvTransfersRefresh() {
+        SwipeRefreshLayout swipeRefreshLayout = getActivity().findViewById(R.id.mainAct_swipeRefreshLayout);
+        lvTransfers.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
 
-    public void openRequestMoneyFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("USER", user);
-        bundle.putSerializable("BANKACCOUNT", bankAccount);
-        bundle.putSerializable("REQUESTS", requests);
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disable refreshing when the user starts touching the ListView
+                        swipeRefreshLayout.setEnabled(false);
+                        break;
 
-        RequestMoneyFragment requestMoneyFragment = new RequestMoneyFragment();
-        requestMoneyFragment.setArguments(bundle);
+                    case MotionEvent.ACTION_UP:
+                        // Enable refreshing when the user stops touching the ListView
+                        swipeRefreshLayout.setEnabled(true);
+                        break;
+                }
 
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainAct_fl, requestMoneyFragment)
-                .commit();
+                // Pass the touch event to the ListView
+                return false;
+            }
+        });
     }
 }

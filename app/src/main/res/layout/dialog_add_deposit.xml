@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <ScrollView
+        android:id="@+id/addDepositDialog_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/addDepositDialog_ivDeposit"
+                android:layout_width="55sp"
+                android:layout_height="55sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/addDepositDialog_tvBaseAmount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_new_deposit" />
+
+            <TextView
+                android:id="@+id/addDepositDialog_tvBaseAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Base Amount"
+                app:layout_constraintBottom_toTopOf="@id/addDepositDialog_tilBaseAmount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_ivDeposit" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addDepositDialog_tilBaseAmount"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tvBaseAmount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addDepositDialog_tietBaseAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/addDepositDialog_tvNumberOfMonths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Number of Months"
+                app:layout_constraintBottom_toTopOf="@id/addDepositDialog_tilNumberOfMonths"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tilBaseAmount" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addDepositDialog_tilNumberOfMonths"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tvNumberOfMonths">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addDepositDialog_tietNumberOfMonths"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:inputType="number"
+                    android:paddingBottom="10sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/addDepositDialog_tvInterestRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_marginTop="5sp"
+                android:text="Interest Rate"
+                app:layout_constraintBottom_toTopOf="@id/addDepositDialog_tilInterestRate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tilNumberOfMonths" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addDepositDialog_tilInterestRate"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tvInterestRate">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addDepositDialog_tietInterestRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_color"
+                    android:enabled="false"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="10sp"
+                    android:text="6%" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/addDepositDialog_tvMaturityRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tilInterestRate"
+                android:text="@string/maturity_rate"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_marginTop="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/addDepositDialog_tvMaturityEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tvMaturityRate"
+                android:text="@string/maturity_end_date"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_marginTop="5sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/addDepositDialog_tvMaturityEndDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20sp"
+                android:layout_marginEnd="20sp"
+                android:layout_marginTop="20sp"
+                app:layout_goneMarginEnd="20sp"
+                android:gravity="fill_horizontal"
+                android:text="@string/deposit_maturity_warning"
+                android:textSize="14sp"
+                >
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -169,6 +169,7 @@
             android:dividerHeight="7sp"
             android:scrollbars="none"
             android:clickable="false"
+            android:layout_marginBottom="50sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

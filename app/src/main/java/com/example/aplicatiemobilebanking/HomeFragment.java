@@ -1,15 +1,19 @@
 package com.example.aplicatiemobilebanking;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
+import com.example.aplicatiemobilebanking.classes.Deposit;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.User;
 import com.vinaygaba.creditcardview.CardType;
@@ -33,10 +38,13 @@ public class HomeFragment extends Fragment {
     private BankAccount bankAccount;
     private ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
     private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<Deposit> deposits = new ArrayList<>();
+
     private ListView lvTransactions;
-    private TextView tvName,tvBalance;
+    private TextView tvName, tvBalance;
+    private HorizontalScrollView hsvCards;
     private LinearLayout llCards;
-    private Button btAddCard, btViewTransactions, btViewBankAccount;
+    private Button btAddCard, btDeposits, btViewBankAccount;
 
     public HomeFragment() {
 
@@ -57,6 +65,7 @@ public class HomeFragment extends Fragment {
             bankAccount = (BankAccount) getArguments().get("BANKACCOUNT");
             creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
             transactions = (ArrayList<Transaction>) getArguments().getSerializable("TRANSACTIONS");
+            deposits = (ArrayList<Deposit>) getArguments().getSerializable("DEPOSITS");
         }
     }
 
@@ -66,38 +75,36 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         tvName = view.findViewById(R.id.homeFrag_tvName);
         tvName.setText(user.getFullName());
-        tvBalance=view.findViewById(R.id.homeFrag_tvBalance);
-        tvBalance.setText(String.format("%.2f",bankAccount.getBalance())+ " " + bankAccount.getCurrency());
+        tvBalance = view.findViewById(R.id.homeFrag_tvBalance);
+        tvBalance.setText(String.format("%.2f", bankAccount.getBalance()) + " " + bankAccount.getCurrency());
+        hsvCards = view.findViewById(R.id.homeFrag_hsvCards);
         llCards = view.findViewById(R.id.homeFrag_llCards);
 
         loadCreditCardView(view);
 
         btAddCard = view.findViewById(R.id.homeFrag_btAddCard);
-        btViewTransactions = view.findViewById(R.id.homeFrag_btViewTransactions);
+        btDeposits = view.findViewById(R.id.homeFrag_btDeposits);
         btViewBankAccount = view.findViewById(R.id.homeFrag_btViewAccount);
 
         btAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(creditCards.size()<2) {
+                if (creditCards.size() < 2) {
                     AddCardDialog dialog = new AddCardDialog();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("USER", user);
-                    bundle.putSerializable("BANKACCOUNT",bankAccount);
+                    bundle.putSerializable("BANKACCOUNT", bankAccount);
                     dialog.setArguments(bundle);
                     dialog.show(getActivity().getSupportFragmentManager(), "AddCardDialogFragment");
-                }
-                else Toast.makeText(getContext(),"You can have a maximum of two credit cards", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getContext(), "You can have a maximum of two credit cards", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btViewTransactions.setOnClickListener(new View.OnClickListener() {
+        btDeposits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity mainActivity = (MainActivity) getActivity();
-                if (mainActivity != null) {
-                    mainActivity.clickTransactionsMenuItem();
-                }
+                ((MainActivity) requireActivity()).openDepositFragment();
             }
         });
 
@@ -112,6 +119,7 @@ public class HomeFragment extends Fragment {
                 dialog.show(getActivity().getSupportFragmentManager(), "AddCardDialogFragment");
             }
         });
+
         return view;
     }
 
@@ -150,6 +158,30 @@ public class HomeFragment extends Fragment {
             llCards.removeView(card1);
             llCards.removeView(card2);
         }
+        diableHsvCardsRefresh();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void diableHsvCardsRefresh() {
+        SwipeRefreshLayout swipeRefreshLayout = getActivity().findViewById(R.id.mainAct_swipeRefreshLayout);
+        hsvCards.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disable refreshing when the user starts touching the LinearLayout
+                        swipeRefreshLayout.setEnabled(false);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Enable refreshing when the user stops touching the LinearLayout
+                        swipeRefreshLayout.setEnabled(true);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
 }

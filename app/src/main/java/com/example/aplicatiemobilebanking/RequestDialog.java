@@ -39,6 +39,7 @@ public class RequestDialog extends DialogFragment {
         builder.setView(view);
 
         tietAmount = view.findViewById(R.id.requestMoneyFrag_tietAmount);
+        tietDescription = view.findViewById(R.id.requestMoneyFrag_tietDescription);
 
         senderBankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
         senderUser = (User) getArguments().getSerializable("USER");

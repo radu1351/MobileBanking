@@ -48,6 +48,10 @@
     <string name="ammount_ron">Ammount (RON)</string>
     <string name="to_be_transfered">To be transfered: %1$s RON</string>
     <string name="total_transfer_cost">Total transfer cost: %1$s RON</string>
+    <string name="maturity_rate">Maturity Rate: %1$s RON</string>
+    <string name="maturity_end_date">Maturity Date: %1$s</string>
+    <string name="deposit_maturity_warning">Please note that if you choose to cancel the deposit before its maturity period, you will lose any accumulated interest.</string>
+    <string name="procent">"%s%%"</string>
     <string-array name="months">
         <item>All</item>
         <item>May</item>

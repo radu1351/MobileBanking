@@ -12,11 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.Request;
 import com.example.aplicatiemobilebanking.classes.Transfer;
 
@@ -24,8 +26,8 @@ import java.text.SimpleDateFormat;
 
 public class ViewRequestDialog extends DialogFragment {
 
-
     private Request request;
+    private BankAccount bankAccount;
 
     private RequestDialogListener requestDialogListener;
 
@@ -38,6 +40,7 @@ public class ViewRequestDialog extends DialogFragment {
         builder.setView(view);
 
         request = (Request) getArguments().getSerializable("REQUEST");
+        bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
 
         TextView tvRequesterName = view.findViewById(R.id.viewRequestDialog_tvRequesterName);
         TextView tvRequesterIban = view.findViewById(R.id.viewRequestDialog_tvRequesterIban);
@@ -49,13 +52,7 @@ public class ViewRequestDialog extends DialogFragment {
         tvAmount.setText(String.valueOf(request.getAmount()));
         tvDescription.setText(request.getDescription());
 
-        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                request.setState(1);
-                sendRequestResult();
-            }
-        });
+        builder.setPositiveButton("Accept", null);
         builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -72,6 +69,19 @@ public class ViewRequestDialog extends DialogFragment {
                 Button acceptButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
                 acceptButton.setTextColor(ContextCompat.getColor(getContext(), R.color.dark_green));
                 acceptButton.setTextSize(14f);
+                acceptButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (bankAccount.getBalance() < request.getAmount()) {
+                            Toast.makeText(getContext(), "Balance too low", Toast.LENGTH_SHORT).show();
+                            tvAmount.setError("Balance too low");
+                        } else {
+                            request.setState(1);
+                            sendRequestResult();
+                            dialog.dismiss(); // Manually dismiss the dialog when the conditions are met
+                        }
+                    }
+                });
 
                 Button cancelButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
                 cancelButton.setTextColor(Color.DKGRAY);

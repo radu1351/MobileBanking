@@ -107,6 +107,7 @@ public class RequestHeaderAdapter extends BaseAdapter {
                         public void onClick(View v) {
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("REQUEST", mData.get(position));
+                            bundle.putSerializable("BANKACCOUNT", bankAccount);
                             ViewRequestDialog viewRequestDialog = new ViewRequestDialog();
                             viewRequestDialog.setArguments(bundle);
                             FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();

@@ -2,14 +2,18 @@ package com.example.aplicatiemobilebanking;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.provider.BlockedNumberContract;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -68,8 +72,6 @@ public class RequestMoneyFragment extends Fragment {
             bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
             user = (User) getArguments().getSerializable("USER");
             requests = (ArrayList<Request>) getArguments().getSerializable("REQUESTS");
-
-            Log.d("REQUESTS IN FRAG ", requests.toString());
         }
     }
 
@@ -133,6 +135,7 @@ public class RequestMoneyFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("REQUEST", request);
+                bundle.putSerializable("BANKACCOUNT", bankAccount);
                 RequestDialog dialog = new RequestDialog();
                 dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "RequestDialog");
@@ -164,6 +167,7 @@ public class RequestMoneyFragment extends Fragment {
             }
         }
         lvRequests.setAdapter(requestHeaderAdapter);
+        diableLvRequestsRefresh();
     }
 
 
@@ -215,5 +219,31 @@ public class RequestMoneyFragment extends Fragment {
         long max = 999999999999L;
         long randomNum = min + ((long) (rand.nextDouble() * (max - min)));
         return Long.toString(randomNum);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void diableLvRequestsRefresh() {
+        SwipeRefreshLayout swipeRefreshLayout = getActivity().findViewById(R.id.mainAct_swipeRefreshLayout);
+        lvRequests.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disable refreshing when the user starts touching the ListView
+                        swipeRefreshLayout.setEnabled(false);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Enable refreshing when the user stops touching the ListView
+                        swipeRefreshLayout.setEnabled(true);
+                        break;
+                }
+
+                // Pass the touch event to the ListView
+                return false;
+            }
+        });
     }
 }

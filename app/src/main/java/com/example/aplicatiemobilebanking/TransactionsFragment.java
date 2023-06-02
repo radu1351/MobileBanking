@@ -1,12 +1,15 @@
 package com.example.aplicatiemobilebanking;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -257,7 +260,7 @@ public class TransactionsFragment extends Fragment {
             }
         }
         lvTransactions.setAdapter(transactionHeaderAdapter);
-
+        diableLvTransactionsRefresh();
     }
 
     public ArrayList<String> getLastSixMonths() {
@@ -297,6 +300,32 @@ public class TransactionsFragment extends Fragment {
                 else if (t1.getDate().compareTo(t2.getDate()) > 0)
                     return -1;
                 else return 0;
+            }
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void diableLvTransactionsRefresh() {
+        SwipeRefreshLayout swipeRefreshLayout = getActivity().findViewById(R.id.mainAct_swipeRefreshLayout);
+        lvTransactions.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disable refreshing when the user starts touching the ListView
+                        swipeRefreshLayout.setEnabled(false);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Enable refreshing when the user stops touching the ListView
+                        swipeRefreshLayout.setEnabled(true);
+                        break;
+                }
+
+                // Pass the touch event to the ListView
+                return false;
             }
         });
     }
