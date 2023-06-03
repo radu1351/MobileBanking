@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ public class TransferFragment extends Fragment {
     private ArrayList<Transfer> transfers = new ArrayList<>(0);
     private ArrayList<CreditCard> creditCards = new ArrayList<>(0);
     private ArrayList<Request> requests = new ArrayList<>(0);
-    private ImageButton ibPay, ibTransfer, ibRequest, ibMobileTransfer;
+    private Button btPay, btTransfer, btRequest, btMobileTransfer;
     private TextView tvName;
     private TransferHeaderAdapter transferHeaderAdapter;
 
@@ -68,8 +69,8 @@ public class TransferFragment extends Fragment {
         lvTransfers = view.findViewById(R.id.transferFrag_lvTransfers);
         loadLvTransfers();
 
-        ibPay = view.findViewById(R.id.transferFrag_ibPay);
-        ibPay.setOnClickListener(new View.OnClickListener() {
+        btPay = view.findViewById(R.id.transferFrag_btPay);
+        btPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -82,16 +83,16 @@ public class TransferFragment extends Fragment {
             }
         });
 
-        ibRequest = view.findViewById(R.id.transferFrag_ibRequest);
-        ibRequest.setOnClickListener(new View.OnClickListener() {
+        btRequest = view.findViewById(R.id.transferFrag_btRequest);
+        btRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity) requireActivity()).openRequestMoneyFragment();
             }
         });
 
-        ibTransfer = view.findViewById(R.id.transferFrag_ibTransfer);
-        ibTransfer.setOnClickListener(new View.OnClickListener() {
+        btTransfer = view.findViewById(R.id.transferFrag_btTransfer);
+        btTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -102,8 +103,8 @@ public class TransferFragment extends Fragment {
             }
         });
 
-        ibMobileTransfer = view.findViewById(R.id.transferFrag_ibMobile);
-        ibMobileTransfer.setOnClickListener(new View.OnClickListener() {
+        btMobileTransfer = view.findViewById(R.id.transferFrag_btMobile);
+        btMobileTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();

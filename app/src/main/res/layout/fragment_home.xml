@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,81 +12,77 @@
         android:id="@+id/homeFrag_tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:text="John Terry"
-        android:layout_marginEnd="5sp"
         android:layout_marginTop="80sp"
+        android:layout_marginEnd="5sp"
+        android:fontFamily="sans-serif"
+        android:singleLine="true"
+        android:text="John Terry"
         android:textColor="@color/white"
         android:textSize="25sp"
-        android:singleLine="true"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/homeFrag_ivUser"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/homeFrag_ivUser"
         android:layout_width="50sp"
         android:layout_height="55dp"
         android:layout_marginStart="5sp"
-        android:layout_marginEnd="25sp"
         android:layout_marginTop="70sp"
+        android:layout_marginEnd="25sp"
         android:src="@drawable/ic_profile_picture_round"
-        app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
 
     <TextView
         android:id="@+id/homeFrag_tvBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:text="3250.45 RON"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:layout_marginStart="30dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/homeFrag_tvBalance"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="135dp" />
 
     <TextView
         android:id="@+id/homeFrag_tvYourBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your balance"
         android:layout_marginStart="30sp"
         android:layout_marginBottom="55sp"
+        android:text="Your balance"
         android:textColor="@color/grey"
-        app:layout_constraintTop_toBottomOf="@id/homeFrag_tvBalance"
+        app:layout_constraintBottom_toTopOf="@id/homeFrag_clCards"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/homeFrag_clCards">
-    </TextView>
+        app:layout_constraintTop_toBottomOf="@id/homeFrag_tvBalance"></TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeFrag_clCards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/roundbackground_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="268sp"
-        >
+        android:background="@drawable/roundbackground_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/homeFrag_tvCards"
             android:layout_width="wrap_content"
             android:layout_height="40sp"
+            android:layout_marginStart="30sp"
+            android:layout_marginTop="25sp"
             android:text="@string/cards"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="30sp"
-            android:layout_marginTop="25sp"
-            app:layout_constraintTop_toTopOf="@id/homeFrag_clCards"
-            app:layout_constraintStart_toStartOf="@id/homeFrag_clCards">
-        </TextView>
+            app:layout_constraintStart_toStartOf="@id/homeFrag_clCards"
+            app:layout_constraintTop_toTopOf="@id/homeFrag_clCards"></TextView>
 
         <!--  Scroll view carduri      -->
         <HorizontalScrollView
@@ -98,8 +93,7 @@
             android:overScrollMode="never"
             android:scrollbars="none"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeFrag_tvCards"
-         >
+            app:layout_constraintTop_toBottomOf="@id/homeFrag_tvCards">
 
             <LinearLayout
                 android:id="@+id/homeFrag_llCards"
@@ -155,58 +149,87 @@
 
         </HorizontalScrollView>
 
-        <Button
-            android:id="@+id/homeFrag_btAddCard"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55sp"
-            android:text="Add new card"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeFrag_hsvCards"
-            android:layout_marginTop="27sp"
-            android:layout_marginStart="20sp"
-            android:backgroundTint="@color/btGrey"
-            android:drawableLeft="@drawable/ic_add_card"
-            android:layout_marginEnd="120sp">
-        </Button>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20sp"
+            app:layout_constraintTop_toBottomOf="@id/homeFrag_hsvCards">
 
-        <Button
-            android:id="@+id/homeFrag_btDeposits"
-            android:layout_width="match_parent"
-            android:layout_height="55sp"
-            android:text="Bank Deposits"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeFrag_btAddCard"
-            android:layout_marginTop="10sp"
-            android:layout_marginStart="20sp"
-            android:backgroundTint="@color/btGrey"
-            android:drawableLeft="@drawable/ic_deposit"
-            android:layout_marginEnd="120sp">
-        </Button>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/homeFrag_btViewAccount"
-            android:layout_width="match_parent"
-            android:layout_height="55sp"
-            android:text="View Bank Account"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeFrag_btDeposits"
-            android:layout_marginTop="10sp"
-            android:layout_marginStart="20sp"
-            android:backgroundTint="@color/btGrey"
-            android:drawableLeft="@drawable/ic_bank"
-            android:layout_marginEnd="120sp">
-        </Button>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/homeFrag_btAddCard"
+                    android:layout_width="0dp"
+                    android:layout_height="100sp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginEnd="5sp"
+                    android:backgroundTint="@color/btGrey"
+                    android:drawableLeft="@drawable/ic_add_card"
+                    android:text="Add new card"
+                    android:textColor="@color/black"
+                    app:cornerRadius="20sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/homeFrag_btViewAccount"
+                    android:layout_width="0dp"
+                    android:layout_height="100sp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginEnd="20sp"
+                    android:backgroundTint="@color/btGrey"
+                    android:drawableLeft="@drawable/ic_bank"
+                    android:text="View Bank Account"
+                    android:textColor="@color/black"
+                    app:cornerRadius="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="2dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/homeFrag_btDeposits"
+                    android:layout_width="0dp"
+                    android:layout_height="100sp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginEnd="5sp"
+                    android:backgroundTint="@color/btGrey"
+                    android:drawableLeft="@drawable/ic_deposit"
+                    android:text="Bank Deposits"
+                    android:textColor="@color/black"
+                    app:cornerRadius="20sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/homeFrag_btCredits"
+                    android:layout_width="0dp"
+                    android:layout_height="100sp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginEnd="20sp"
+                    android:backgroundTint="@color/btGrey"
+                    android:drawableLeft="@drawable/ic_credit"
+                    android:text="Credits"
+                    android:textColor="@color/black"
+                    app:cornerRadius="20sp"
+                    android:drawablePadding="8dp" />
+            </LinearLayout>
+        </LinearLayout>
+
 
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
