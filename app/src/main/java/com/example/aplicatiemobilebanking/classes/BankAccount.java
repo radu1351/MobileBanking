@@ -71,9 +71,14 @@ public class BankAccount implements Serializable {
         return userPersonalID;
     }
 
-    public void reduceBalance(float ammount){
-        this.balance -= ammount;
+    public void reduceBalance(float amount) {
+        this.balance -= amount;
     }
+
+    public void addBalance(float amount) {
+        this.balance += amount;
+    }
+
     @Override
     public String toString() {
         return "BankAccount{" +

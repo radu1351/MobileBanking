@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,8 +19,8 @@ import androidx.fragment.app.DialogFragment;
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.Deposit;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -82,8 +81,14 @@ public class AddDepositDialog extends DialogFragment {
                             int numberOfMonths = Integer.parseInt(tietNumberOfMonths.getText().toString());
                             float maturityRate = calculateMaturityRate(baseAmount, numberOfMonths);
 
-                            Deposit deposit = new Deposit(generateId(), baseAmount, INTEREST_RATE,
-                                    numberOfMonths, maturityRate, bankAccount.getIban());
+                            Deposit deposit = null;
+                            try {
+                                deposit = new Deposit(generateId(), baseAmount, INTEREST_RATE, numberOfMonths,
+                                        new SimpleDateFormat("dd MMM yyyy").parse(calculateMaturityDate(numberOfMonths)),
+                                        maturityRate, bankAccount.getIban());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
                             if (depositDialogListener != null) {
                                 depositDialogListener.onDepositCreated(deposit);
@@ -108,7 +113,7 @@ public class AddDepositDialog extends DialogFragment {
         tietInterestRate = view.findViewById(R.id.addDepositDialog_tietInterestRate);
 
         tvMaturityRate.setText(getString(R.string.maturity_rate, String.valueOf(0.0f)));
-        tvMaturityEndDate.setText(getString(R.string.maturity_end_date,
+        tvMaturityEndDate.setText(getString(R.string.maturity_date,
                 new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date())));
 
         tietInterestRate.setText(getString(R.string.procent, String.valueOf(INTEREST_RATE * 100)));
@@ -174,11 +179,8 @@ public class AddDepositDialog extends DialogFragment {
 
                 if (!numberOfMonthsString.isEmpty()) {
                     int numberOfMonths = Integer.parseInt(numberOfMonthsString);
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.add(Calendar.MONTH, numberOfMonths);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                    String endDate = dateFormat.format(calendar.getTime());
-                    tvMaturityEndDate.setText(getString(R.string.maturity_end_date, endDate));
+                    tvMaturityEndDate.setText(getString(R.string.maturity_date,
+                            calculateMaturityDate(numberOfMonths)));
                 }
             }
 
@@ -217,12 +219,20 @@ public class AddDepositDialog extends DialogFragment {
         }
     }
 
-    public String generateId() {
+    private String generateId() {
         Random rand = new Random();
         long min = 100000000000L;
         long max = 999999999999L;
         long randomNum = min + ((long) (rand.nextDouble() * (max - min)));
         return Long.toString(randomNum);
+    }
+
+    private String calculateMaturityDate(int numberOfMonths) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, numberOfMonths);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        String endDate = dateFormat.format(calendar.getTime());
+        return endDate;
     }
 
 }

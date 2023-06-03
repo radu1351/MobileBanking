@@ -36,12 +36,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:textSize="14sp"
-                android:text="@string/maturity_end_date" />
+                android:text="@string/maturity_date" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/buttonView"
+            android:id="@+id/lvDeposit_btViewDeposit"
             android:layout_width="130sp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"

@@ -1,0 +1,103 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Base Amount"
+        android:textStyle="bold"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp" />
+
+    <TextView
+        android:id="@+id/viewDepositDialog_tvBaseAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text="" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Interest Rate"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/viewDepositDialog_tvInterestRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text="" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Number of Months"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/viewDepositDialog_tvNumberOfMonths"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:textColor="@android:color/black"
+        android:text="" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Maturity Rate"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/viewDepositDialog_tvMaturityRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text="" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Maturity Date"
+        android:textStyle="bold"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/viewDepositDialog_tvMaturityDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:textColor="@android:color/black"
+        android:text="" />
+
+</LinearLayout>

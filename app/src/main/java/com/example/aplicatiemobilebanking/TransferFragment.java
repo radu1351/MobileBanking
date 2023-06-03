@@ -32,7 +32,7 @@ public class TransferFragment extends Fragment {
     private ListView lvTransfers;
     private ArrayList<Transfer> transfers = new ArrayList<>(0);
     private ArrayList<CreditCard> creditCards = new ArrayList<>(0);
-    private ArrayList<Request> requests = new ArrayList<Request>(0);
+    private ArrayList<Request> requests = new ArrayList<>(0);
     private ImageButton ibPay, ibTransfer, ibRequest, ibMobileTransfer;
     private TextView tvName;
     private TransferHeaderAdapter transferHeaderAdapter;

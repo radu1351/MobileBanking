@@ -30,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
         AddCardDialog.AddCardListener, ViewBankAccountDialog.CreditCardListener,
         TransferDialog.TransferDialogListener, RequestDialog.RequestListener,
         ViewRequestDialog.RequestDialogListener, MobileTransferDialog.MobileTransferDialogListener,
-        AddDepositDialog.DepositDialogListener {
+        AddDepositDialog.DepositDialogListener, ViewDepositDialog.OnTerminateDepositListener {
 
     private FrameLayout fl;
     private Fragment currentFragment;
@@ -278,6 +279,12 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                 for (QueryDocumentSnapshot document : querySnapshot) {
                     Deposit deposit = document.toObject(Deposit.class);
                     deposits.add(deposit);
+
+                    //Check if the deposit has reached its maturity date.
+                    // If so, update the balance and close the deposit
+                    if (deposit.getMaturityDate().before(new Date())) {
+                        closeMaturityDepositFromDatabse(deposit);
+                    }
                 }
                 callback.onSuccess(deposits);
             }
@@ -360,13 +367,23 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
                     requestsFuture.complete(requestsFromDatabase);
                 }
             });
+
+            CompletableFuture<List<Deposit>> depositsFuture = new CompletableFuture<>();
+            loadDepositsFromDatabase(new OnSuccessListener<List<Deposit>>() {
+                @Override
+                public void onSuccess(List<Deposit> depositsFromDatabse) {
+                    depositsFuture.complete(depositsFromDatabse);
+                }
+            });
+
             // wait for all the futures to complete
-            return CompletableFuture.allOf(creditCardFuture, transactionsFuture, transfersFuture, requestsFuture)
+            return CompletableFuture.allOf(creditCardFuture, transactionsFuture, transfersFuture, requestsFuture, depositsFuture)
                     .thenAccept(v -> {
                         creditCards = new ArrayList<>(creditCardFuture.join());
                         transactions = new ArrayList<>(transactionsFuture.join());
                         transfers = new ArrayList<>(transfersFuture.join());
                         requests = new ArrayList<>(requestsFuture.join());
+                        deposits = new ArrayList<>(depositsFuture.join());
                     });
         });
 
@@ -556,6 +573,38 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
             }
         }
         addRequestToDatabase(request);
+    }
+
+    private void removeDepositFromDatabase(Deposit deposit) {
+        // Delete the local variables
+        this.deposits.remove(deposit);
+        this.bankAccount.addBalance(deposit.getBaseAmount());
+
+        // Update the database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference bankAccountsCollection = db.collection("bankAccounts");
+        DocumentReference bankAccountRef = bankAccountsCollection.document(deposit.getBankAccountIban());
+        bankAccountRef.update("balance", FieldValue.increment(deposit.getBaseAmount()));
+
+        CollectionReference depositsCollection = db.collection("deposits");
+        DocumentReference depositRef = depositsCollection.document(deposit.getId());
+        depositRef.delete();
+    }
+
+    private void closeMaturityDepositFromDatabse(Deposit deposit) {
+        // Delete the local variables
+        this.deposits.remove(deposit);
+        this.bankAccount.addBalance(deposit.getMaturityRate());
+
+        // Update the database
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference bankAccountsCollection = db.collection("bankAccounts");
+        DocumentReference bankAccountRef = bankAccountsCollection.document(deposit.getBankAccountIban());
+        bankAccountRef.update("balance", FieldValue.increment(deposit.getMaturityRate()));
+
+        CollectionReference depositsCollection = db.collection("deposits");
+        DocumentReference depositRef = depositsCollection.document(deposit.getId());
+        depositRef.delete();
     }
 
     private void openHomeFragment() {
@@ -783,5 +832,9 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
         return Long.toString(randomNum);
     }
 
-
+    @Override
+    public void onTerminateDeposit(Deposit deposit) {
+        removeDepositFromDatabase(deposit);
+        openDepositFragment();
+    }
 }
