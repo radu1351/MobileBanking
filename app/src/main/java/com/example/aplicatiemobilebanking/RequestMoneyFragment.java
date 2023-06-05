@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class RequestMoneyFragment extends Fragment {
     private TextView tvName;
     private ListView lvRequests;
     private User senderUser;
+    private ImageButton ibBack;
     private BankAccount senderBankAccount;
 
     private User user;
@@ -84,6 +86,14 @@ public class RequestMoneyFragment extends Fragment {
         llSender.setVisibility(View.GONE);
         tvName = view.findViewById(R.id.requestMoneyFrag_tvName);
         tvName.setText(user.getFullName());
+
+        ibBack = view.findViewById(R.id.requestMoneyFrag_ibBack);
+        ibBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) requireActivity()).openTransferFragment();
+            }
+        });
 
         tietPersonalNumber = view.findViewById(R.id.requestMoneyFrag_tietPersonalNumber);
         tvSenderIban = view.findViewById(R.id.requestMoneyFrag_tvSenderIban);

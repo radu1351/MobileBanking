@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aplicatiemobilebanking.classes.BankAccount;
+import com.example.aplicatiemobilebanking.classes.Credit;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Deposit;
 import com.example.aplicatiemobilebanking.classes.Transaction;
@@ -27,6 +28,7 @@ import com.example.aplicatiemobilebanking.classes.User;
 import com.vinaygaba.creditcardview.CardType;
 import com.vinaygaba.creditcardview.CreditCardView;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +41,13 @@ public class HomeFragment extends Fragment {
     private ArrayList<CreditCard> creditCards = new ArrayList<CreditCard>();
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private ArrayList<Deposit> deposits = new ArrayList<>();
+    private ArrayList<Credit> credits = new ArrayList<Credit>();
 
     private ListView lvTransactions;
     private TextView tvName, tvBalance;
     private HorizontalScrollView hsvCards;
     private LinearLayout llCards;
-    private Button btAddCard, btDeposits, btViewBankAccount;
+    private Button btAddCard, btViewBankAccount, btDeposits, btCredits;
 
     public HomeFragment() {
 
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment {
             creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
             transactions = (ArrayList<Transaction>) getArguments().getSerializable("TRANSACTIONS");
             deposits = (ArrayList<Deposit>) getArguments().getSerializable("DEPOSITS");
+            credits = (ArrayList<Credit>) getArguments().getSerializable("CREDIS");
         }
     }
 
@@ -105,6 +109,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) requireActivity()).openDepositFragment();
+            }
+        });
+
+        btCredits = view.findViewById(R.id.homeFrag_btCredits);
+        btCredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) requireActivity()).openCreditFragment();
             }
         });
 

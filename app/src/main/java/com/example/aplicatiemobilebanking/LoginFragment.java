@@ -34,8 +34,7 @@ public class LoginFragment extends Fragment {
     public TextInputEditText tietEmail;
     public TextInputEditText tietPassword;
     public Switch switchRemember;
-    public Button btLogin, btRegister;
-
+    public Button btLogin, btRegister, btAdminLogin;
     private final String SHARED_PREFS_NAME = "com.example.aplicatiemobilebanking";
     private final String PREF_EMAIL = "PREF_EMAIL";
     private final String PREF_PASSWORD = "PREF_PASSWORD";
@@ -75,6 +74,15 @@ public class LoginFragment extends Fragment {
         tietEmail = view.findViewById(R.id.loginFrag_tietEmail);
         tietPassword = view.findViewById(R.id.loginFrag_tietPass);
         switchRemember = view.findViewById(R.id.loginFrag_switchRem);
+
+        btAdminLogin = view.findViewById(R.id.loginFrag_btAdminLogin);
+        btAdminLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAdminLoginFragment();
+            }
+        });
+
         btLogin = view.findViewById(R.id.loginFrag_btLogin);
         btRegister = view.findViewById(R.id.loginFrag_btRegister);
 
@@ -146,6 +154,12 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    private void openAdminLoginFragment() {
+        Fragment registerFragment = new AdminLoginFragment();
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.loginAct_fl, registerFragment)
+                .commit();
+    }
 
     private void openRegisterFragment() {
         Fragment registerFragment = new RegisterFragment();

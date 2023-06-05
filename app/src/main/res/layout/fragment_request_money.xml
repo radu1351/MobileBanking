@@ -35,6 +35,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/requestMoneyFrag_ibBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/ap_transparent"
+        android:src="@drawable/ic_back_arrow"
+        android:layout_marginTop="78sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="5sp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/requestMoneyFrag_cltransactions"

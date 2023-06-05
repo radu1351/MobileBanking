@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aplicatie Mobile Banking</string>
+    <string name="app_name">SwiftBank</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="log_in">Log in</string>
@@ -46,16 +46,30 @@
     <string name="recipient_iban">Recipient IBAN</string>
     <string name="recipient_name">Recipient Name</string>
     <string name="ammount_ron">Ammount (RON)</string>
+    <string name="RON">%1$s RON</string>
     <string name="to_be_transfered">To be transfered: %1$s RON</string>
     <string name="total_transfer_cost">Total transfer cost: %1$s RON</string>
     <string name="maturity_rate">Maturity Rate: %1$s RON</string>
     <string name="maturity_date">Maturity Date: %1$s</string>
     <string name="deposit_maturity_warning">Please note that if you choose to cancel the deposit before its maturity period, you will lose any accumulated interest.</string>
     <string name="procent">"%s%%"</string>
+    <string name="loaned_amount">Loaned Amount: %1$s RON</string>
+    <string name="total_cost">Total Cost: %1$s RON</string>
+    <string name="monthly_instalment">Monthly Instalment: %1$s RON</string>
+    <string name="CreditWarning">Please be aware that once a credit is opened, it cannot be closed without fully paying off the total amount owed.</string>
     <string-array name="months">
         <item>All</item>
         <item>May</item>
         <item>April</item>
         <item>March</item>
     </string-array>
+    <string name="title_activity_admin_main">AdminMainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

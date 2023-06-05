@@ -1,0 +1,140 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginEnd="20sp"
+        android:text="Loaned Amount"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewCreditDiag_tvLoanedAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Interest Rate"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewCreditDiag_tvInterestRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Total Cost"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewCreditDiag_tvTotalCost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Number of Months"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewCreditDiag_tvNumberOfMonths"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Maturity Date"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewCreditDiag_tvMaturityDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Last Monthly Payment"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewCreditDiag_tvLastMonthlyPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20sp"
+        android:text="Outstanding Balance"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/viewCreditDiag_tvOutstandingBalance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="20sp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+</LinearLayout>

@@ -50,7 +50,8 @@ public class ViewBankAccountDialog extends DialogFragment {
         bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
         creditCards = (ArrayList<CreditCard>) getArguments().getSerializable("CREDITCARDS");
         numberOfCreditCards = creditCards.size();
-        creditCardAdapter = new CreditCardAdapter(getContext(), R.layout.lv_cards_row_item, creditCards, getLayoutInflater());
+        creditCardAdapter = new CreditCardAdapter(getContext(), R.layout.lv_cards_row_item,
+                creditCards, getLayoutInflater(),false);
         lvCreditCards = view.findViewById(R.id.viewAccountDialog_lvCreditCards);
         lvCreditCards.setAdapter(creditCardAdapter);
 

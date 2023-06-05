@@ -16,27 +16,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.aplicatiemobilebanking.classes.BankAccount;
-import com.example.aplicatiemobilebanking.classes.Deposit;
+import com.example.aplicatiemobilebanking.classes.Credit;
+import com.example.aplicatiemobilebanking.classes.Credit;
 import com.example.aplicatiemobilebanking.classes.User;
 
 import java.util.ArrayList;
 
-public class DepositFragment extends Fragment {
+public class CreditFragment extends Fragment {
 
     private User user;
     private BankAccount bankAccount;
-    private Button btAddDeposit;
+    private Button btAddCredit;
     private TextView tvName;
-    private ListView lvDeposits;
+    private ListView lvCredits;
     private ImageButton ibBack;
-    private ArrayList<Deposit> deposits = new ArrayList<>(0);
+    private ArrayList<Credit> credits = new ArrayList<>(0);
 
 
-    public DepositFragment() {
+    public CreditFragment() {
     }
 
-    public static DepositFragment newInstance() {
-        DepositFragment fragment = new DepositFragment();
+    public static CreditFragment newInstance() {
+        CreditFragment fragment = new CreditFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -48,19 +49,19 @@ public class DepositFragment extends Fragment {
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("USER");
             bankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
-            deposits = (ArrayList<Deposit>) getArguments().getSerializable("DEPOSITS");
+            credits = (ArrayList<Credit>) getArguments().getSerializable("CREDITS");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_deposit, container, false);
+        View view = inflater.inflate(R.layout.fragment_credit, container, false);
 
-        tvName = view.findViewById(R.id.depositFrag_tvName);
+        tvName = view.findViewById(R.id.creditFrag_tvName);
         tvName.setText(user.getFullName());
 
-        ibBack = view.findViewById(R.id.depositFrag_ibBack);
+        ibBack = view.findViewById(R.id.creditFrag_ibBack);
         ibBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,35 +69,35 @@ public class DepositFragment extends Fragment {
             }
         });
 
-        btAddDeposit = view.findViewById(R.id.depositFrag_btAddDeposit);
-        btAddDeposit.setOnClickListener(new View.OnClickListener() {
+        btAddCredit = view.findViewById(R.id.creditFrag_btAddCredit);
+        btAddCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddDepositDialog dialog = new AddDepositDialog();
+                AddCreditDialog dialog = new AddCreditDialog();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("BANKACCOUNT", bankAccount);
                 bundle.putSerializable("USER", user);
                 dialog.setArguments(bundle);
-                dialog.show(getActivity().getSupportFragmentManager(), "AddDepositDialog");
+                dialog.show(getActivity().getSupportFragmentManager(), "AddCreditDialog");
             }
         });
 
-        loadLvDeposits(view);
+        loadLvCredits(view);
 
         return view;
     }
 
-    private void loadLvDeposits(View view) {
-        lvDeposits = view.findViewById(R.id.depositFrag_lvDeposits);
-        DepositAdapter depositAdapter = new DepositAdapter(getContext(), R.layout.lv_deposits_row_item, deposits, getLayoutInflater());
-        lvDeposits.setAdapter(depositAdapter);
-        diableLvDepositsRefresh();
+    private void loadLvCredits(View view) {
+        lvCredits = view.findViewById(R.id.creditFrag_lvCredits);
+        CreditAdapter creditAdapter = new CreditAdapter(getContext(), R.layout.lv_credit_row_item, credits, getLayoutInflater());
+        lvCredits.setAdapter(creditAdapter);
+        diableLvCreditsRefresh();
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public void diableLvDepositsRefresh() {
+    public void diableLvCreditsRefresh() {
         SwipeRefreshLayout swipeRefreshLayout = getActivity().findViewById(R.id.mainAct_swipeRefreshLayout);
-        lvDeposits.setOnTouchListener(new View.OnTouchListener() {
+        lvCredits.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();

@@ -16,4 +16,11 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.AplicatieMobileBanking.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.AplicatieMobileBanking.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.AplicatieMobileBanking.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

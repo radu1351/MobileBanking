@@ -1,53 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/blue_gradient"
-    tools:context=".DepositFragment">
+    tools:context=".CreditFragment">
 
     <TextView
-        android:id="@+id/depositFrag_tvName"
+        android:id="@+id/creditFrag_tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:text="John Terry"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="5sp"
+        android:fontFamily="sans-serif"
+        android:singleLine="true"
+        android:text="John Terry"
         android:textColor="@color/white"
         android:textSize="25sp"
-        android:singleLine="true"
         android:textStyle="bold"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toStartOf="@+id/depositFrag_ivUser"
+        app:layout_constraintEnd_toStartOf="@+id/creditFrag_ivUser"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/depositFrag_ivUser"
+        android:id="@+id/creditFrag_ivUser"
         android:layout_width="50sp"
         android:layout_height="55dp"
         android:layout_marginStart="5sp"
-        android:layout_marginEnd="25sp"
         android:layout_marginTop="70dp"
+        android:layout_marginEnd="25sp"
         android:src="@drawable/ic_profile_picture_round"
-        app:tint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <ImageButton
-        android:id="@+id/depositFrag_ibBack"
+        android:id="@+id/creditFrag_ibBack"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginStart="5sp"
+        android:layout_marginTop="78sp"
         android:background="@color/ap_transparent"
         android:src="@drawable/ic_back_arrow"
-        android:layout_marginTop="78sp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="5sp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/depositFrag_clDeposits"
+        android:id="@+id/creditFrag_clCredits"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="150sp"
@@ -58,43 +57,40 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/depositFrag_btAddDeposit"
+            android:id="@+id/creditFrag_btAddCredit"
             android:layout_width="match_parent"
             android:layout_height="80sp"
-            android:backgroundTint="@color/btGrey"
-            app:cornerRadius="40sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="25sp"
-            android:layout_marginEnd="25sp"
             android:layout_marginTop="30sp"
-            android:text="Make a New Deposit"
+            android:layout_marginEnd="25sp"
+            android:backgroundTint="@color/btGrey"
+            android:drawableLeft="@drawable/ic_credit"
+            android:text="Make a New Credit"
             android:textColor="@color/black"
             android:textSize="17sp"
-            android:drawableLeft="@drawable/ic_new_deposit"
-            >
-        </com.google.android.material.button.MaterialButton>
+            app:cornerRadius="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></com.google.android.material.button.MaterialButton>
 
         <ListView
-            android:id="@+id/depositFrag_lvDeposits"
+            android:id="@+id/creditFrag_lvCredits"
             android:layout_width="match_parent"
             android:layout_height="0sp"
-            app:layout_constraintTop_toBottomOf="@id/depositFrag_btAddDeposit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40sp"
             android:layout_marginStart="20sp"
+            android:layout_marginTop="40sp"
             android:layout_marginEnd="20sp"
             android:layout_marginBottom="90sp"
-            android:overScrollMode="never"
             android:divider="@color/white"
             android:dividerHeight="25sp"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
             android:scrollbars="none"
-            android:listSelector="@android:color/transparent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/creditFrag_btAddCredit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

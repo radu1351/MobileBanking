@@ -46,7 +46,6 @@ import java.util.regex.Pattern;
 public class RegisterFragment extends Fragment {
 
     TextInputEditText tietFirstName, tietLastName, tietIdNumber, tietPhoneNumber, tietAddres, tietEmail, tietPassword;
-    TextView tvDateOfBirth;
     Button btCreateAccount, btBack;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -83,7 +82,6 @@ public class RegisterFragment extends Fragment {
         tietFirstName = view.findViewById(R.id.registerFrag_tietFirstName);
         tietLastName = view.findViewById(R.id.registerFrag_tietLastName);
         tietIdNumber = view.findViewById(R.id.registerFrag_tietIdentificationNumber);
-        tvDateOfBirth = view.findViewById(R.id.registerFrag_tvDateOfBirth);
         tietPhoneNumber = view.findViewById(R.id.registerFrag_tietPhone);
         tietAddres = view.findViewById(R.id.registerFrag_tietAddress);
         tietEmail = view.findViewById(R.id.registerFrag_tietEmail);
@@ -132,7 +130,6 @@ public class RegisterFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                //Timer...
                 if (!isValidIdNumber(s.toString()))
                     tietIdNumber.setError("Invalid Personal ID Number");
             }

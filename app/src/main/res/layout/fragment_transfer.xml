@@ -7,7 +7,6 @@
     android:background="@drawable/blue_gradient"
     tools:context=".TransferFragment">
 
-
     <TextView
         android:id="@+id/transferFrag_tvName"
         android:layout_width="wrap_content"
@@ -71,7 +70,7 @@
                     android:layout_marginEnd="5sp"
                     android:backgroundTint="@color/btGrey"
                     android:drawableLeft="@drawable/ic_pay"
-                    android:text="Pay"
+                    android:text="Make A Payment"
                     android:textColor="@color/black"
                     app:cornerRadius="20sp" />
 

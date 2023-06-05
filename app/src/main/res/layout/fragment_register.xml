@@ -20,9 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
-
     <TextView
         android:id="@+id/registerFrag_FirstName"
         android:layout_width="wrap_content"
@@ -119,43 +116,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-
-    <TextView
-        android:id="@+id/registerFrag_tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20sp"
-        android:text="Date of Birth"
-        app:layout_constraintBottom_toTopOf="@id/registerFrag_tilPhone"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/registerFrag_tvDateOfBirth"
-        android:layout_width="match_parent"
-        android:layout_height="45sp"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="30sp"
-        android:layout_marginEnd="200sp"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/background_spinner"
-        android:hint = "Click to set date"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/registerFrag_tilAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/registerFrag_tilPhone"
-        app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilIdentificationNumber" />
-
-
-
-
-
     <TextView
         android:id="@+id/registerFrag_tvPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200sp"
+        android:layout_marginStart="20sp"
         android:text="Phone Number"
         app:layout_constraintBottom_toTopOf="@id/registerFrag_tilPhone"
         app:layout_constraintStart_toStartOf="parent" />
@@ -164,11 +129,11 @@
         android:id="@+id/registerFrag_tilPhone"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginStart="200sp"
+        android:layout_marginStart="20sp"
         android:layout_marginTop="25sp"
         android:layout_marginEnd="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/registerFrag_tvDate"
+        app:layout_constraintStart_toEndOf="@id/registerFrag_tvPhone"
         app:layout_constraintTop_toBottomOf="@+id/registerFrag_tilIdentificationNumber">
 
         <com.google.android.material.textfield.TextInputEditText

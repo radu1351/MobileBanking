@@ -33,16 +33,14 @@
         app:layout_constraintTop_toBottomOf="@+id/loginFrag_tvHello" />
 
 
-
-
     <TextView
         android:id="@+id/loginFrag_tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
         android:text="@string/email_adress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilEmail" />
+        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilEmail"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginFrag_tilEmail"
@@ -57,13 +55,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginFrag_tietEmail"
-            android:paddingBottom="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary_color" />
+            android:backgroundTint="@color/primary_color"
+            android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
     <TextView
@@ -72,8 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
         android:text="@string/password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilPass" />
+        app:layout_constraintBottom_toTopOf="@id/loginFrag_tilPass"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginFrag_tilPass"
@@ -88,14 +84,12 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginFrag_tietPass"
-            android:paddingBottom="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/primary_color"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:paddingBottom="10sp" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
     <Switch
@@ -124,44 +118,55 @@
         app:layout_constraintTop_toBottomOf="@+id/loginFrag_tilPass" />
 
 
-
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginFrag_btAdminLogin"
+        android:layout_width="130sp"
+        android:layout_height="55sp"
+        android:layout_gravity="end"
+        android:layout_marginTop="12sp"
+        android:layout_marginEnd="1sp"
+        android:background="@color/ap_transparent"
+        android:gravity="end|center_vertical"
+        android:text="Admin Login"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/primary_color"
+        android:textSize="13sp"
+        app:cornerRadius="0sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginFrag_tilPass" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginFrag_btLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="20sp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20sp"
-        android:text="@string/log_in"
         android:backgroundTint="@color/primary_color"
+        android:text="@string/log_in"
         app:cornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tvRem"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_tvRem" />
 
     <Button
         android:id="@+id/loginFrag_btRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="20sp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20sp"
-        app:strokeColor="@color/primary_color"
-        app:strokeWidth="2dp"
+        android:backgroundTint="@color/white"
         android:text="@string/register"
         android:textColor="@color/primary_color"
-        android:backgroundTint="@color/white"
         app:cornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginFrag_btLogin"
-        />
-
+        app:strokeColor="@color/primary_color"
+        app:strokeWidth="2dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,6 +28,7 @@ import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Transaction;
 import com.example.aplicatiemobilebanking.classes.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -53,7 +55,6 @@ public class TransactionsFragment extends Fragment {
     private ArrayList<CreditCard> creditCards = new ArrayList<>();
 
     public TransactionsFragment() {
-        // Required empty public constructor
     }
 
     public static TransactionsFragment newInstance(String param1, String param2) {
@@ -127,18 +128,37 @@ public class TransactionsFragment extends Fragment {
                     }
                     actualPosition -= headerCount;
 
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("TRANSACTION", transactions.get(actualPosition));
-                    bundle.putSerializable("CREDITCARDS", creditCards);
-                    ViewTransactionDialog viewTransactionDialog = new ViewTransactionDialog();
-                    viewTransactionDialog.setArguments(bundle);
-                    viewTransactionDialog.show(getActivity().getSupportFragmentManager(), "ViewTransactionDialog");
+                    if (!spinMonth.getSelectedItem().toString().equals("All")) {
+                        ArrayList<Transaction> filteredTransactions = filterTransactionsByMonth(transactions,
+                                spinMonth.getSelectedItem().toString());
+                        openViewTransactionDialog(filteredTransactions.get(actualPosition));
+                    } else {
+                        openViewTransactionDialog(transactions.get((actualPosition)));
+                    }
                 }
-
             });
         }
 
         return view;
+    }
+
+    private void openViewTransactionDialog(Transaction transaction) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("TRANSACTION", transaction);
+        bundle.putSerializable("CREDITCARDS", creditCards);
+        ViewTransactionDialog viewTransactionDialog = new ViewTransactionDialog();
+        viewTransactionDialog.setArguments(bundle);
+        viewTransactionDialog.show(getActivity().getSupportFragmentManager(), "ViewTransactionDialog");
+    }
+
+    private ArrayList<Transaction> filterTransactionsByMonth(List<Transaction> transactions, String month) {
+        ArrayList<Transaction> filteredList = new ArrayList<>();
+        for (Transaction transaction : transactions) {
+            if (new SimpleDateFormat("MMMM").format(transaction.getDate()).equals(month)) {
+                filteredList.add(transaction);
+            }
+        }
+        return filteredList;
     }
 
     private void initSpinnerMonth(View view) {

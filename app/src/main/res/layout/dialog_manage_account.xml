@@ -1,0 +1,175 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="20sp"
+                android:layout_marginEnd="10sp"
+                android:text="Owner Full Name"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/manageAccountDialog_tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="20sp"
+                android:layout_marginEnd="10sp"
+                android:text="Owner Personal ID Number"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/manageAccountDialog_tvIdNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="20sp"
+                android:layout_marginEnd="10sp"
+                android:text="IBAN"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/manageAccountDialog_tvIban"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10sp"
+                android:text="Balance"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/manageAccountDialog_tvBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10sp"
+                android:text="Associated Credit Cards"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/manageAccountDialog_lvCreditCards"
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:divider="@color/white"
+                android:dividerHeight="1sp"
+                android:listSelector="@android:color/transparent"
+                android:nestedScrollingEnabled="true"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10sp"
+                android:text="Active Deposits"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/manageAccountDialog_lvDeposits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:divider="@color/white"
+                android:dividerHeight="5sp"
+                android:listSelector="@android:color/transparent"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="none"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:text="Active Credits"
+                android:textStyle="bold"
+                android:scrollbars="none"/>
+
+            <ListView
+                android:id="@+id/manageAccountDialog_lvCredits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/white"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:dividerHeight="5sp"
+                android:listSelector="@android:color/transparent"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="true"
+                android:scrollbars="none"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+
+
+

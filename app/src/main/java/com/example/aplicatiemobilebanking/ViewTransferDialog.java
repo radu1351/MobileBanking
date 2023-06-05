@@ -24,7 +24,7 @@ public class ViewTransferDialog extends DialogFragment {
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundDialogSyle);
-        builder.setTitle("Transaction Details");
+        builder.setTitle("Transfer Details");
 
         // Inflate the layout for the dialog
         LayoutInflater inflater = getActivity().getLayoutInflater();

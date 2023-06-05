@@ -25,13 +25,16 @@ public class CreditCardAdapter extends ArrayAdapter<CreditCard> {
     private int resource;
     private ArrayList<CreditCard> creditCards;
     private LayoutInflater inflater;
+    private boolean shortText;
 
-    public CreditCardAdapter(@NonNull Context context, int resource, @NonNull ArrayList<CreditCard> objects, LayoutInflater inflater) {
+    public CreditCardAdapter(@NonNull Context context, int resource,
+                             @NonNull ArrayList<CreditCard> objects, LayoutInflater inflater, boolean shortText) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
         this.creditCards = objects;
         this.inflater = inflater;
+        this.shortText = shortText;
     }
 
     @NonNull
@@ -55,9 +58,16 @@ public class CreditCardAdapter extends ArrayAdapter<CreditCard> {
 
     private void addDescription(String cardNumber, int cardType, View view) {
         TextView textView = view.findViewById(R.id.lvCards_tvCard);
-        String value = context.getString(R.string.card_description, cardType == 0 ? "Visa" : "Mastercard",
-                cardNumber.substring(12, 16));
-        textView.setText(value);
+        String value;
+        if (!shortText) {
+            value = context.getString(R.string.card_description, cardType == 0 ? "Visa" : "Mastercard",
+                    cardNumber.substring(12, 16));
+        }
+        else{
+            value = context.getString(R.string.card_description, cardType == 0 ? "Visa" : "M.C.",
+                    cardNumber.substring(12, 16));
+        }
+            textView.setText(value);
     }
 
 
