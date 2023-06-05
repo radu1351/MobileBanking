@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_gradient"
-    tools:context=".TransferFragment">
+    tools:context=".fragments.TransferFragment">
 
     <TextView
         android:id="@+id/transferFrag_tvName"
