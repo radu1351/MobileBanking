@@ -29,6 +29,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RegisterFragment extends Fragment {
 
@@ -403,70 +405,40 @@ public class RegisterFragment extends Fragment {
         return matcher.matches();
     }
 
-    public static String generateIban() { // Modulo 97
+    public static String generateIban() {
         String countryCode = "RO";
         String bankCode = "BTRL";
         String currencyCode = "RON";
-        String accountNumber = "";
-        Random random = new Random();
-        for (int i = 0; i < 13; i++) {
-            accountNumber += random.nextInt(10);
-        }
+        String accountNumber = new Random().ints(0,10)
+                .limit(13)
+                .mapToObj(Integer::toString)
+                .collect(Collectors.joining());
+
         String iban = countryCode + "00" + bankCode + currencyCode + accountNumber;
-        int remainder = 0;
-        for (int i = 0; i < iban.length(); i++) {
-            char c = iban.charAt(i);
-            int digit;
-            if (Character.isDigit(c)) {
-                digit = Character.getNumericValue(c);
-            } else {
-                digit = c - 'A' + 10;
-            }
-            remainder = (remainder * 10 + digit) % 97;
-        }
-        int checkDigits = 98 - remainder;
-        String checkDigitsStr = String.format("%02d", checkDigits);
+
+        int remainder = iban.chars().reduce(0,
+                (r, c) -> (r * 10 + Character.getNumericValue(c)) % 97);
+        String checkDigitsStr = String.format("%02d", 98 - remainder);
+
         return countryCode + checkDigitsStr + bankCode + currencyCode + accountNumber;
     }
 
 
     public static String generateCreditCardNumber() {
-        String ccNumber = "4140"; // start with 4140
-        int length = 16 - ccNumber.length(); // remaining digits
         Random random = new Random();
-
-        // Generate the remaining 12 digits of the credit card number
-        for (int i = 0; i < length - 1; i++) {
-            int digit = random.nextInt(10);
-            ccNumber += digit;
-        }
-
-        // Generate the last digit (the check digit)
-        int checkDigit = getCheckDigit(ccNumber);
-        ccNumber += checkDigit;
-
+        String ccNumber = random.ints(11, 0, 10)
+                .mapToObj(Integer::toString)
+                .collect(Collectors.joining());
+        ccNumber = "4140" + ccNumber + getCheckDigit("4140" + ccNumber);
         return ccNumber;
     }
 
     private static int getCheckDigit(String ccNumber) {
-        int sum = 0;
-        boolean alternate = false;
-        for (int i = ccNumber.length() - 1; i >= 0; i--) {
-            int n = Integer.parseInt(ccNumber.substring(i, i + 1));
-            if (alternate) {
-                n *= 2;
-                if (n > 9) {
-                    n = (n % 10) + 1;
-                }
-            }
-            sum += n;
-            alternate = !alternate;
-        }
-        int checkDigit = (sum % 10);
-        if (checkDigit > 0) {
-            checkDigit = 10 - checkDigit;
-        }
-        return checkDigit;
+        int sum = IntStream.range(0, ccNumber.length())
+                .map(i -> ccNumber.charAt(i) - '0')
+                .map(i -> ccNumber.length() % 2 == i % 2 ? (2 * i) % 9 : i)
+                .sum();
+        return (10 - sum % 10) % 10;
     }
 
     public int CVVGenerator() {

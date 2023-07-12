@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_gradient"
-    tools:context=".fragments.TransactionsFragment">
+    tools:context=".fragments.TransactionFragment">
 
     <android.widget.Toolbar
         android:id="@+id/transactionsFrag_toolbar"
@@ -111,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Month"
-                android:textColor="@color/light_grey"
+                android:textColor="@color/dark_grey"
                 android:textSize="16sp"/>
 
             <Spinner

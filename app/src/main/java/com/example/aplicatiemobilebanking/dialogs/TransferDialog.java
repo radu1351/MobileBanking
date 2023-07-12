@@ -63,7 +63,7 @@ public class TransferDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundDialogSyle);
-        builder.setTitle("Make a new transfer");
+        builder.setTitle("Make a new IBAN transfer");
 
         // Inflate the layout for the dialog
         LayoutInflater inflater = getActivity().getLayoutInflater();

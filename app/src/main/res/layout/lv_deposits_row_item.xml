@@ -2,13 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/blue_gradient">
+    android:background="@drawable/roundbackground_blue_gradient"
+    android:elevation="3sp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
         android:layout_marginTop="25sp"
-        android:background="@color/grey"
+        android:background="@drawable/roundbackground_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:text="5000 RON"
                 android:textStyle="bold"/>
 
@@ -35,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:text="@string/maturity_date" />
 
         </LinearLayout>

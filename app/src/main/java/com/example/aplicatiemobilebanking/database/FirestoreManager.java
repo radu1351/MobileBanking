@@ -66,10 +66,8 @@ public class FirestoreManager {
         });
 
         CompletableFuture<Void> allFutures = bankAccountFuture.thenCompose(bankAccount -> {
-            // store the bank account
             this.bankAccount = bankAccount;
 
-            // load the rest of the data
             CompletableFuture<List<CreditCard>> creditCardFuture = new CompletableFuture<>();
             this.loadCardsFromDatabase(new OnSuccessListener<List<CreditCard>>() {
                 @Override
@@ -130,11 +128,10 @@ public class FirestoreManager {
                     });
         });
 
-        // initialize the components after all the futures complete
         allFutures.thenRun(thenAction);
     }
 
-    private void loadBankAccountFromDatabase(OnSuccessListener<BankAccount> callback) {
+    public void loadBankAccountFromDatabase(OnSuccessListener<BankAccount> callback) {
         db.collection("bankAccounts")
                 .whereEqualTo("userPersonalID", user.getIdentificationNumber())
                 .get()
@@ -156,7 +153,6 @@ public class FirestoreManager {
 
     public void loadCardsFromDatabase(OnSuccessListener<List<CreditCard>> callback) {
         CollectionReference creditCardsCollection = FirebaseFirestore.getInstance().collection("creditCards");
-
         creditCardsCollection.whereEqualTo("bankAccountIban", bankAccount.getIban()).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -165,7 +161,6 @@ public class FirestoreManager {
                             List<CreditCard> creditCards = new ArrayList<>(2);
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CreditCard creditCard = document.toObject(CreditCard.class);
-                                // Add credit card to list, up to max size of 2
                                 if (creditCards.size() < 2) {
                                     creditCards.add(creditCard);
                                 }
@@ -203,9 +198,7 @@ public class FirestoreManager {
         CollectionReference transfersRef = db.collection("transfers");
 
         Query recipientQuery = transfersRef.whereEqualTo("recipientIban", bankAccount.getIban());
-
         Query bankAccountQuery = transfersRef.whereEqualTo("bankAccountIban", bankAccount.getIban());
-
         Tasks.whenAllSuccess(recipientQuery.get(), bankAccountQuery.get())
                 .addOnSuccessListener(new OnSuccessListener<List<Object>>() {
                     @Override
@@ -226,13 +219,8 @@ public class FirestoreManager {
     private void loadRequestsFromDatabase(OnSuccessListener<List<Request>> callback) {
         CollectionReference requestsRef = db.collection("requests");
 
-        // Query for requets where requesterIban = bankAccount.getIban()
         Query requesterQuery = requestsRef.whereEqualTo("requesterIban", bankAccount.getIban());
-
-        // Query for requests where senderIban = bankAccount.getIban()
         Query senderQuery = requestsRef.whereEqualTo("senderIban", bankAccount.getIban());
-
-        // Combine the results of the two queries into a single list
         Tasks.whenAllSuccess(requesterQuery.get(), senderQuery.get())
                 .addOnSuccessListener(new OnSuccessListener<List<Object>>() {
                     @Override
@@ -287,7 +275,6 @@ public class FirestoreManager {
                     Credit credit = document.toObject(Credit.class);
                     credits.add(credit);
 
-                    //Check for the credit monthly installment if it is the case
                     updateCreditInDatabse(bankAccount, credit);
                 }
                 callback.onSuccess(credits);
@@ -298,7 +285,6 @@ public class FirestoreManager {
     public void closeMaturityDepositFromDatabse(BankAccount bankAccount, Deposit deposit) {
         bankAccount.addBalance(deposit.getMaturityRate());
 
-        // Update the database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference bankAccountsCollection = db.collection("bankAccounts");
         DocumentReference bankAccountRef = bankAccountsCollection.document(deposit.getBankAccountIban());
@@ -316,7 +302,6 @@ public class FirestoreManager {
         long monthsPassed = duration.toDays() / 30;
 
         if (monthsPassed >= 1) {
-            // Update the local last monthly payment date to today
             credit.setLastMonthlyPayment(new Date());
             credit.setOutstandingBalance(credit.getOutstandingBalance() - monthsPassed * credit.getMonthlyInstalment());
             bankAccount.reduceBalance(monthsPassed * credit.getMonthlyInstalment());
@@ -437,13 +422,11 @@ public class FirestoreManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Credit card added successfully
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Handle error adding credit card
                     }
                 });
     }
@@ -529,7 +512,6 @@ public class FirestoreManager {
                             });
                 })
                 .addOnFailureListener(e -> {
-                    // Handle error
                     Log.e(TAG, "Error adding transfer", e);
                 });
     }
@@ -559,7 +541,6 @@ public class FirestoreManager {
                 .addOnSuccessListener(aVoid -> {
                     Log.d(TAG, "Deposit added successfully");
 
-                    // Update bank account balance
                     bankAccount.reduceBalance(deposit.getBaseAmount());
 
                     CollectionReference bankAccountsCollection = db.collection("bankAccounts");
@@ -600,11 +581,9 @@ public class FirestoreManager {
     }
 
     public void removeDepositFromDatabase(Deposit deposit) {
-        // Delete the local variables
         this.deposits.remove(deposit);
         this.bankAccount.addBalance(deposit.getBaseAmount());
 
-        // Update the database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference bankAccountsCollection = db.collection("bankAccounts");
         DocumentReference bankAccountRef = bankAccountsCollection.document(deposit.getBankAccountIban());
@@ -617,11 +596,9 @@ public class FirestoreManager {
 
 
     public void addCreditToDatabase(Credit credit) {
-        //Update the local variables
         this.bankAccount.addBalance(credit.getLoanedAmount());
         this.credits.add(credit);
 
-        //Add the credit to the database
         CollectionReference creditsCollection = db.collection("credits");
         creditsCollection.document(credit.getId()).set(credit)
                 .addOnSuccessListener(aVoid -> {
@@ -655,11 +632,9 @@ public class FirestoreManager {
     }
 
     public void payCreditInDatabase(Credit credit) {
-        //Update local variables
         this.credits.remove(credit);
         this.bankAccount.reduceBalance(credit.getOutstandingBalance());
 
-        //Update the database
         DocumentReference creditRef = db.collection("credits").document(credit.getId());
         creditRef.delete()
                 .addOnSuccessListener(aVoid -> {

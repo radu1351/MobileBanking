@@ -44,7 +44,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-public class TransactionsFragment extends Fragment {
+public class TransactionFragment extends Fragment {
 
     private User user;
     private PieChart pieChartTransactions;
@@ -57,11 +57,11 @@ public class TransactionsFragment extends Fragment {
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private ArrayList<CreditCard> creditCards = new ArrayList<>();
 
-    public TransactionsFragment() {
+    public TransactionFragment() {
     }
 
-    public static TransactionsFragment newInstance(String param1, String param2) {
-        TransactionsFragment fragment = new TransactionsFragment();
+    public static TransactionFragment newInstance(String param1, String param2) {
+        TransactionFragment fragment = new TransactionFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

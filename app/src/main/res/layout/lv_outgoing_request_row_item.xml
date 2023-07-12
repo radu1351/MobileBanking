@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/roundbackground_listview">
+    android:background="@drawable/roundbackground_listview"
+    android:elevation="1sp">
 
     <TextView
         android:id="@+id/lvOutgoingReq_tvTo"

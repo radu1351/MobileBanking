@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:hardwareAccelerated="true"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80sp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="100sp"
+            android:layout_height="15dp"
+            android:background="@drawable/roundbackground_verification_blue" />
+
+        <View
+            android:layout_width="100sp"
+            android:layout_height="15dp"
+            android:layout_marginStart="15sp"
+            android:background="@drawable/roundbackground_verification_grey" />
+
+        <View
+            android:layout_width="100sp"
+            android:layout_height="15dp"
+            android:layout_marginStart="15sp"
+            android:background="@drawable/roundbackground_verification_grey" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/smsVerificationFragment_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="160sp"
+        android:src="@drawable/otp"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.53" />
+
+    <TextView
+        android:id="@+id/smsVerificationFragment_tvVerification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="40sp"
+        android:layout_marginEnd="25sp"
+        android:gravity="center"
+        android:text="Phone Verification"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/smsVerificationFragment_iv" />
+
+    <TextView
+        android:id="@+id/smsVerificationFragment_tvEnterCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginEnd="25sp"
+        android:gravity="center"
+        android:text="@string/code_sent"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/smsVerificationFragment_tvVerification" />
+
+    <com.mukeshsolanki.OtpView
+        android:id="@+id/smsVerificationFragment_otpView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80sp"
+        android:inputType="numberDecimal"
+        android:itemBackground="@drawable/roundbackground_otp"
+        android:selectAllOnFocus="false"
+        android:textAllCaps="true"
+        android:textColor="@android:color/black"
+        app:OtpHideLineWhenFilled="true"
+        app:OtpItemCount="6"
+        app:OtpItemHeight="50sp"
+        app:OtpItemSpacing="10dp"
+        app:OtpItemWidth="50sp"
+        app:OtpLineColor="@color/ap_transparent"
+        app:OtpState_filled="true"
+        android:shadowColor="@color/ap_transparent"
+        android:outlineAmbientShadowColor="@color/ap_transparent"
+        app:OtpViewType="line"
+        android:textIsSelectable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/smsVerificationFragment_tvEnterCode" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13sp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/smsVerificationFragment_otpView">
+
+        <TextView
+            android:id="@+id/smsVerificationFragment_tvDidntRecieve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Didn't receive the code?"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/smsVerificationFragment_tvResendCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5sp"
+            android:gravity="center"
+            android:text="Resend code"
+            android:textColor="@color/primary_color"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/smsVerificationFragment_btContinue"
+        android:layout_width="200sp"
+        android:layout_height="60sp"
+        android:layout_marginBottom="110sp"
+        android:text="Continue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

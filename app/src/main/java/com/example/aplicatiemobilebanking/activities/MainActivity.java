@@ -37,7 +37,7 @@ import com.example.aplicatiemobilebanking.fragments.HomeFragment;
 import com.example.aplicatiemobilebanking.fragments.NoTransactionsFragment;
 import com.example.aplicatiemobilebanking.fragments.ProfileFragment;
 import com.example.aplicatiemobilebanking.fragments.RequestMoneyFragment;
-import com.example.aplicatiemobilebanking.fragments.TransactionsFragment;
+import com.example.aplicatiemobilebanking.fragments.TransactionFragment;
 import com.example.aplicatiemobilebanking.fragments.TransferFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
     private void reopenCurrentFragment() {
         if (currentFragment instanceof HomeFragment)
             openHomeFragment();
-        else if (currentFragment instanceof TransactionsFragment)
+        else if (currentFragment instanceof TransactionFragment)
             openTransactionsFragment();
         else if (currentFragment instanceof TransferFragment)
             openTransferFragment();
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements PayDialog.OnTrans
             bundle.putSerializable("TRANSACTIONS", transactions);
             bundle.putSerializable("CREDITCARDS", creditCards);
 
-            currentFragment = new TransactionsFragment();
+            currentFragment = new TransactionFragment();
             currentFragment.setArguments(bundle);
 
             getSupportFragmentManager().beginTransaction()

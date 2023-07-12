@@ -288,7 +288,6 @@ public class FirestoreAdminManager {
         long monthsPassed = duration.toDays() / 30;
 
         if (monthsPassed >= 1) {
-            // Update the local last monthly payment date to today
             credit.setLastMonthlyPayment(new Date());
             credit.setOutstandingBalance(credit.getOutstandingBalance() - monthsPassed * credit.getMonthlyInstalment());
             bankAccount.reduceBalance(monthsPassed * credit.getMonthlyInstalment());
@@ -298,7 +297,6 @@ public class FirestoreAdminManager {
                     .addOnSuccessListener(aVoid -> {
                         Log.d(TAG, "Credit updated successfully");
 
-                        // Reduce the bank account balance by the monthly installment
                         CollectionReference bankAccountsCollection = db.collection("bankAccounts");
                         Query query = bankAccountsCollection.whereEqualTo("iban", credit.getBankAccountIban());
 

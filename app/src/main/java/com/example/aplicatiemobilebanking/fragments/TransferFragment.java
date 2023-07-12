@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.example.aplicatiemobilebanking.activities.MainActivity;
 import com.example.aplicatiemobilebanking.R;
-import com.example.aplicatiemobilebanking.list_view_adapters.TransferHeaderAdapter;
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.Request;

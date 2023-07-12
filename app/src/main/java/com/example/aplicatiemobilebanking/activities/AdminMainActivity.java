@@ -17,12 +17,15 @@ import com.example.aplicatiemobilebanking.dialogs.ViewDepositDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.aplicatiemobilebanking.list_view_adapters.AccountsAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -31,12 +34,12 @@ public class AdminMainActivity extends AppCompatActivity implements ViewCreditDi
         ViewDepositDialog.OnTerminateDepositListener, ManageAccountDialog.CreditCardListener,
         ManageAccountDialog.TerminateAccountListener {
 
-    ArrayList<BankAccount> bankAccounts = new ArrayList<>(0);
-    ArrayList<User> users = new ArrayList<User>(0);
+    private ArrayList<BankAccount> bankAccounts = new ArrayList<>(0);
+    private ArrayList<User> users = new ArrayList<User>(0);
 
-    Button btLogout;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ListView lvAccounts;
+    private Button btLogout;
+    private ListView lvAccounts;
+    private TextInputEditText tietSearch;
 
     FirestoreAdminManager firestoreAdminManager;
     private final String SHARED_PREFS_NAME = "com.example.aplicatiemobilebanking.admin";
@@ -79,7 +82,39 @@ public class AdminMainActivity extends AppCompatActivity implements ViewCreditDi
             }
         });
 
+        tietSearch = findViewById(R.id.adminMainActivity_tietSearch);
+        tietSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                filterUsers(cs.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
         loadAccountsListView(this, bankAccounts);
+    }
+
+    private void filterUsers(String text) {
+        ArrayList<BankAccount> temp = new ArrayList();
+        ArrayList<User> tempUsers = new ArrayList();
+        for (User user : users) {
+            if (user.getFullName().toLowerCase().contains(text.toLowerCase())) {
+                tempUsers.add(user);
+                for (BankAccount acc : bankAccounts) {
+                    if (acc.getUserPersonalID().equals(user.getIdentificationNumber())) {
+                        temp.add(acc);
+                        break;
+                    }
+                }
+            }
+        }
+        loadAccountsListView(this, temp);
     }
 
     private void loadAccountsListView(AppCompatActivity activity, ArrayList<BankAccount> bankAccounts) {
