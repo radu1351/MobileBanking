@@ -17,6 +17,8 @@ import com.example.aplicatiemobilebanking.R;
 import com.example.aplicatiemobilebanking.classes.BankAccount;
 import com.example.aplicatiemobilebanking.classes.CreditCard;
 import com.example.aplicatiemobilebanking.classes.User;
+import com.example.aplicatiemobilebanking.utils.AesEncryption;
+import com.example.aplicatiemobilebanking.utils.Generator;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,6 +31,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class RegisterFragment extends Fragment {
 
@@ -38,7 +42,6 @@ public class RegisterFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public RegisterFragment() {
-        // Required empty public constructor
     }
 
 
@@ -234,7 +237,7 @@ public class RegisterFragment extends Fragment {
                     user.setAddress(tietAddres.getText().toString());
                     user.setPhoneNumber(tietPhoneNumber.getText().toString());
                     user.setEmail(tietEmail.getText().toString());
-                    user.setPassword(tietPassword.getText().toString());
+                    user.setPassword(AesEncryption.encrypt(tietPassword.getText().toString()));
                     addUserToDatabase(user);
 
                 }
@@ -316,7 +319,7 @@ public class RegisterFragment extends Fragment {
 
 
     private BankAccount assignBankAccount(User user) {
-        String IBAN = generateIban();
+        String IBAN = Generator.generateIban();
         String SWIFT = "BTRLRO22";
 
         BankAccount bankAccount = new BankAccount(IBAN, SWIFT, 500.00f, "RON",
@@ -341,8 +344,8 @@ public class RegisterFragment extends Fragment {
 
     private void assignCreditCard(User user, BankAccount bankAccount) {
 
-        CreditCard creditCard = new CreditCard(generateCreditCardNumber(),
-                user.getFullName(), dateGenerator(), CVVGenerator(), 0, bankAccount.getIban());
+        CreditCard creditCard = new CreditCard(Generator.generateCreditCardNumber(),
+                user.getFullName(), Generator.expirationDateGenerator(), Generator.CVVGenerator(), 0, bankAccount.getIban());
 
         db.collection("creditCards").document(creditCard.getCardNumber())
                 .set(creditCard)
@@ -360,7 +363,6 @@ public class RegisterFragment extends Fragment {
                 });
 
     }
-
 
     public void openLoginFragment() {
         Fragment loginFragment = new LoginFragment();
@@ -401,87 +403,6 @@ public class RegisterFragment extends Fragment {
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         return matcher.matches();
-    }
-
-    public static String generateIban() { // Modulo 97
-        String countryCode = "RO";
-        String bankCode = "BTRL";
-        String currencyCode = "RON";
-        String accountNumber = "";
-        Random random = new Random();
-        for (int i = 0; i < 13; i++) {
-            accountNumber += random.nextInt(10);
-        }
-        String iban = countryCode + "00" + bankCode + currencyCode + accountNumber;
-        int remainder = 0;
-        for (int i = 0; i < iban.length(); i++) {
-            char c = iban.charAt(i);
-            int digit;
-            if (Character.isDigit(c)) {
-                digit = Character.getNumericValue(c);
-            } else {
-                digit = c - 'A' + 10;
-            }
-            remainder = (remainder * 10 + digit) % 97;
-        }
-        int checkDigits = 98 - remainder;
-        String checkDigitsStr = String.format("%02d", checkDigits);
-        return countryCode + checkDigitsStr + bankCode + currencyCode + accountNumber;
-    }
-
-
-    public static String generateCreditCardNumber() {
-        String ccNumber = "4140"; // start with 4140
-        int length = 16 - ccNumber.length(); // remaining digits
-        Random random = new Random();
-
-        // Generate the remaining 12 digits of the credit card number
-        for (int i = 0; i < length - 1; i++) {
-            int digit = random.nextInt(10);
-            ccNumber += digit;
-        }
-
-        // Generate the last digit (the check digit)
-        int checkDigit = getCheckDigit(ccNumber);
-        ccNumber += checkDigit;
-
-        return ccNumber;
-    }
-
-    private static int getCheckDigit(String ccNumber) {
-        int sum = 0;
-        boolean alternate = false;
-        for (int i = ccNumber.length() - 1; i >= 0; i--) {
-            int n = Integer.parseInt(ccNumber.substring(i, i + 1));
-            if (alternate) {
-                n *= 2;
-                if (n > 9) {
-                    n = (n % 10) + 1;
-                }
-            }
-            sum += n;
-            alternate = !alternate;
-        }
-        int checkDigit = (sum % 10);
-        if (checkDigit > 0) {
-            checkDigit = 10 - checkDigit;
-        }
-        return checkDigit;
-    }
-
-    public int CVVGenerator() {
-        Random rand = new Random();
-        int firstDigit = 3;
-        int secondDigit = rand.nextInt(5) + 5; // Generate a random number between 5 and 9
-        int thirdDigit = rand.nextInt(10); // Generate a random number between 0 and 9
-        return firstDigit * 100 + secondDigit * 10 + thirdDigit;
-    }
-
-    private Date dateGenerator() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, 3);
-        Date date = calendar.getTime();
-        return date;
     }
 
 }

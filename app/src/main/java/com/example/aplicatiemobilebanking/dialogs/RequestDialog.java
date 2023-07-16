@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -26,6 +27,7 @@ public class RequestDialog extends DialogFragment {
     private BankAccount senderBankAccount;
     private User senderUser;
     private Request request;
+    private TextView tvSenderName, tvSenderIban;
     private TextInputEditText tietAmount, tietDescription;
 
     private RequestListener requestListener;
@@ -45,6 +47,12 @@ public class RequestDialog extends DialogFragment {
         senderBankAccount = (BankAccount) getArguments().getSerializable("BANKACCOUNT");
         senderUser = (User) getArguments().getSerializable("USER");
         request = (Request) getArguments().getSerializable("REQUEST");
+
+        tvSenderName = view.findViewById(R.id.requestDiag_tvSenderName);
+        tvSenderName.setText(request.getSenderFullName());
+
+        tvSenderIban = view.findViewById(R.id.requestDiag_tvSenderIban);
+        tvSenderIban.setText(request.getSenderIban());
 
         builder.setPositiveButton("Request", new DialogInterface.OnClickListener() {
             @Override

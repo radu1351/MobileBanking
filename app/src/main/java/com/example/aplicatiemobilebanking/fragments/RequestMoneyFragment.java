@@ -145,6 +145,7 @@ public class RequestMoneyFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("REQUEST", request);
                 bundle.putSerializable("BANKACCOUNT", bankAccount);
+                bundle.putSerializable("USER",user);
                 RequestDialog dialog = new RequestDialog();
                 dialog.setArguments(bundle);
                 dialog.show(getActivity().getSupportFragmentManager(), "RequestDialog");

@@ -20,11 +20,13 @@ import com.example.aplicatiemobilebanking.classes.User;
 
 public class ProfileFragment extends Fragment {
     private TextView tvName, tvFirstName, tvLastName, tvIdentificationNumber,
-            tvAddress,tvPhone,tvEmail;
+            tvAddress, tvPhone, tvEmail;
     private Button btLogOut;
     private User user;
 
     private final String SHARED_PREFS_NAME = "com.example.aplicatiemobilebanking";
+    private final String PREF_EMAIL = "PREF_EMAIL";
+    private final String PREF_PASSWORD = "PREF_PASSWORD";
 
     public ProfileFragment() {
 
@@ -41,7 +43,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user = (User)getArguments().getSerializable("USER");
+            user = (User) getArguments().getSerializable("USER");
         }
     }
 
@@ -49,7 +51,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         tvName = view.findViewById(R.id.profileFrag_tvName);
         tvFirstName = view.findViewById(R.id.profileFrag_tvFirstName);
         tvLastName = view.findViewById(R.id.profileFrag_tvLastName);
@@ -72,7 +74,8 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 // Clear saved email and password
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.clear();
+                editor.remove(PREF_EMAIL);
+                editor.remove(PREF_PASSWORD);
                 editor.apply();
 
                 Intent intent = new Intent(getContext(), LoginActivity.class);

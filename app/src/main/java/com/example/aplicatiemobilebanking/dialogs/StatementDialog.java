@@ -47,7 +47,6 @@ public class StatementDialog extends DialogFragment {
     private PDFViewPagerZoom pdfView;
     private File pdfFile;
 
-
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundDialogSyle);
         builder.setTitle("Bank Account Statement");
@@ -154,7 +153,7 @@ public class StatementDialog extends DialogFragment {
             for (Transaction transaction : transactions) {
                 transactionsTable.addCell(new Cell().add(new Paragraph(transaction.getMerchant())));
                 transactionsTable.addCell(new Cell().add(new Paragraph(transaction.getDate().toString())));
-                transactionsTable.addCell(new Cell().add(new Paragraph(String.valueOf(transaction.getAmount()))));
+                transactionsTable.addCell(new Cell().add(new Paragraph(getString(R.string.RON,String.valueOf(transaction.getAmount())))));
             }
 
             document.add(transactionsTable);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:divider="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
     <ImageView
@@ -19,29 +19,28 @@
         android:id="@+id/lvCards_tvCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8sp"
         android:text="@string/card_description"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:layout_marginStart="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/lvCards_ivCard"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-    </TextView>
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
 
     <Button
         android:id="@+id/lvCards_btRemove"
         android:layout_width="129dp"
         android:layout_height="wrap_content"
-        android:text="Remove Card"
         android:backgroundTint="@color/white"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Remove Card"
+        android:textColor="#FF0000"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:textColor="#FF0000"
-        android:singleLine="true"
-        android:ellipsize="end"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

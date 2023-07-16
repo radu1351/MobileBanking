@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:hardwareAccelerated="true"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80sp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="100sp"
+            android:layout_height="15dp"
+            android:background="@drawable/roundbackground_verification_grey" />
+
+        <View
+            android:layout_width="100sp"
+            android:layout_height="15dp"
+            android:layout_marginStart="15sp"
+            android:background="@drawable/roundbackground_verification_grey"  />
+
+        <View
+            android:layout_width="100sp"
+            android:layout_height="15dp"
+            android:layout_marginStart="15sp"
+            android:background="@drawable/roundbackground_verification_blue"  />
+
+    </LinearLayout>
+
+
+    <com.vinaygaba.creditcardview.CreditCardView
+        android:id="@+id/creditCardVerificationFragment_creditCardView"
+        android:layout_width="300sp"
+        android:layout_height="185dp"
+        app:cardName="John Terry"
+        app:cardNameTextColor="#cccccc"
+        app:cardNumber="5500005555555559"
+        app:cardNumberFormat="all_digits"
+        app:cardNumberTextColor="#cccccc"
+        app:expiryDate="02/22"
+        app:expiryDateTextColor="#cccccc"
+        app:hintTextColor="#cccccc"
+        app:isEditable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:putChip="true"
+        app:type="visa"
+        app:validTillTextColor="#cccccc"
+        android:layout_marginTop="170sp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/creditCardVerificationFragment_tvVerification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="45sp"
+        android:layout_marginEnd="25sp"
+        android:gravity="center"
+        android:text="Credit Card Verification"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creditCardVerificationFragment_creditCardView" />
+
+    <TextView
+        android:id="@+id/creditCardVerificationFragment_tvEnterCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginEnd="25sp"
+        android:gravity="center"
+        android:text="Please enter the last 5 digits of your credit card as displayed above."
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creditCardVerificationFragment_tvVerification" />
+
+    <com.mukeshsolanki.OtpView
+        android:id="@+id/creditCardVerificationFragment_otpView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90sp"
+        android:inputType="numberDecimal"
+        android:itemBackground="@drawable/roundbackground_otp"
+        android:selectAllOnFocus="false"
+        android:textAllCaps="true"
+        android:textColor="@android:color/black"
+        app:OtpHideLineWhenFilled="true"
+        app:OtpItemCount="5"
+        app:OtpItemHeight="50sp"
+        app:OtpItemSpacing="10dp"
+        app:OtpItemWidth="50sp"
+        app:OtpLineColor="@color/ap_transparent"
+        app:OtpState_filled="true"
+        app:OtpViewType="line"
+        android:textIsSelectable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creditCardVerificationFragment_tvEnterCode" />
+
+
+    <Button
+        android:id="@+id/creditCardVerificationFragment_btContinue"
+        android:layout_width="200sp"
+        android:layout_height="60sp"
+        android:layout_marginBottom="120sp"
+        android:text="Continue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

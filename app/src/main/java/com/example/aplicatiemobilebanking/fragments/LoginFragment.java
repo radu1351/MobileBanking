@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 
+import com.example.aplicatiemobilebanking.activities.VerificationActivity;
 import com.example.aplicatiemobilebanking.activities.MainActivity;
 import com.example.aplicatiemobilebanking.R;
 import com.example.aplicatiemobilebanking.classes.User;
+import com.example.aplicatiemobilebanking.utils.AesEncryption;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -33,6 +35,7 @@ public class LoginFragment extends Fragment {
     private final String SHARED_PREFS_NAME = "com.example.aplicatiemobilebanking";
     private final String PREF_EMAIL = "PREF_EMAIL";
     private final String PREF_PASSWORD = "PREF_PASSWORD";
+    private final String FIRST_LOGIN = "FIRST_LOGIN";
     //User and Account information
     User user;
 
@@ -85,7 +88,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String email = tietEmail.getText().toString();
-                String password = tietPassword.getText().toString();
+                String password = AesEncryption.encrypt(tietPassword.getText().toString());
                 logInUser(email, password);
             }
         });
@@ -103,17 +106,15 @@ public class LoginFragment extends Fragment {
 
         if (!savedEmail.isEmpty() && !savedPassword.isEmpty()) {
             tietEmail.setText(savedEmail);
-            tietPassword.setText(savedPassword);
+            tietPassword.setText(AesEncryption.decrypt(savedPassword));
             switchRemember.setChecked(true);
             logInUser(savedEmail, savedPassword);
         }
     }
 
     private void logInUser(String email, String password) {
-        // Create a reference to the Firestore database
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Query the "users" collection for the given email and password
         Query query = db.collection("users")
                 .whereEqualTo("email", email)
                 .whereEqualTo("password", password);
@@ -135,10 +136,21 @@ public class LoginFragment extends Fragment {
                     }
                     editor.apply();
 
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    user = task.getResult().getDocuments().get(0).toObject(User.class);
-                    intent.putExtra("USER", user);
-                    startActivity(intent);
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
+                    if (sharedPreferences.getBoolean(FIRST_LOGIN, true)) {
+                        editor.putBoolean(FIRST_LOGIN, false).apply();
+                        // Open Verify Activity
+                        Intent intent = new Intent(getContext(), VerificationActivity.class);
+                        user = task.getResult().getDocuments().get(0).toObject(User.class);
+                        intent.putExtra("USER", user);
+                        startActivity(intent);
+                    } else {
+                        // Open Main Activity
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        user = task.getResult().getDocuments().get(0).toObject(User.class);
+                        intent.putExtra("USER", user);
+                        startActivity(intent);
+                    }
                 } else {
                     // No user found
                 }

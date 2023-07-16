@@ -42,9 +42,8 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.RoundDialogSyle);
-        builder.setTitle("Add a new payment");
+        builder.setTitle("Make a new payment");
 
-        // Inflate the layout for the dialog
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_pay, null);
         builder.setView(view);
@@ -74,7 +73,6 @@ public class PayDialog extends DialogFragment implements DialogInterface.OnClick
 
 
         builder.setPositiveButton("Add payment", null);
-        // Set the negative button to cancel the dialog
         builder.setNegativeButton("Cancel", null);
 
         Dialog dialog = builder.create();

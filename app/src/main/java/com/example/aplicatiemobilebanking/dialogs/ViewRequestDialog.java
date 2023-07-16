@@ -50,7 +50,7 @@ public class ViewRequestDialog extends DialogFragment {
 
         tvRequesterName.setText(request.getRequesterFullName());
         tvRequesterIban.setText(request.getRequesterIban());
-        tvAmount.setText(String.valueOf(request.getAmount()));
+        tvAmount.setText(getString(R.string.RON, String.valueOf(request.getAmount())));
         tvDescription.setText(request.getDescription());
 
         builder.setPositiveButton("Accept", null);

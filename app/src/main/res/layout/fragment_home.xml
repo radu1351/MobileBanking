@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_gradient"
-    tools:context=".fragments.HomeFragment">
+    tools:context=".fragments.HomeFragment"
+    android:hardwareAccelerated="true">
 
 
     <TextView
@@ -82,7 +83,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/homeFrag_clCards"
-            app:layout_constraintTop_toTopOf="@id/homeFrag_clCards"></TextView>
+            app:layout_constraintTop_toTopOf="@id/homeFrag_clCards" />
 
         <!--  Scroll view carduri      -->
         <HorizontalScrollView
@@ -161,7 +162,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+               >
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/homeFrag_btAddCard"
@@ -174,7 +176,8 @@
                     android:drawableLeft="@drawable/ic_add_card"
                     android:text="Add new card"
                     android:textColor="@color/black"
-                    app:cornerRadius="20sp" />
+                    app:cornerRadius="20sp"
+                   />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/homeFrag_btViewAccount"

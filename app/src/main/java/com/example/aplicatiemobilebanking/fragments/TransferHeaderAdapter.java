@@ -1,4 +1,4 @@
-package com.example.aplicatiemobilebanking.list_view_adapters;
+package com.example.aplicatiemobilebanking.fragments;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

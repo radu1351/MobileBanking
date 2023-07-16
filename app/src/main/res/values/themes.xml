@@ -21,6 +21,7 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="Theme.AplicatieMobileBanking.AppBarOverlay"
-        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar"
+        />
     <style name="Theme.AplicatieMobileBanking.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

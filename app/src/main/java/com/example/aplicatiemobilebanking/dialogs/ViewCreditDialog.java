@@ -54,7 +54,7 @@ public class ViewCreditDialog extends DialogFragment {
 
         tvLoanedAmount.setText(getString(R.string.RON, String.format("%.2f", credit.getLoanedAmount())));
         tvInterestRate.setText(getString(R.string.procent, String.valueOf(credit.getInterestRate() * 100)));
-        tvTotalCost.setText(String.format("%.2f", credit.getTotalCost()));
+        tvTotalCost.setText(getString(R.string.RON,String.format("%.2f", credit.getTotalCost())));
         tvNumberOfMonths.setText(String.valueOf(credit.getNumberOfMonths()));
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
         tvMaturityDate.setText(dateFormat.format(credit.getMaturityDate()));
