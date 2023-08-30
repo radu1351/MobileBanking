@@ -235,11 +235,10 @@ public class RegisterFragment extends Fragment {
                     user.setLastName(tietLastName.getText().toString());
                     user.setIdentificationNumber(tietIdNumber.getText().toString());
                     user.setAddress(tietAddres.getText().toString());
-                    user.setPhoneNumber(tietPhoneNumber.getText().toString());
+                    user.setPhoneNumber("+4" + tietPhoneNumber.getText().toString());
                     user.setEmail(tietEmail.getText().toString());
                     user.setPassword(AesEncryption.encrypt(tietPassword.getText().toString()));
                     addUserToDatabase(user);
-
                 }
             }
         });
